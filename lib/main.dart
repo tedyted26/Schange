@@ -1,3 +1,5 @@
+import 'dart:html';
+
 import 'package:flutter/material.dart';
 
 void main() {
@@ -11,43 +13,54 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        title: 'Schange',
-        theme: ThemeData(
-          // This is the theme of your application.
-          //
-          // Try running your application with "flutter run". You'll see the
-          // application has a blue toolbar. Then, without quitting the app, try
-          // changing the primarySwatch below to Colors.green and then invoke
-          // "hot reload" (press "r" in the console where you ran "flutter run",
-          // or simply save your changes to "hot reload" in a Flutter IDE).
-          // Notice that the counter didn't reset back to zero; the application
-          // is not restarted.
+      title: 'Schange',
+      theme: ThemeData(
+        // This is the theme of your application.
+        //
+        // Try running your application with "flutter run". You'll see the
+        // application has a blue toolbar. Then, without quitting the app, try
+        // changing the primarySwatch below to Colors.green and then invoke
+        // "hot reload" (press "r" in the console where you ran "flutter run",
+        // or simply save your changes to "hot reload" in a Flutter IDE).
+        // Notice that the counter didn't reset back to zero; the application
+        // is not restarted.
 
-          //fondo: Colors.white,
+        //fondo: Colors.white,
 
-          primarySwatch: Colors.blue,
-        ),
-        home: Scaffold(
-            body: Center(
-                child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: [
-            const Image(
-              image: AssetImage("images/logo_principal.png"),
-            ),
-            const Text("Your exchange to Spain, in company"),
-            const Text("Loading...",
-                style: TextStyle(
-                  fontSize: 32,
-                  fontFamily: 'Sniglet',
-                )),
-            ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  primary: Colors.blue,
-                ),
-                child: const Text("Boton provisional a home"),
-                onPressed: () {})
-          ],
-        ))));
+        primarySwatch: Colors.blue,
+      ),
+      home: const AppPage(),
+    );
+  }
+}
+
+class AppPage extends StatelessWidget {
+  const AppPage({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Center(
+          child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        children: [
+          const Image(
+            image: AssetImage("images/logo_principal.png"),
+          ),
+          const Text("Your exchange to Spain, in company"),
+          const Text("Loading...",
+              style: TextStyle(
+                fontSize: 32,
+                fontFamily: 'Sniglet',
+              )),
+          ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                primary: Colors.blue,
+              ),
+              child: const Text("Boton provisional a home"),
+              onPressed: () {})
+        ],
+      )),
+    );
   }
 }
