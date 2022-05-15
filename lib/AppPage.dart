@@ -24,7 +24,12 @@ class AppPage extends StatelessWidget {
                 primary: Colors.blue,
               ),
               child: const Text("Boton provisional a home"),
-              onPressed: () {})
+              onPressed: () {
+                Navigator.of(context).pushNamed(
+                  '/home',
+                  arguments: "prueba",
+                );
+              })
         ],
       )),
     );
