@@ -5,7 +5,25 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
-    throw UnimplementedError();
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Home'),
+        actions: [
+          IconButton(
+            icon: Icon(
+              Icons.messenger_rounded,
+            ),
+            onPressed: () {},
+          ),
+        ],
+        leading: IconButton(
+          icon: Icon(
+            Icons.menu,
+          ),
+          onPressed: () {},
+        ),
+      ),
+      body: Center(),
+    );
   }
 }

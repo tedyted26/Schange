@@ -14,19 +14,25 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Schange',
       theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // Try running your application with "flutter run". You'll see the
-        // application has a blue toolbar. Then, without quitting the app, try
-        // changing the primarySwatch below to Colors.green and then invoke
-        // "hot reload" (press "r" in the console where you ran "flutter run",
-        // or simply save your changes to "hot reload" in a Flutter IDE).
-        // Notice that the counter didn't reset back to zero; the application
-        // is not restarted.
-
-        //fondo: Colors.white,
-
-        primarySwatch: Colors.blue,
+        primaryColor: Color(0xff023047),
+        //APP BAR THEME
+        appBarTheme: const AppBarTheme(
+          backgroundColor: Colors.white,
+          centerTitle: true,
+          // text style
+          titleTextStyle: TextStyle(
+            color: Color(0xff023047),
+            fontFamily: 'SFUIText',
+            fontWeight: FontWeight.bold,
+            fontSize: 18,
+          ),
+          elevation: 0,
+          //icon theme
+          iconTheme: IconThemeData(
+            color: Color(0xff023047),
+            size: 30,
+          ),
+        ),
       ),
       initialRoute: '/',
       onGenerateRoute: RouteGenerator.generateRoute,
