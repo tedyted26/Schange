@@ -15,7 +15,8 @@ class MyApp extends StatelessWidget {
       title: 'Schange',
       theme: ThemeData(
         primaryColor: Color(0xff023047),
-        hintColor: Color(0xff219EBC),
+        focusColor: Color(0xff219EBC),
+        errorColor: Color(0xffFFB703),
         //APP BAR THEME
         appBarTheme: const AppBarTheme(
           backgroundColor: Colors.white,

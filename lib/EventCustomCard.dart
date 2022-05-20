@@ -1,4 +1,23 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'User.dart';
+
+//temporal
+User getUserData(int idCreator) {
+  //pillar de json
+  User user_data = User(
+      id: idCreator,
+      name: 'Teo',
+      profilePic: '',
+      mail: '',
+      contacts: [],
+      chats: []);
+  if (user_data.profilePic == "") {
+    user_data.profilePic = "images/no_user.png";
+  }
+  return user_data;
+}
 
 class EventCustomCard extends StatelessWidget {
   @override
@@ -9,50 +28,62 @@ class EventCustomCard extends StatelessWidget {
 }
 
 class EventCustomCardImage extends StatelessWidget {
-  const EventCustomCardImage({Key? key}) : super(key: key);
+  final String picUrl;
+  const EventCustomCardImage(
+      {Key? key, this.picUrl = 'images/no-image.png'}) //TODO mirar rutas
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Container(
-        margin: EdgeInsets.only(top: 15, bottom: 15),
-        child: ClipRRect(
-            borderRadius: BorderRadius.all(Radius.circular(20.0)),
-            child: Image.network(
-              'https://images.pexels.com/photos/1537635/pexels-photo-1537635.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940',
-              height: 220,
-              width: 320,
-              fit: BoxFit.cover,
-            )));
+      margin: const EdgeInsets.only(top: 15, bottom: 15),
+      child: ClipRRect(
+        borderRadius: const BorderRadius.all(Radius.circular(20.0)),
+        child: Image.asset(
+          picUrl,
+          height: 220,
+          width: 320,
+          fit: BoxFit.cover,
+        ),
+      ),
+    );
   }
 }
 
 class EventCustomCardCreatorInfo extends StatelessWidget {
-  const EventCustomCardCreatorInfo({Key? key}) : super(key: key);
+  final int idCreator;
+  final String date;
+
+  const EventCustomCardCreatorInfo(
+      {Key? key, required this.idCreator, required this.date})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    User userdata = getUserData(idCreator);
+
     return Container(
-      margin: EdgeInsets.only(top: 5, bottom: 15),
+      margin: const EdgeInsets.only(top: 5, bottom: 15),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Row(
             children: [
               ClipOval(
-                child: Image.network(
-                  'https://images.pexels.com/photos/1537635/pexels-photo-1537635.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940',
+                child: Image.asset(
+                  userdata.profilePic,
                   height: 50,
                   width: 50,
                   fit: BoxFit.cover,
                 ),
               ),
               Container(
-                margin: EdgeInsets.only(left: 10),
+                margin: const EdgeInsets.only(left: 10),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Nombre apellidos',
+                      userdata.name,
                       style: TextStyle(
                         color: Theme.of(context).primaryColor,
                         fontSize: 16,
@@ -60,7 +91,7 @@ class EventCustomCardCreatorInfo extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      'Created on Mes Dia',
+                      'Created on $date',
                       style: TextStyle(
                         color: Theme.of(context).primaryColor,
                         fontSize: 15,
@@ -73,11 +104,13 @@ class EventCustomCardCreatorInfo extends StatelessWidget {
             ],
           ),
           IconButton(
-            icon: Icon(
+            icon: const Icon(
               Icons.person_add_sharp,
               size: 30,
             ),
-            onPressed: () {},
+            onPressed:
+                () {}, //TODO añadir el id del usuario creador a la lista del
+            //usuario loggeado y hacer que el boton desaparezca
           ),
         ],
       ),
@@ -85,13 +118,25 @@ class EventCustomCardCreatorInfo extends StatelessWidget {
   }
 }
 
+//finiquitado
 class EventCustomCardFiltersInfo extends StatelessWidget {
-  const EventCustomCardFiltersInfo({Key? key}) : super(key: key);
+  final int maxPeople;
+  final String date;
+  final int price;
+  final String category;
+
+  const EventCustomCardFiltersInfo(
+      {Key? key,
+      required this.maxPeople,
+      required this.date,
+      required this.price,
+      required this.category})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.only(bottom: 15),
+      margin: const EdgeInsets.only(bottom: 15),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -100,13 +145,13 @@ class EventCustomCardFiltersInfo extends StatelessWidget {
             crossAxisAlignment: WrapCrossAlignment.center,
             children: [
               Text(
-                'Nº ',
+                '$maxPeople ',
                 style: TextStyle(
                   color: Theme.of(context).primaryColor,
                   fontWeight: FontWeight.w300,
                 ),
               ),
-              Icon(
+              const Icon(
                 Icons.people,
                 size: 22,
               ),
@@ -117,13 +162,13 @@ class EventCustomCardFiltersInfo extends StatelessWidget {
             crossAxisAlignment: WrapCrossAlignment.center,
             children: [
               Text(
-                'Mes Dia ',
+                '$date ',
                 style: TextStyle(
                   color: Theme.of(context).primaryColor,
                   fontWeight: FontWeight.w300,
                 ),
               ),
-              Icon(
+              const Icon(
                 Icons.calendar_month,
                 size: 22,
               ),
@@ -134,13 +179,13 @@ class EventCustomCardFiltersInfo extends StatelessWidget {
             crossAxisAlignment: WrapCrossAlignment.center,
             children: [
               Text(
-                'Nº ',
+                '$price ',
                 style: TextStyle(
                   color: Theme.of(context).primaryColor,
                   fontWeight: FontWeight.w300,
                 ),
               ),
-              Icon(
+              const Icon(
                 Icons.euro,
                 size: 22,
               ),
@@ -151,13 +196,13 @@ class EventCustomCardFiltersInfo extends StatelessWidget {
             crossAxisAlignment: WrapCrossAlignment.center,
             children: [
               Text(
-                'Categoria ',
+                '$category ',
                 style: TextStyle(
                   color: Theme.of(context).primaryColor,
                   fontWeight: FontWeight.w300,
                 ),
               ),
-              Icon(
+              const Icon(
                 Icons.chair,
                 size: 22,
               ),
@@ -169,38 +214,62 @@ class EventCustomCardFiltersInfo extends StatelessWidget {
   }
 }
 
-class EventCustomCardSocialIcons extends StatelessWidget {
-  const EventCustomCardSocialIcons({Key? key}) : super(key: key);
+class EventCustomCardSocialIcons extends StatefulWidget {
+  final int likes;
+  const EventCustomCardSocialIcons({Key? key, required this.likes})
+      : super(key: key);
+
+  @override
+  State<StatefulWidget> createState() =>
+      _EventCustomCardSocialIcons(likes: this.likes);
+}
+
+class _EventCustomCardSocialIcons extends State<EventCustomCardSocialIcons> {
+  int likes;
+  bool _pressed = false;
+
+  _EventCustomCardSocialIcons({required this.likes});
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.only(top: 10, bottom: 15),
+      margin: const EdgeInsets.only(top: 10, bottom: 15),
       child: Row(
         children: [
+          Text('$likes',
+              style: TextStyle(
+                color: Theme.of(context).focusColor,
+              )),
           IconButton(
-            icon: Icon(
-              Icons.favorite_outline,
-              size: 28,
-              color: Theme.of(context).hintColor,
-            ),
-            onPressed: () {},
+            icon: Icon(_pressed ? Icons.favorite : Icons.favorite_outline,
+                size: 28, color: Theme.of(context).focusColor),
+            onPressed: () {
+              setState(() {
+                if (_pressed) {
+                  likes = likes - 1;
+                  _pressed = false;
+                } else {
+                  likes = likes + 1;
+                  _pressed = true;
+                }
+              });
+            },
           ),
           IconButton(
             icon: Icon(
               Icons.messenger_outline,
               size: 28,
-              color: Theme.of(context).hintColor,
+              color: Theme.of(context).focusColor,
             ),
-            onPressed: () {},
+            onPressed: () {}, //TODO enviar mensaje
           ),
           IconButton(
             icon: Icon(
               Icons.share_outlined,
               size: 28,
-              color: Theme.of(context).hintColor,
+              color: Theme.of(context).focusColor,
             ),
-            onPressed: () {},
+            onPressed: () {}, //TODO COMPARTIR
           ),
         ],
       ),
