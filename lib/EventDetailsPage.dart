@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'EventCustomCard.dart';
+import 'package:schange/DashboardPage.dart';
 
 class EventDetailsPage extends StatelessWidget {
   @override
@@ -22,7 +23,13 @@ class EventDetailsPage extends StatelessWidget {
           icon: Icon(
             Icons.arrow_back,
           ),
-          onPressed: () {},
+          onPressed: () {
+            FocusScope.of(context).unfocus(); // Que no abra el teclado al volver al login
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => const DashboardPage()),
+            );
+          },
         ),
       ),
       body: SingleChildScrollView(

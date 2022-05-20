@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'EventDetailsPage.dart';
 import 'LoginPage.dart';
 import 'HomePage.dart';
+import 'DashboardPage.dart';
 
 class RouteGenerator {
   static Route<dynamic> generateRoute(RouteSettings data) {
@@ -13,6 +14,8 @@ class RouteGenerator {
         return MaterialPageRoute(builder: (_) => HomePage());
       case '/event-details':
         return MaterialPageRoute(builder: (_) => EventDetailsPage());
+      case '/dashboard':
+        return MaterialPageRoute(builder: (_) => DashboardPage());
       default:
         return _errorRoute();
     }

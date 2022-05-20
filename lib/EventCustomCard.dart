@@ -40,7 +40,7 @@ class EventCustomCardCreatorInfo extends StatelessWidget {
             children: [
               ClipOval(
                 child: Image.network(
-                  'https://images.pexels.com/photos/1537635/pexels-photo-1537635.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940',
+                  'https://i.pravatar.cc/300',
                   height: 50,
                   width: 50,
                   fit: BoxFit.cover,
@@ -52,7 +52,7 @@ class EventCustomCardCreatorInfo extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Nombre apellidos',
+                      'Vivien Heaslip',
                       style: TextStyle(
                         color: Theme.of(context).primaryColor,
                         fontSize: 16,
