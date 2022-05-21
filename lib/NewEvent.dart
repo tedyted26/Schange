@@ -13,16 +13,29 @@ class _NewEvent extends State<NewEvent> {
   TextEditingController _titleController = TextEditingController();
   TextEditingController _descController = TextEditingController();
   TextEditingController _peopleController = TextEditingController();
+  TextEditingController _moneyController = TextEditingController();
   String picUrl = "";
+  String? category;
 
   _NewEvent() {
     _peopleController.text = "0";
+    _moneyController.text = "0";
   }
+  final dropdownItems = [
+    "Party",
+    "Restaurant",
+    "Trip",
+    "Tourism",
+    "Cinema",
+    "Other"
+  ];
+
+  DateTime date = DateTime.now();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xffF5F9FF),
+      backgroundColor: const Color(0xffF5F9FF),
       appBar: AppBar(
         title: const Text("New event"),
         leading: IconButton(
@@ -93,7 +106,7 @@ class _NewEvent extends State<NewEvent> {
                                   color: Color(0xffD6EAFF)),
                             ]),
                         child: IconButton(
-                          icon: Icon(Icons.add_a_photo),
+                          icon: const Icon(Icons.add_a_photo),
                           onPressed: () {}, //TODO Pillar foto de galeria
                         ),
                       ),
@@ -102,8 +115,8 @@ class _NewEvent extends State<NewEvent> {
                     //DESCRIPTION
                     Container(
                       alignment: Alignment.topLeft,
-                      margin: EdgeInsets.only(bottom: 15),
-                      padding: EdgeInsets.only(left: 15, right: 15),
+                      margin: const EdgeInsets.only(bottom: 15),
+                      padding: const EdgeInsets.only(left: 15, right: 15),
                       height: 110,
                       decoration: const BoxDecoration(
                         color: Color(0xffF5F9FF),
@@ -144,7 +157,6 @@ class _NewEvent extends State<NewEvent> {
                             icon: const Icon(Icons.remove),
                             color: Colors.white,
                             iconSize: 11,
-                            splashColor: Colors.black,
                             onPressed: () {
                               setState(() {
                                 int val =
@@ -172,13 +184,6 @@ class _NewEvent extends State<NewEvent> {
                             textAlign: TextAlign.center,
                             keyboardType: TextInputType.number,
                             maxLength: 3,
-                            onChanged: (text) {
-                              if (text.isEmpty) {
-                                setState(() {
-                                  _peopleController.text = "0";
-                                });
-                              }
-                            },
                             style: TextStyle(
                               fontSize: 18,
                               color: Theme.of(context).primaryColor,
@@ -203,7 +208,6 @@ class _NewEvent extends State<NewEvent> {
                             icon: const Icon(Icons.add),
                             color: Colors.white,
                             iconSize: 11,
-                            splashColor: Colors.black,
                             onPressed: () {
                               int val =
                                   int.tryParse(_peopleController.text) ?? 0;
@@ -219,24 +223,145 @@ class _NewEvent extends State<NewEvent> {
                     ),
                     //Average price per person
                     Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        CustomPairIconText(
+                        const CustomPairIconText(
                             icon: Icons.euro,
                             text: "Average price per person:"),
+                        Row(
+                          children: [
+                            Container(
+                              height: 30,
+                              width: 80,
+                              margin: const EdgeInsets.only(right: 7),
+                              alignment: Alignment.center,
+                              decoration: const BoxDecoration(
+                                color: Color(0xffF5F9FF),
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(30.0)),
+                              ),
+                              child: TextField(
+                                controller: _moneyController,
+                                textAlign: TextAlign.center,
+                                keyboardType: TextInputType.number,
+                                maxLength: 5,
+                                style: TextStyle(
+                                  fontSize: 18,
+                                  color: Theme.of(context).primaryColor,
+                                ),
+                                decoration: const InputDecoration(
+                                  counterText: "",
+                                  border: UnderlineInputBorder(
+                                    borderSide: BorderSide.none,
+                                  ),
+                                ),
+                              ),
+                            ),
+                            Icon(Icons.euro,
+                                size: 24, color: Theme.of(context).focusColor),
+                          ],
+                        ),
                       ],
                     ),
                     //Type of event
                     Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        CustomPairIconText(
+                        const CustomPairIconText(
                             icon: Icons.chair, text: "Type of event:"),
+                        Container(
+                          padding: const EdgeInsets.only(left: 10),
+                          decoration: const BoxDecoration(
+                              color: Colors.white,
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(20)),
+                              boxShadow: [
+                                BoxShadow(
+                                    blurStyle: BlurStyle.inner,
+                                    blurRadius: 2,
+                                    offset: Offset(0, -0.5),
+                                    spreadRadius: 1.5,
+                                    color: Color(0xffD6EAFF))
+                              ]),
+                          child: DropdownButton(
+                            value: category,
+                            hint: const Text("Select category "),
+                            elevation: 1,
+                            icon: Container(
+                                decoration: BoxDecoration(
+                                    color: Theme.of(context).focusColor,
+                                    borderRadius: BorderRadius.circular(50)),
+                                child: const Icon(
+                                  Icons.keyboard_arrow_down,
+                                  color: Colors.white,
+                                )),
+                            isDense: true,
+                            borderRadius: BorderRadius.circular(20),
+                            dropdownColor: Colors.white,
+                            underline: Container(),
+                            style: TextStyle(
+                                color: Theme.of(context).primaryColor),
+                            items: dropdownItems.map(buildMenuItem).toList(),
+                            onChanged: (value) {
+                              if (value is String) {
+                                setState(() {
+                                  category = value;
+                                });
+                              }
+                            },
+                          ),
+                        ),
                       ],
                     ),
+
                     //Date
                     Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        CustomPairIconText(
+                        const CustomPairIconText(
                             icon: Icons.calendar_month, text: "Date:"),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            Text(
+                              formatString(date),
+                              style: TextStyle(
+                                color: Theme.of(context).primaryColor,
+                              ),
+                            ),
+                            Container(
+                              margin: const EdgeInsets.only(left: 10),
+                              height: 30,
+                              decoration: BoxDecoration(
+                                color: Theme.of(context).focusColor,
+                                borderRadius: BorderRadius.circular(20),
+                              ),
+                              child: TextButton(
+                                child: const Text(
+                                  "Pick a date",
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                  ),
+                                ),
+                                onPressed: () {
+                                  showDatePicker(
+                                    context: context,
+                                    initialDate: date,
+                                    firstDate: DateTime(2022),
+                                    lastDate: DateTime(2122),
+                                  ).then((newDate) {
+                                    setState(() {
+                                      date = newDate!;
+                                    });
+                                  });
+                                },
+                              ),
+                            ),
+                          ],
+                        ),
                       ],
                     ),
                     //Location
@@ -249,7 +374,7 @@ class _NewEvent extends State<NewEvent> {
                     //LOCATION
                     Container(
                       height: 100,
-                      margin: EdgeInsets.only(bottom: 25),
+                      margin: const EdgeInsets.only(bottom: 25),
                       child: Text('Espacio para Ubicación'),
                     ),
                   ],
@@ -262,7 +387,13 @@ class _NewEvent extends State<NewEvent> {
             height: 50,
             child: TextButton(
               onPressed: () {
-                print(_titleController.text);
+                print("title " + _titleController.text);
+                print("img " + picUrl);
+                print("des " + _descController.text);
+                print("people " + _peopleController.text);
+                print("money " + _moneyController.text);
+                print("cat $category");
+                print("date " + formatString(date));
               },
               child: const Text(
                 "Publish event",
@@ -282,5 +413,31 @@ class _NewEvent extends State<NewEvent> {
         ],
       ),
     );
+  }
+
+  DropdownMenuItem<String> buildMenuItem(String item) {
+    return DropdownMenuItem(value: item, child: Text(item));
+  }
+
+  String formatString(DateTime date) {
+    String stringDate = "";
+    int month = date.month.toInt();
+    List<String> monthStrings = [
+      "Jan",
+      "Feb",
+      "Mar",
+      "Apr",
+      "May",
+      "Jun",
+      "Jul",
+      "Aug",
+      "Sep",
+      "Oct",
+      "Nov",
+      "Dec"
+    ];
+    stringDate += monthStrings[month - 1];
+    stringDate += " " + date.day.toString() + " " + date.year.toString();
+    return stringDate;
   }
 }
