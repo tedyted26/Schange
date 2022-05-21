@@ -70,13 +70,8 @@ class EventCustomCardCreatorInfo extends StatelessWidget {
           Row(
             children: [
               ClipOval(
-<<<<<<< HEAD
                 child: Image.network(
                   'https://i.pravatar.cc/300',
-=======
-                child: Image.asset(
-                  userdata.profilePic,
->>>>>>> 4b532fe1d4efaabfb207babbadc08469c31fc9b0
                   height: 50,
                   width: 50,
                   fit: BoxFit.cover,
@@ -88,11 +83,7 @@ class EventCustomCardCreatorInfo extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-<<<<<<< HEAD
                       'Vivien Heaslip',
-=======
-                      userdata.name,
->>>>>>> 4b532fe1d4efaabfb207babbadc08469c31fc9b0
                       style: TextStyle(
                         color: Theme.of(context).primaryColor,
                         fontSize: 16,

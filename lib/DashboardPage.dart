@@ -1,5 +1,10 @@
+import 'package:Schange/constants.dart';
 import 'package:flutter/material.dart';
 import 'EventCustomCard.dart';
+import 'package:Schange/EventCustomCard.dart';
+import 'EventCustomCard.dart';
+import 'Event.dart';
+import 'User.dart';
 
 class DashboardPage extends StatefulWidget {
   const DashboardPage({Key? key}) : super(key: key);
@@ -9,6 +14,96 @@ class DashboardPage extends StatefulWidget {
 
 class DashboardPageState extends State<DashboardPage> {
   @override
+  List<Widget> itemsData = [];
+  ScrollController controller = ScrollController();
+  bool closeTopContainer = false;
+  double topContainer = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    getPostData();
+    controller.addListener(() {
+      double value = controller.offset / 119;
+
+      setState(() {
+        topContainer = value;
+        closeTopContainer = controller.offset > 50;
+      });
+    });
+  }
+
+  void getPostData() {
+    List<dynamic> responseList = EVENTS_DATA;
+    List<Widget> listItem = [];
+    responseList.forEach((element) {
+      listItem.add(Container(
+        child: Column(
+          children: [
+            Text(
+              element['title'],
+              textAlign: TextAlign.center,
+              overflow: TextOverflow.ellipsis,
+              maxLines: 2,
+              style: TextStyle(fontSize: 24, fontWeight: FontWeight.w400),
+            ),
+            Row(
+              children: [
+                ClipOval(
+                  child: Image.network(
+                    'https://i.pravatar.cc/300',
+                    height: 50,
+                    width: 50,
+                    fit: BoxFit.cover,
+                  ),
+                ),
+                Container(
+                  margin: const EdgeInsets.only(left: 10),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Vivien Heaslip',
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 16,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                      Text(
+                        'Created on ',
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 15,
+                          fontWeight: FontWeight.w300,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+            Container(
+              margin: const EdgeInsets.only(top: 15, bottom: 15),
+              child: ClipRRect(
+                borderRadius: const BorderRadius.all(Radius.circular(20.0)),
+                child: Image.network(
+                  element['picUrl'],
+                  height: 220,
+                  width: 320,
+                  fit: BoxFit.cover,
+                ),
+              ),
+            ),
+          ],
+        ),
+      ));
+    });
+    setState(() {
+      itemsData = listItem;
+    });
+  }
+
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -18,7 +113,7 @@ class DashboardPageState extends State<DashboardPage> {
             height: 50, fit: BoxFit.cover),
         actions: <Widget>[
           IconButton(
-            icon: const Icon(Icons.message),
+            icon: const Icon(Icons.messenger_rounded),
             tooltip: 'Show Snackbar',
             onPressed: () {
               ScaffoldMessenger.of(context).showSnackBar(
@@ -54,6 +149,9 @@ class DashboardPageState extends State<DashboardPage> {
                 ),
               ],
             ),
+            const SizedBox(
+              height: 5,
+            ),
             SizedBox(
                 height: 60,
                 child: ListView.builder(
@@ -73,51 +171,13 @@ class DashboardPageState extends State<DashboardPage> {
                     color: Color(0xFFF5F9FF),
                   ),
                 )),
-            Scrollbar(
-              child: Container(
-                margin: const EdgeInsets.all(20),
-                padding: const EdgeInsets.all(15),
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.all(Radius.circular(20.0)),
-                  boxShadow: const [
-                    BoxShadow(
-                        blurRadius: 4,
-                        offset: Offset(0, 4),
-                        spreadRadius: 1,
-                        color: Color(0xffBEC1FF)),
-                  ],
-                ),
-                child: Column(
-                  children: [
-                    Text(
-                      'Titulo',
-                      textAlign: TextAlign.center,
-                      overflow: TextOverflow.ellipsis,
-                      maxLines: 2,
-                      style: TextStyle(
-                          fontSize: 24,
-                          color: Theme.of(context).primaryColor,
-                          fontWeight: FontWeight.w400),
-                    ),
-                    EventCustomCardImage(),
-                    EventCustomCardCreatorInfo(),
-                    EventCustomCardFiltersInfo(),
-                    Text(
-                      'DescripcionDescripcionDescripcionDescripcionDescripcionDescripcionDescripcionDescripcionDescripcionDescripcion',
-                      textAlign: TextAlign.left,
-                      style: TextStyle(color: Theme.of(context).primaryColor),
-                    ),
-                    EventCustomCardSocialIcons(),
-                    Container(
-                      height: 100,
-                      margin: EdgeInsets.only(bottom: 25),
-                      child: Text('Espacio para Ubicación'),
-                    ),
-                  ],
-                ),
-              ),
-            ),
+            Expanded(
+                child: ListView.builder(
+                    itemCount: itemsData.length,
+                    physics: BouncingScrollPhysics(),
+                    itemBuilder: (context, index) {
+                      return itemsData[index];
+                    }))
           ],
         ),
       ),

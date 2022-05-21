@@ -4,9 +4,6 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'EventCustomCard.dart';
-<<<<<<< HEAD
-import 'package:schange/DashboardPage.dart';
-=======
 import 'Event.dart';
 import 'User.dart';
 
@@ -33,7 +30,6 @@ class EventDetailsPage extends StatefulWidget {
   @override
   State<StatefulWidget> createState() => _EventDetailsPage();
 }
->>>>>>> 4b532fe1d4efaabfb207babbadc08469c31fc9b0
 
 class _EventDetailsPage extends State<EventDetailsPage> {
   @override
@@ -47,17 +43,7 @@ class _EventDetailsPage extends State<EventDetailsPage> {
           icon: Icon(
             Icons.arrow_back,
           ),
-<<<<<<< HEAD
-          onPressed: () {
-            FocusScope.of(context).unfocus(); // Que no abra el teclado al volver al login
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => const DashboardPage()),
-            );
-          },
-=======
           onPressed: () {}, //TODO volver a menu
->>>>>>> 4b532fe1d4efaabfb207babbadc08469c31fc9b0
         ),
       ),
       body: Column(

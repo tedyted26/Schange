@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:schange/DashboardPage.dart';
+import 'package:Schange/DashboardPage.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -13,25 +13,27 @@ class LoginPageState extends State<LoginPage> {
     return Scaffold(
       body: Container(
         color: Color(0xffffffff),
-        padding:
-        EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.08) +
+        padding: EdgeInsets.only(
+                left: MediaQuery.of(context).size.width * 0.08) +
             EdgeInsets.only(right: MediaQuery.of(context).size.width * 0.08) +
             EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.2),
         child: Column(
           children: [
             Container(
-              margin: EdgeInsets.only(bottom: MediaQuery.of(context).size.height * 0.1),
+              margin: EdgeInsets.only(
+                  bottom: MediaQuery.of(context).size.height * 0.1),
               child: Image.asset(
                 "images/logo_principal.png",
                 width: MediaQuery.of(context).size.width * 0.3,
               ),
             ),
             Container(
-              margin: EdgeInsets.only(bottom: MediaQuery.of(context).size.height * 0.03),
+              margin: EdgeInsets.only(
+                  bottom: MediaQuery.of(context).size.height * 0.03),
               decoration: BoxDecoration(
                 border: Border.all(color: Color(0xff023047)),
                 color: Color(0x44E3F2FD),
-                borderRadius:  BorderRadius.circular(15),
+                borderRadius: BorderRadius.circular(15),
               ),
               child: TextField(
                 autofocus: false,
@@ -45,54 +47,58 @@ class LoginPageState extends State<LoginPage> {
                       color: Color(0xff023047),
                     ),
                     border: InputBorder.none,
-                    contentPadding:
-                    EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.02) +
-                        EdgeInsets.only(bottom: MediaQuery.of(context).size.height * 0.02)
-                ),
+                    contentPadding: EdgeInsets.only(
+                            top: MediaQuery.of(context).size.height * 0.02) +
+                        EdgeInsets.only(
+                            bottom: MediaQuery.of(context).size.height * 0.02)),
               ),
             ),
             Container(
-              margin: EdgeInsets.only(bottom: MediaQuery.of(context).size.height * 0.03),
+              margin: EdgeInsets.only(
+                  bottom: MediaQuery.of(context).size.height * 0.03),
               decoration: BoxDecoration(
                 border: Border.all(color: Color(0xff023047)),
                 color: Color(0x44E3F2FD),
-                borderRadius:  BorderRadius.circular(15),
+                borderRadius: BorderRadius.circular(15),
               ),
               child: TextField(
                 autofocus: false,
                 style: TextStyle(color: Color(0xff023047)),
                 obscureText: true,
                 decoration: InputDecoration(
-                    hintStyle: TextStyle(color:  Color(0xff023047)),
-                    fillColor:  Color(0xff023047),
+                    hintStyle: TextStyle(color: Color(0xff023047)),
+                    fillColor: Color(0xff023047),
                     hintText: 'Password',
                     prefixIcon: Icon(
                       Icons.security_outlined,
                       color: Color(0xff023047),
                     ),
                     border: InputBorder.none,
-                    contentPadding:
-                    EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.02) +
-                        EdgeInsets.only(bottom: MediaQuery.of(context).size.height * 0.02)
-                ),
+                    contentPadding: EdgeInsets.only(
+                            top: MediaQuery.of(context).size.height * 0.02) +
+                        EdgeInsets.only(
+                            bottom: MediaQuery.of(context).size.height * 0.02)),
               ),
             ),
             Container(
-              margin: EdgeInsets.only(bottom: MediaQuery.of(context).size.height * 0.005),
+              margin: EdgeInsets.only(
+                  bottom: MediaQuery.of(context).size.height * 0.005),
               width: MediaQuery.of(context).size.height * 0.2,
-
               child: ElevatedButton(
-
                 child: const Text('LOGIN'),
-                style: ElevatedButton.styleFrom(primary:Color(0xff219EBC) , shape: new RoundedRectangleBorder(
-                  borderRadius: new BorderRadius.circular(15),
-                ),
+                style: ElevatedButton.styleFrom(
+                  primary: Color(0xff219EBC),
+                  shape: new RoundedRectangleBorder(
+                    borderRadius: new BorderRadius.circular(15),
+                  ),
                 ),
                 onPressed: () {
-                  FocusScope.of(context).unfocus(); // Que no abra el teclado al volver al login
+                  FocusScope.of(context)
+                      .unfocus(); // Que no abra el teclado al volver al login
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => const DashboardPage()),
+                    MaterialPageRoute(
+                        builder: (context) => const DashboardPage()),
                   );
                 },
               ),
@@ -100,34 +106,27 @@ class LoginPageState extends State<LoginPage> {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                RichText(text: TextSpan(
-                    text:"Forgot Password?",
-                    style: TextStyle(
-                      color: Color(0xff023047),
-                      decoration: TextDecoration.underline,
-                      fontSize: 16,
-
-                    )
-                )),
-
+                RichText(
+                    text: TextSpan(
+                        text: "Forgot Password?",
+                        style: TextStyle(
+                          color: Color(0xff023047),
+                          decoration: TextDecoration.underline,
+                          fontSize: 16,
+                        ))),
               ],
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                RichText(text: TextSpan(
-                    text:"Register Now",
-                    style: TextStyle(
-                      color: Color(0xff023047),
-                      decoration: TextDecoration.underline,
-                      fontSize: 16,
-
-                    )
-                )),
-
-
-
-
+                RichText(
+                    text: TextSpan(
+                        text: "Register Now",
+                        style: TextStyle(
+                          color: Color(0xff023047),
+                          decoration: TextDecoration.underline,
+                          fontSize: 16,
+                        ))),
               ],
             ),
           ],
@@ -148,5 +147,4 @@ class LoginPageState extends State<LoginPage> {
       ),
     );
   }
-
 }

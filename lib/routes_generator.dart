@@ -1,11 +1,9 @@
+import 'package:Schange/DashboardPage.dart';
 import 'package:flutter/material.dart';
 import 'package:Schange/NewEvent.dart';
 import 'EventDetailsPage.dart';
 import 'LoginPage.dart';
 import 'HomePage.dart';
-<<<<<<< HEAD
-import 'DashboardPage.dart';
-=======
 import 'Event.dart';
 
 //temporal
@@ -26,7 +24,6 @@ Event getEvent(int id) {
       ubication: "Mi casa",
       subscribedPeople: [4, 2, 5]);
 }
->>>>>>> 4b532fe1d4efaabfb207babbadc08469c31fc9b0
 
 class RouteGenerator {
   static Route<dynamic> generateRoute(RouteSettings data) {
@@ -34,19 +31,15 @@ class RouteGenerator {
     switch (data.name) {
       case '/login':
         return MaterialPageRoute(builder: (_) => LoginPage());
-      case '/home':
+      case '/home2':
         return MaterialPageRoute(builder: (_) => HomePage());
-      case '/event-details':
-<<<<<<< HEAD
-        return MaterialPageRoute(builder: (_) => EventDetailsPage());
-      case '/dashboard':
+      case '/home':
         return MaterialPageRoute(builder: (_) => DashboardPage());
-=======
+      case '/event-details':
         return MaterialPageRoute(
             builder: (_) => EventDetailsPage(event: getEvent(0)));
       case '/new-event':
         return MaterialPageRoute(builder: (_) => NewEvent());
->>>>>>> 4b532fe1d4efaabfb207babbadc08469c31fc9b0
       default:
         return _errorRoute();
     }
