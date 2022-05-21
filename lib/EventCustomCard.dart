@@ -29,20 +29,23 @@ class EventCustomCard extends StatelessWidget {
 
 class EventCustomCardImage extends StatelessWidget {
   final String picUrl;
+  final double marginTop;
   const EventCustomCardImage(
-      {Key? key, this.picUrl = 'images/no-image.png'}) //TODO mirar rutas
+      {Key? key,
+      this.picUrl = 'images/no-image.png',
+      this.marginTop = 15}) //TODO mirar rutas
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.only(top: 15, bottom: 15),
+      height: 220,
+      width: 320,
+      margin: EdgeInsets.only(top: marginTop, bottom: 15),
       child: ClipRRect(
         borderRadius: const BorderRadius.all(Radius.circular(20.0)),
         child: Image.asset(
           picUrl,
-          height: 220,
-          width: 320,
           fit: BoxFit.cover,
         ),
       ),
@@ -141,73 +144,77 @@ class EventCustomCardFiltersInfo extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           //NUMBER OF PEOPLE
-          Wrap(
-            crossAxisAlignment: WrapCrossAlignment.center,
-            children: [
-              Text(
-                '$maxPeople ',
-                style: TextStyle(
-                  color: Theme.of(context).primaryColor,
-                  fontWeight: FontWeight.w300,
-                ),
-              ),
-              const Icon(
-                Icons.people,
-                size: 22,
-              ),
-            ],
+          CustomPairIconText(
+            icon: Icons.people,
+            text: '$maxPeople ',
+            reversed: true,
+            size: 22,
           ),
+
           //DATE
-          Wrap(
-            crossAxisAlignment: WrapCrossAlignment.center,
-            children: [
-              Text(
-                '$date ',
-                style: TextStyle(
-                  color: Theme.of(context).primaryColor,
-                  fontWeight: FontWeight.w300,
-                ),
-              ),
-              const Icon(
-                Icons.calendar_month,
-                size: 22,
-              ),
-            ],
+          CustomPairIconText(
+            icon: Icons.calendar_month,
+            text: date,
+            reversed: true,
+            size: 22,
           ),
+
           //PRICE
-          Wrap(
-            crossAxisAlignment: WrapCrossAlignment.center,
-            children: [
-              Text(
-                '$price ',
-                style: TextStyle(
-                  color: Theme.of(context).primaryColor,
-                  fontWeight: FontWeight.w300,
-                ),
-              ),
-              const Icon(
-                Icons.euro,
-                size: 22,
-              ),
-            ],
+          CustomPairIconText(
+            icon: Icons.euro,
+            text: '$price',
+            reversed: true,
+            size: 22,
           ),
+
           //CATEGORY
-          Wrap(
-            crossAxisAlignment: WrapCrossAlignment.center,
-            children: [
-              Text(
-                '$category ',
-                style: TextStyle(
-                  color: Theme.of(context).primaryColor,
-                  fontWeight: FontWeight.w300,
-                ),
-              ),
-              const Icon(
-                Icons.chair,
-                size: 22,
-              ),
-            ],
+          CustomPairIconText(
+            icon: Icons.chair,
+            text: category,
+            reversed: true,
+            size: 22,
           ),
+        ],
+      ),
+    );
+  }
+}
+
+class CustomPairIconText extends StatelessWidget {
+  final IconData icon;
+  final String text;
+  final bool reversed;
+  final double size;
+
+  const CustomPairIconText({
+    Key? key,
+    required this.icon,
+    required this.text,
+    this.reversed = false,
+    this.size = 20,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: const EdgeInsets.only(top: 10, bottom: 10),
+      child: Row(
+        children: [
+          if (reversed)
+            Text(
+              ' ' + text + ' ',
+              style: TextStyle(
+                color: Theme.of(context).primaryColor.withOpacity(0.9),
+              ),
+            ),
+          Icon(icon, size: size),
+          if (!reversed)
+            Text(
+              ' ' + text,
+              style: TextStyle(
+                color: Theme.of(context).primaryColor.withOpacity(0.9),
+              ),
+            ),
         ],
       ),
     );

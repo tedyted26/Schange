@@ -41,7 +41,7 @@ class MyApp extends StatelessWidget {
           size: 30,
         ),
       ),
-      initialRoute: '/event-details',
+      initialRoute: '/new-event',
       onGenerateRoute: RouteGenerator.generateRoute,
     );
   }
