@@ -40,13 +40,6 @@ class DashboardPageState extends State<DashboardPage> {
       listItem.add(Container(
         child: Column(
           children: [
-            Text(
-              element['title'],
-              textAlign: TextAlign.center,
-              overflow: TextOverflow.ellipsis,
-              maxLines: 2,
-              style: TextStyle(fontSize: 24, fontWeight: FontWeight.w400),
-            ),
             Row(
               children: [
                 ClipOval(
@@ -95,6 +88,87 @@ class DashboardPageState extends State<DashboardPage> {
                 ),
               ),
             ),
+            Text(
+              element['title'],
+              textAlign: TextAlign.left,
+              overflow: TextOverflow.ellipsis,
+              maxLines: 2,
+              style: TextStyle(fontSize: 24, fontWeight: FontWeight.w400),
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                //NUMBER OF PEOPLE
+                Wrap(
+                  crossAxisAlignment: WrapCrossAlignment.center,
+                  children: [
+                    Text(
+                      'Max persona',
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontWeight: FontWeight.w300,
+                      ),
+                    ),
+                    const Icon(
+                      Icons.people,
+                      size: 22,
+                    ),
+                  ],
+                ),
+                //DATE
+                Wrap(
+                  crossAxisAlignment: WrapCrossAlignment.center,
+                  children: [
+                    Text(
+                      'Fecha',
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontWeight: FontWeight.w300,
+                      ),
+                    ),
+                    const Icon(
+                      Icons.calendar_month,
+                      size: 22,
+                    ),
+                  ],
+                ),
+                //PRICE
+                Wrap(
+                  crossAxisAlignment: WrapCrossAlignment.center,
+                  children: [
+                    Text(
+                      'Precio',
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontWeight: FontWeight.w300,
+                      ),
+                    ),
+                    const Icon(
+                      Icons.euro,
+                      size: 22,
+                    ),
+                  ],
+                ),
+                //CATEGORY
+                Wrap(
+                  crossAxisAlignment: WrapCrossAlignment.center,
+                  children: [
+                    Text(
+                      'Categoria',
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontWeight: FontWeight.w300,
+                      ),
+                    ),
+                    const Icon(
+                      Icons.chair,
+                      size: 22,
+                    ),
+                  ],
+                ),
+              ],
+            ),
+            const SizedBox(height: 35),
           ],
         ),
       ));
