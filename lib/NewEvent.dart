@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'EventCustomCard.dart';
 
 class NewEvent extends StatefulWidget {
@@ -11,7 +12,12 @@ class NewEvent extends StatefulWidget {
 class _NewEvent extends State<NewEvent> {
   TextEditingController _titleController = TextEditingController();
   TextEditingController _descController = TextEditingController();
+  TextEditingController _peopleController = TextEditingController();
   String picUrl = "";
+
+  _NewEvent() {
+    _peopleController.text = "0";
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -120,10 +126,95 @@ class _NewEvent extends State<NewEvent> {
                     //OTHER DATA
                     //Maximum numer of people
                     Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        CustomPairIconText(
+                        const CustomPairIconText(
                             icon: Icons.people,
                             text: "Maximum number of people:"),
+                        Container(
+                          height: 25,
+                          width: 25,
+                          decoration: BoxDecoration(
+                            color: Theme.of(context).focusColor,
+                            borderRadius:
+                                const BorderRadius.all(Radius.circular(50.0)),
+                          ),
+                          child: IconButton(
+                            icon: const Icon(Icons.remove),
+                            color: Colors.white,
+                            iconSize: 11,
+                            splashColor: Colors.black,
+                            onPressed: () {
+                              setState(() {
+                                int val =
+                                    int.tryParse(_peopleController.text) ?? 0;
+                                if (val <= 0) {
+                                  _peopleController.text = "0";
+                                } else {
+                                  _peopleController.text = "${val - 1}";
+                                }
+                              });
+                            },
+                          ),
+                        ),
+                        Container(
+                          height: 30,
+                          width: 50,
+                          alignment: Alignment.center,
+                          decoration: const BoxDecoration(
+                            color: Color(0xffF5F9FF),
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(30.0)),
+                          ),
+                          child: TextField(
+                            controller: _peopleController,
+                            textAlign: TextAlign.center,
+                            keyboardType: TextInputType.number,
+                            maxLength: 3,
+                            onChanged: (text) {
+                              if (text.isEmpty) {
+                                setState(() {
+                                  _peopleController.text = "0";
+                                });
+                              }
+                            },
+                            style: TextStyle(
+                              fontSize: 18,
+                              color: Theme.of(context).primaryColor,
+                            ),
+                            decoration: const InputDecoration(
+                              counterText: "",
+                              border: UnderlineInputBorder(
+                                borderSide: BorderSide.none,
+                              ),
+                            ),
+                          ),
+                        ),
+                        Container(
+                          height: 25,
+                          width: 25,
+                          decoration: BoxDecoration(
+                            color: Theme.of(context).focusColor,
+                            borderRadius:
+                                const BorderRadius.all(Radius.circular(50.0)),
+                          ),
+                          child: IconButton(
+                            icon: const Icon(Icons.add),
+                            color: Colors.white,
+                            iconSize: 11,
+                            splashColor: Colors.black,
+                            onPressed: () {
+                              int val =
+                                  int.tryParse(_peopleController.text) ?? 0;
+                              if (val >= 999) {
+                                _peopleController.text = "999";
+                              } else {
+                                _peopleController.text = "${val + 1}";
+                              }
+                            },
+                          ),
+                        ),
                       ],
                     ),
                     //Average price per person

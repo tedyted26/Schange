@@ -227,15 +227,16 @@ class EventCustomCardSocialIcons extends StatefulWidget {
       : super(key: key);
 
   @override
-  State<StatefulWidget> createState() =>
-      _EventCustomCardSocialIcons(likes: this.likes);
+  State<StatefulWidget> createState() => _EventCustomCardSocialIcons();
 }
 
 class _EventCustomCardSocialIcons extends State<EventCustomCardSocialIcons> {
-  int likes;
+  int likes = 0;
   bool _pressed = false;
 
-  _EventCustomCardSocialIcons({required this.likes});
+  _EventCustomCardSocialIcons() {
+    likes = widget.likes;
+  }
 
   @override
   Widget build(BuildContext context) {
