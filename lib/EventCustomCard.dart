@@ -3,8 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'User.dart';
 
-//temporal
-User getUserData(int idCreator) {
+User getFromJsonUserData(int idCreator) {
   //pillar de json
   User user_data = User(
       id: idCreator,
@@ -13,9 +12,7 @@ User getUserData(int idCreator) {
       mail: '',
       contacts: [],
       chats: []);
-  if (user_data.profilePic == "") {
-    user_data.profilePic = "images/no_user.png";
-  }
+
   return user_data;
 }
 
@@ -30,25 +27,54 @@ class EventCustomCard extends StatelessWidget {
 class EventCustomCardImage extends StatelessWidget {
   final String picUrl;
   final double marginTop;
+  final bool isOriginCreateEvent;
+
   const EventCustomCardImage(
       {Key? key,
-      this.picUrl = 'images/no-image.png',
-      this.marginTop = 15}) //TODO mirar rutas
+      required this.picUrl,
+      this.marginTop = 15,
+      this.isOriginCreateEvent = false})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    String pic = "";
+    if (picUrl == "" && !isOriginCreateEvent) {
+      pic = "images/no-image.png";
+    } else {
+      pic = picUrl;
+    }
     return Container(
       height: 220,
       width: 320,
       margin: EdgeInsets.only(top: marginTop, bottom: 15),
-      child: ClipRRect(
-        borderRadius: const BorderRadius.all(Radius.circular(20.0)),
-        child: Image.asset(
-          picUrl,
-          fit: BoxFit.cover,
-        ),
-      ),
+      decoration: const BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.all(Radius.circular(20.0)),
+          boxShadow: [
+            BoxShadow(
+                blurStyle: BlurStyle.inner,
+                blurRadius: 2,
+                offset: Offset(0, -0.5),
+                spreadRadius: 1.5,
+                color: Color(0xffD6EAFF)),
+          ]),
+      child: pic != ""
+          ? ClipRRect(
+              borderRadius: const BorderRadius.all(Radius.circular(20.0)),
+              child: (!pic.startsWith("images/"))
+                  // si es un archivo del emulador
+                  ? Image.file(
+                      File(pic),
+                      fit: BoxFit.cover,
+                    )
+                  // si no es un archivo del emulador
+                  : Image.asset(
+                      pic,
+                      fit: BoxFit.cover,
+                    ),
+            )
+          : Container(),
     );
   }
 }
@@ -63,7 +89,7 @@ class EventCustomCardCreatorInfo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    User userdata = getUserData(idCreator);
+    User userdata = getFromJsonUserData(idCreator);
 
     return Container(
       margin: const EdgeInsets.only(top: 5, bottom: 15),
@@ -73,12 +99,36 @@ class EventCustomCardCreatorInfo extends StatelessWidget {
           Row(
             children: [
               ClipOval(
-                child: Image.asset(
-                  userdata.profilePic,
-                  height: 50,
-                  width: 50,
-                  fit: BoxFit.cover,
-                ),
+                child: (userdata.profilePic == "" ||
+                        userdata.profilePic.startsWith("images/"))
+                    ? Image.asset(
+                        userdata.profilePic,
+                        height: 50,
+                        width: 50,
+                        fit: BoxFit.cover,
+                        errorBuilder: (context, object, stacktrace) {
+                          return Image.asset(
+                            "images/no_user.png",
+                            height: 50,
+                            width: 50,
+                            fit: BoxFit.cover,
+                          );
+                        },
+                      )
+                    : Image.file(
+                        File(userdata.profilePic),
+                        height: 50,
+                        width: 50,
+                        fit: BoxFit.cover,
+                        errorBuilder: (context, object, stacktrace) {
+                          return Image.asset(
+                            "images/no_user.png",
+                            height: 50,
+                            width: 50,
+                            fit: BoxFit.cover,
+                          );
+                        },
+                      ),
               ),
               Container(
                 margin: const EdgeInsets.only(left: 10),
@@ -234,8 +284,10 @@ class _EventCustomCardSocialIcons extends State<EventCustomCardSocialIcons> {
   int likes = 0;
   bool _pressed = false;
 
-  _EventCustomCardSocialIcons() {
+  @override
+  void initState() {
     likes = widget.likes;
+    super.initState();
   }
 
   @override

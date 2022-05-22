@@ -1,14 +1,10 @@
-// ignore_for_file: prefer_const_constructors, unnecessary_new
-
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'EventCustomCard.dart';
 import 'Event.dart';
 import 'User.dart';
 
 //temporal
-List<User> getUserList(subscribedPeopleList) {
+List<User> getFromJsonSubscribedUserList(List<int> subscribedPeopleList) {
   List<User> userList = [];
   //TODO buscarlo en JSON y devolver una lista de usuarios
   userList.add(User(
@@ -17,7 +13,7 @@ List<User> getUserList(subscribedPeopleList) {
       id: 1,
       mail: '',
       name: 'Nombre de prueba',
-      profilePic: 'images/no_user.png'));
+      profilePic: ''));
 
   return userList;
 }
@@ -34,13 +30,14 @@ class EventDetailsPage extends StatefulWidget {
 class _EventDetailsPage extends State<EventDetailsPage> {
   @override
   Widget build(BuildContext context) {
-    List<User> userList = getUserList(widget.event.subscribedPeople);
+    List<User> userList =
+        getFromJsonSubscribedUserList(widget.event.subscribedPeople);
     return Scaffold(
-      backgroundColor: Color(0xffF5F9FF),
+      backgroundColor: const Color(0xffF5F9FF),
       appBar: AppBar(
-        title: Text("Details"),
+        title: const Text("Details"),
         leading: IconButton(
-          icon: Icon(
+          icon: const Icon(
             Icons.arrow_back,
           ),
           onPressed: () {}, //TODO volver a menu
@@ -54,10 +51,10 @@ class _EventDetailsPage extends State<EventDetailsPage> {
               child: Container(
                 margin: const EdgeInsets.all(20),
                 padding: const EdgeInsets.all(15),
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.all(Radius.circular(20.0)),
-                  boxShadow: const [
+                  boxShadow: [
                     BoxShadow(
                         blurRadius: 4,
                         offset: Offset(0, 4),
@@ -77,9 +74,7 @@ class _EventDetailsPage extends State<EventDetailsPage> {
                           color: Theme.of(context).primaryColor,
                           fontWeight: FontWeight.w400),
                     ),
-                    EventCustomCardImage(
-                      picUrl: widget.event.picUrl,
-                    ),
+                    EventCustomCardImage(picUrl: widget.event.picUrl),
                     EventCustomCardCreatorInfo(
                       date: widget.event.creationDate,
                       idCreator: widget.event.creatorId,
@@ -99,6 +94,7 @@ class _EventDetailsPage extends State<EventDetailsPage> {
                       height: 100,
                       margin: EdgeInsets.only(bottom: 25),
                       child: Text('Espacio para Ubicación'),
+                      //TODO ubicacion
                     ),
                     EventDetailsSubscribedPeople(
                       maxPeople: widget.event.maxPeople,
@@ -109,7 +105,8 @@ class _EventDetailsPage extends State<EventDetailsPage> {
               ),
             ),
           ),
-          EventDetailsSubscribedButton(),
+          const EventDetailsSubscribedButton(),
+          //TODO suscribirse y cambiar de color el boton
         ],
       ),
     );
@@ -155,21 +152,28 @@ class EventDetailsSubscribedPeople extends StatelessWidget {
         ),
         for (var i in userList)
           Container(
-            margin: EdgeInsets.only(top: 10),
+            margin: const EdgeInsets.only(top: 10),
             child: Row(
               children: [
                 ClipOval(
-                  child: Image.asset(
-                    i.profilePic,
-                    height: 30,
-                    width: 30,
-                    fit: BoxFit.cover,
-                  ),
+                  child: i.profilePic != ""
+                      ? Image.asset(
+                          i.profilePic,
+                          height: 30,
+                          width: 30,
+                          fit: BoxFit.cover,
+                        )
+                      : Image.asset(
+                          "images/no_user.png",
+                          height: 30,
+                          width: 30,
+                          fit: BoxFit.cover,
+                        ),
                 ),
                 Container(
                   child: Text(i.name,
                       style: TextStyle(color: Theme.of(context).primaryColor)),
-                  margin: EdgeInsets.only(left: 10),
+                  margin: const EdgeInsets.only(left: 10),
                 ),
               ],
             ),
@@ -189,13 +193,13 @@ class EventDetailsSubscribedButton extends StatelessWidget {
       height: 50,
       child: TextButton(
         onPressed: () {},
-        child: Text(
+        child: const Text(
           "Subscribe to event",
           style: TextStyle(color: Colors.white),
         ),
         style: ButtonStyle(
           backgroundColor: MaterialStateProperty.resolveWith((states) {
-            // If the button is pressed, return green, otherwise blue
+            
             if (states.contains(MaterialState.pressed)) {
               return Theme.of(context).focusColor.withOpacity(0.9);
             }

@@ -1,6 +1,9 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'EventCustomCard.dart';
+import 'package:image_picker/image_picker.dart';
 
 class NewEvent extends StatefulWidget {
   const NewEvent({Key? key}) : super(key: key);
@@ -14,13 +17,15 @@ class _NewEvent extends State<NewEvent> {
   TextEditingController _descController = TextEditingController();
   TextEditingController _peopleController = TextEditingController();
   TextEditingController _moneyController = TextEditingController();
-  String picUrl = "";
+  File? image;
+  String picPath = "";
   String? category;
 
   _NewEvent() {
     _peopleController.text = "0";
     _moneyController.text = "0";
   }
+
   final dropdownItems = [
     "Party",
     "Restaurant",
@@ -31,6 +36,15 @@ class _NewEvent extends State<NewEvent> {
   ];
 
   DateTime date = DateTime.now();
+
+  Future pickImage() async {
+    final image = await ImagePicker().pickImage(source: ImageSource.gallery);
+    if (image != null) {
+      final imageTemporary = File(image.path);
+      this.image = imageTemporary;
+      picPath = this.image!.path;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -92,30 +106,23 @@ class _NewEvent extends State<NewEvent> {
                         ),
                       ),
                       //IMAGE
-                      if (picUrl == "") //mostrar contenedor y boton
-                        Container(
-                          margin: const EdgeInsets.only(top: 10, bottom: 15),
-                          height: 220,
-                          width: 320,
-                          decoration: const BoxDecoration(
-                              color: Colors.white,
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(20.0)),
-                              boxShadow: [
-                                BoxShadow(
-                                    blurStyle: BlurStyle.inner,
-                                    blurRadius: 2,
-                                    offset: Offset(0, -0.5),
-                                    spreadRadius: 1.5,
-                                    color: Color(0xffD6EAFF)),
-                              ]),
-                          child: IconButton(
-                            icon: const Icon(Icons.add_a_photo),
-                            onPressed: () {}, //TODO Pillar foto de galeria
+                      Stack(
+                        alignment: Alignment.center,
+                        children: [
+                          EventCustomCardImage(
+                            picUrl: picPath,
+                            marginTop: 10,
+                            isOriginCreateEvent: true,
                           ),
-                        ),
-                      if (picUrl != "")
-                        EventCustomCardImage(picUrl: picUrl, marginTop: 10),
+                          IconButton(
+                            icon: const Icon(Icons.add_a_photo),
+                            onPressed: () => setState(() {
+                              pickImage();
+                            }),
+                          ),
+                        ],
+                      ),
+
                       //DESCRIPTION
                       Container(
                         alignment: Alignment.topLeft,
@@ -403,7 +410,7 @@ class _NewEvent extends State<NewEvent> {
               child: TextButton(
                 onPressed: () {
                   print("title " + _titleController.text);
-                  print("img " + picUrl);
+                  print("img " + picPath);
                   print("des " + _descController.text);
                   print("people " + _peopleController.text);
                   print("money " + _moneyController.text);

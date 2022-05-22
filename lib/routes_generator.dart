@@ -10,7 +10,7 @@ Event getEvent(int id) {
   return Event(
       id: 0,
       title: "Dinner with Teo",
-      picUrl: "images/imagen-prueba.jpg",
+      picUrl: "",
       creatorName: "Teo",
       creatorId: 0,
       creationDate: "Jun 10",
@@ -34,7 +34,9 @@ class RouteGenerator {
         return MaterialPageRoute(builder: (_) => HomePage());
       case '/event-details':
         return MaterialPageRoute(
-            builder: (_) => EventDetailsPage(event: getEvent(0)));
+            builder: (_) => EventDetailsPage(
+                event:
+                    getEvent(0))); //TODO cambiar el evento seleccionado en home
       case '/new-event':
         return MaterialPageRoute(builder: (_) => NewEvent());
       default:
