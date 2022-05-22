@@ -348,11 +348,21 @@ class _NewEvent extends State<NewEvent> {
                                 ),
                                 onPressed: () {
                                   showDatePicker(
-                                    context: context,
-                                    initialDate: date,
-                                    firstDate: DateTime(2022),
-                                    lastDate: DateTime(2122),
-                                  ).then((newDate) {
+                                      context: context,
+                                      initialDate: date,
+                                      firstDate: DateTime.now(),
+                                      lastDate: DateTime(2122),
+                                      builder: (context, child) {
+                                        return Theme(
+                                            data: ThemeData().copyWith(
+                                              colorScheme:
+                                                  ColorScheme.highContrastLight(
+                                                primary: Theme.of(context)
+                                                    .focusColor,
+                                              ),
+                                            ),
+                                            child: child!);
+                                      }).then((newDate) {
                                     setState(() {
                                       date = newDate!;
                                     });
@@ -394,6 +404,7 @@ class _NewEvent extends State<NewEvent> {
                 print("money " + _moneyController.text);
                 print("cat $category");
                 print("date " + formatString(date));
+                //TODO LOCATION
               },
               child: const Text(
                 "Publish event",
