@@ -1,7 +1,6 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'EventCustomCard.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -60,7 +59,7 @@ class _NewEvent extends State<NewEvent> {
             icon: const Icon(
               Icons.arrow_back,
             ),
-            onPressed: () {},
+            onPressed: () {}, //TODO boton de volver
           ),
         ),
         body: Column(

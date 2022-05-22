@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:Schange/NewEvent.dart';
+import 'package:Schange/NewEventPage.dart';
 import 'EventDetailsPage.dart';
 import 'LoginPage.dart';
 import 'HomePage.dart';
 import 'Event.dart';
+import 'YourEventsPage.dart';
+import 'YourSubscriptionsPage.dart';
 
 //temporal
 Event getEvent(int id) {
@@ -39,6 +41,12 @@ class RouteGenerator {
                     getEvent(0))); //TODO cambiar el evento seleccionado en home
       case '/new-event':
         return MaterialPageRoute(builder: (_) => NewEvent());
+      case '/your-events':
+        return MaterialPageRoute(
+            builder: (_) => YourEvents(event: getEvent(0)));
+      case '/your-subscriptions':
+        return MaterialPageRoute(
+            builder: (_) => YourSubscriptions(event: getEvent(0)));
       default:
         return _errorRoute();
     }

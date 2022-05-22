@@ -2,10 +2,11 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'User.dart';
+import 'Event.dart';
 
 User getFromJsonUserData(int idCreator) {
   //pillar de json
-  User user_data = User(
+  User userdata = User(
       id: idCreator,
       name: 'Teo',
       profilePic: '',
@@ -13,26 +14,104 @@ User getFromJsonUserData(int idCreator) {
       contacts: [],
       chats: []);
 
-  return user_data;
+  return userdata;
 }
 
 class EventCustomCard extends StatelessWidget {
+  final Event event;
+  final bool isEditable;
+  const EventCustomCard(
+      {Key? key, required this.event, this.isEditable = false})
+      : super(key: key);
+
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
-    throw UnimplementedError();
+    User userInfo;
+    if (isEditable) userInfo = getFromJsonUserData(event.creatorId);
+
+    return Container(
+      margin: const EdgeInsets.all(20),
+      padding: const EdgeInsets.only(left: 15, right: 15, top: 0, bottom: 0),
+      height: 450,
+      decoration: const BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.all(Radius.circular(20.0)),
+        boxShadow: [
+          BoxShadow(
+              blurRadius: 4,
+              offset: Offset(0, 4),
+              spreadRadius: 1,
+              color: Color(0xffBEC1FF)),
+        ],
+      ),
+      child: Column(
+        children: [
+          EventCustomCardCreatorInfo(
+            date: event.creationDate,
+            idCreator: event.creatorId,
+            marginbottom: 0,
+          ),
+          EventCustomCardImage(
+            picUrl: event.picUrl,
+            marginTop: 5,
+            marginBottom: 5,
+          ),
+          EventCustomCardFiltersInfo(
+            category: event.category,
+            date: event.eventDate,
+            maxPeople: event.maxPeople,
+            price: event.price,
+            marginbottom: 0,
+          ),
+          Container(
+            alignment: Alignment.topLeft,
+            height: 70,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  event.title,
+                  overflow: TextOverflow.ellipsis,
+                  maxLines: 1,
+                  style: TextStyle(
+                      fontSize: 16,
+                      color: Theme.of(context).primaryColor,
+                      fontWeight: FontWeight.w500),
+                ),
+                Text(
+                  event.description,
+                  overflow: TextOverflow.ellipsis,
+                  maxLines: 4,
+                  style: TextStyle(color: Theme.of(context).primaryColor),
+                ),
+              ],
+            ),
+          ),
+          Align(
+            child: EventCustomCardSocialIcons(
+              likes: event.likes,
+              marginTop: 0,
+              marginBottom: 5,
+            ),
+          ),
+        ],
+      ),
+    );
   }
 }
 
 class EventCustomCardImage extends StatelessWidget {
   final String picUrl;
   final double marginTop;
+  final double marginBottom;
   final bool isOriginCreateEvent;
 
   const EventCustomCardImage(
       {Key? key,
       required this.picUrl,
       this.marginTop = 15,
+      this.marginBottom = 15,
       this.isOriginCreateEvent = false})
       : super(key: key);
 
@@ -47,7 +126,7 @@ class EventCustomCardImage extends StatelessWidget {
     return Container(
       height: 220,
       width: 320,
-      margin: EdgeInsets.only(top: marginTop, bottom: 15),
+      margin: EdgeInsets.only(top: marginTop, bottom: marginBottom),
       decoration: const BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.all(Radius.circular(20.0)),
@@ -82,41 +161,38 @@ class EventCustomCardImage extends StatelessWidget {
 class EventCustomCardCreatorInfo extends StatelessWidget {
   final int idCreator;
   final String date;
+  final double marginbottom;
 
   const EventCustomCardCreatorInfo(
-      {Key? key, required this.idCreator, required this.date})
+      {Key? key,
+      required this.idCreator,
+      required this.date,
+      this.marginbottom = 15})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     User userdata = getFromJsonUserData(idCreator);
+    String profilepic = userdata.profilePic;
+    if (profilepic == "") profilepic = "images/no_user.png";
 
     return Container(
-      margin: const EdgeInsets.only(top: 5, bottom: 15),
+      margin: EdgeInsets.only(top: 5, bottom: marginbottom),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Row(
             children: [
               ClipOval(
-                child: (userdata.profilePic == "" ||
-                        userdata.profilePic.startsWith("images/"))
+                child: profilepic.startsWith("images/")
                     ? Image.asset(
-                        userdata.profilePic,
+                        profilepic,
                         height: 50,
                         width: 50,
                         fit: BoxFit.cover,
-                        errorBuilder: (context, object, stacktrace) {
-                          return Image.asset(
-                            "images/no_user.png",
-                            height: 50,
-                            width: 50,
-                            fit: BoxFit.cover,
-                          );
-                        },
                       )
                     : Image.file(
-                        File(userdata.profilePic),
+                        File(profilepic),
                         height: 50,
                         width: 50,
                         fit: BoxFit.cover,
@@ -177,19 +253,21 @@ class EventCustomCardFiltersInfo extends StatelessWidget {
   final String date;
   final int price;
   final String category;
+  final double marginbottom;
 
   const EventCustomCardFiltersInfo(
       {Key? key,
       required this.maxPeople,
       required this.date,
       required this.price,
-      required this.category})
+      required this.category,
+      this.marginbottom = 15})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.only(bottom: 15),
+      margin: EdgeInsets.only(bottom: marginbottom),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -273,7 +351,13 @@ class CustomPairIconText extends StatelessWidget {
 
 class EventCustomCardSocialIcons extends StatefulWidget {
   final int likes;
-  const EventCustomCardSocialIcons({Key? key, required this.likes})
+  final double marginTop;
+  final double marginBottom;
+  const EventCustomCardSocialIcons(
+      {Key? key,
+      required this.likes,
+      this.marginTop = 10,
+      this.marginBottom = 15})
       : super(key: key);
 
   @override
@@ -293,7 +377,8 @@ class _EventCustomCardSocialIcons extends State<EventCustomCardSocialIcons> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.only(top: 10, bottom: 15),
+      margin:
+          EdgeInsets.only(top: widget.marginTop, bottom: widget.marginBottom),
       child: Row(
         children: [
           Text('$likes',
