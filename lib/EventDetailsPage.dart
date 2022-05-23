@@ -87,7 +87,7 @@ class _EventDetailsPage extends State<EventDetailsPage> {
                     EventCustomCardFiltersInfo(
                       category: widget.event.category,
                       date: widget.event.eventDate,
-                      maxPeople: widget.event.maxPeople,
+                      maxPeople: widget.event.maxPeople.toString(),
                       price: widget.event.price,
                     ),
                     Text(

@@ -38,137 +38,56 @@ class DashboardPageState extends State<DashboardPage> {
     List<Widget> listItem = [];
     responseList.forEach((element) {
       listItem.add(Container(
+        height: 550,
         child: Column(
           children: [
-            Row(
-              children: [
-                ClipOval(
-                  child: Image.network(
-                    'https://i.pravatar.cc/300',
-                    height: 50,
-                    width: 50,
-                    fit: BoxFit.cover,
-                  ),
-                ),
-                Container(
-                  margin: const EdgeInsets.only(left: 10),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        'Vivien Heaslip',
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 16,
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
-                      Text(
-                        'Created on ',
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 15,
-                          fontWeight: FontWeight.w300,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
             Container(
-              margin: const EdgeInsets.only(top: 15, bottom: 15),
-              child: ClipRRect(
-                borderRadius: const BorderRadius.all(Radius.circular(20.0)),
-                child: Image.network(
-                  element['picUrl'],
-                  height: 220,
-                  width: 320,
-                  fit: BoxFit.cover,
-                ),
+              margin: EdgeInsets.all(10),
+              padding: EdgeInsets.all(20),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.all(Radius.circular(20.0)),
+                boxShadow: const [
+                  BoxShadow(
+                      blurRadius: 4,
+                      offset: Offset(0, 4),
+                      spreadRadius: 1,
+                      color: Color(0xffBEC1FF)),
+                ],
               ),
-            ),
-            Text(
-              element['title'],
-              textAlign: TextAlign.left,
-              overflow: TextOverflow.ellipsis,
-              maxLines: 2,
-              style: TextStyle(fontSize: 24, fontWeight: FontWeight.w400),
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                //NUMBER OF PEOPLE
-                Wrap(
-                  crossAxisAlignment: WrapCrossAlignment.center,
-                  children: [
-                    Text(
-                      'Max persona',
-                      style: TextStyle(
+              child: Column(
+                children: [
+                  EventCustomCardCreatorInfo(
+                    date: 'Monday',
+                    idCreator: element['id'],
+                  ),
+                  EventCustomCardImage(
+                    picUrl: element['picUrl'],
+                  ),
+                  EventCustomCardFiltersInfo(
+                    category: element['category'],
+                    date: 'Monday',
+                    maxPeople: element['max_people'].toString(),
+                    price: element['price'],
+                  ),
+                  Text(
+                    element['title'],
+                    textAlign: TextAlign.left,
+                    overflow: TextOverflow.ellipsis,
+                    maxLines: 2,
+                    style: TextStyle(
+                        fontSize: 24,
                         color: Colors.black,
-                        fontWeight: FontWeight.w300,
-                      ),
-                    ),
-                    const Icon(
-                      Icons.people,
-                      size: 22,
-                    ),
-                  ],
-                ),
-                //DATE
-                Wrap(
-                  crossAxisAlignment: WrapCrossAlignment.center,
-                  children: [
-                    Text(
-                      'Fecha',
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontWeight: FontWeight.w300,
-                      ),
-                    ),
-                    const Icon(
-                      Icons.calendar_month,
-                      size: 22,
-                    ),
-                  ],
-                ),
-                //PRICE
-                Wrap(
-                  crossAxisAlignment: WrapCrossAlignment.center,
-                  children: [
-                    Text(
-                      'Precio',
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontWeight: FontWeight.w300,
-                      ),
-                    ),
-                    const Icon(
-                      Icons.euro,
-                      size: 22,
-                    ),
-                  ],
-                ),
-                //CATEGORY
-                Wrap(
-                  crossAxisAlignment: WrapCrossAlignment.center,
-                  children: [
-                    Text(
-                      'Categoria',
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontWeight: FontWeight.w300,
-                      ),
-                    ),
-                    const Icon(
-                      Icons.chair,
-                      size: 22,
-                    ),
-                  ],
-                ),
-              ],
-            ),
-            const SizedBox(height: 35),
+                        fontWeight: FontWeight.w400),
+                  ),
+                  Text(
+                    'Bring your tacos hunger!',
+                    style: TextStyle(color: Colors.black),
+                  ),
+                  EventCustomCardSocialIcons(likes: 10),
+                ],
+              ),
+            )
           ],
         ),
       ));
@@ -267,6 +186,31 @@ class DashboardPageState extends State<DashboardPage> {
             ),
             new ListTile(
                 title: new Text('CREATE EVENT'),
+                onTap: () {
+                  Navigator.of(context).pop();
+                }),
+            new ListTile(
+                title: new Text("MY EVENTS"),
+                onTap: () {
+                  Navigator.of(context).pop();
+                }),
+            new ListTile(
+                title: new Text("FRIENDS"),
+                onTap: () {
+                  Navigator.of(context).pop();
+                }),
+            new ListTile(
+                title: new Text("TIPS"),
+                onTap: () {
+                  Navigator.of(context).pop();
+                }),
+            new ListTile(
+                title: new Text("PREFERNCES"),
+                onTap: () {
+                  Navigator.of(context).pop();
+                }),
+            new ListTile(
+                title: new Text("LOGOUT"),
                 onTap: () {
                   Navigator.of(context).pop();
                 })

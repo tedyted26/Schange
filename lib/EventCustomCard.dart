@@ -39,7 +39,7 @@ class EventCustomCardImage extends StatelessWidget {
       margin: const EdgeInsets.only(top: 15, bottom: 15),
       child: ClipRRect(
         borderRadius: const BorderRadius.all(Radius.circular(20.0)),
-        child: Image.asset(
+        child: Image.network(
           picUrl,
           height: 220,
           width: 320,
@@ -120,7 +120,7 @@ class EventCustomCardCreatorInfo extends StatelessWidget {
 
 //finiquitado
 class EventCustomCardFiltersInfo extends StatelessWidget {
-  final int maxPeople;
+  final String maxPeople;
   final String date;
   final int price;
   final String category;
