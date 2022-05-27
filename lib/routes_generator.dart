@@ -6,6 +6,7 @@ import 'HomePage.dart';
 import 'Event.dart';
 import 'YourEventsPage.dart';
 import 'YourSubscriptionsPage.dart';
+import 'EditEventPage.dart';
 
 //temporal
 Event getEvent(int id) {
@@ -35,18 +36,31 @@ class RouteGenerator {
       case '/home':
         return MaterialPageRoute(builder: (_) => HomePage());
       case '/event-details':
-        return MaterialPageRoute(
-            builder: (_) => EventDetailsPage(
-                event:
-                    getEvent(0))); //TODO cambiar el evento seleccionado en home
+        //comprobar si el argumento pasado es de tipo evento
+        if (args is Event) {
+          return MaterialPageRoute(
+              builder: (_) => EventDetailsPage(
+                  event: getEvent(
+                      0))); //TODO cambiar el evento seleccionado en home
+          // En home seria: onPressed(): (){
+          // Navigator.of(context).pushNamed('/event-details', data: objetoEvento)}
+        }
+        //si no lo es aparece una pagina de error
+        else {
+          return _errorRoute();
+        }
       case '/new-event':
         return MaterialPageRoute(builder: (_) => NewEvent());
       case '/your-events':
         return MaterialPageRoute(
-            builder: (_) => YourEvents(event: getEvent(0)));
+            builder: (_) =>
+                YourEvents(events: [getEvent(0), getEvent(0), getEvent(0)]));
       case '/your-subscriptions':
         return MaterialPageRoute(
-            builder: (_) => YourSubscriptions(event: getEvent(0)));
+            builder: (_) => YourSubscriptions(
+                events: [getEvent(0), getEvent(0), getEvent(0)]));
+      case '/edit-event':
+        return MaterialPageRoute(builder: (_) => EditEvent(event: getEvent(0)));
       default:
         return _errorRoute();
     }

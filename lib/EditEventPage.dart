@@ -2,18 +2,25 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
-import 'package:latlong2/latlong.dart';
 import 'EventCustomCard.dart';
 import 'package:image_picker/image_picker.dart';
+import 'Event.dart';
+import "package:latlong2/latlong.dart";
 
-class NewEvent extends StatefulWidget {
-  const NewEvent({Key? key}) : super(key: key);
-
-  @override
-  State<StatefulWidget> createState() => _NewEvent();
+getYourEventFromJson() {
+  //TODO
 }
 
-class _NewEvent extends State<NewEvent> {
+class EditEvent extends StatefulWidget {
+  Event event;
+
+  EditEvent({Key? key, required this.event}) : super(key: key);
+
+  @override
+  State<StatefulWidget> createState() => _EditEvent();
+}
+
+class _EditEvent extends State<EditEvent> {
   TextEditingController _titleController = TextEditingController();
   TextEditingController _descController = TextEditingController();
   TextEditingController _peopleController = TextEditingController();
@@ -22,13 +29,6 @@ class _NewEvent extends State<NewEvent> {
   File? image;
   String picPath = "";
   String? category;
-  double _lat = 40.37;
-  double _long = -3.91;
-
-  _NewEvent() {
-    _peopleController.text = "0";
-    _moneyController.text = "0";
-  }
 
   final dropdownItems = [
     "Party",
@@ -52,6 +52,14 @@ class _NewEvent extends State<NewEvent> {
 
   @override
   Widget build(BuildContext context) {
+    _titleController.text = widget.event.title;
+    _descController.text = widget.event.description;
+    _peopleController.text = widget.event.maxPeople.toString();
+    _moneyController.text = widget.event.price.toString();
+    double _lat = 40.37;
+    double _long = -3.91;
+
+    picPath = widget.event.picUrl;
     return GestureDetector(
       onTap: () {
         FocusManager.instance.primaryFocus?.unfocus();
@@ -59,12 +67,15 @@ class _NewEvent extends State<NewEvent> {
       child: Scaffold(
         backgroundColor: const Color(0xffF5F9FF),
         appBar: AppBar(
-          title: const Text("New event"),
+          title: const Text("Edit event"),
           leading: IconButton(
             icon: const Icon(
               Icons.arrow_back,
             ),
-            onPressed: () {}, //TODO boton de volver
+            onPressed: () {
+              Navigator.of(context)
+                  .pushNamed('/your-events', arguments: getYourEventFromJson());
+            },
           ),
         ),
         body: Column(
@@ -392,7 +403,7 @@ class _NewEvent extends State<NewEvent> {
                       ),
                       //Location
                       Row(
-                        children: [
+                        children: const [
                           CustomPairIconText(
                               icon: Icons.location_on, text: "Location:"),
                         ],
@@ -457,12 +468,11 @@ class _NewEvent extends State<NewEvent> {
               child: TextButton(
                 onPressed: () {},
                 child: const Text(
-                  "Publish event",
+                  "Save event",
                   style: TextStyle(color: Colors.white),
                 ),
                 style: ButtonStyle(
                   backgroundColor: MaterialStateProperty.resolveWith((states) {
-                    // If the button is pressed, return green, otherwise blue
                     if (states.contains(MaterialState.pressed)) {
                       return Theme.of(context).focusColor.withOpacity(0.9);
                     }

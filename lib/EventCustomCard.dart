@@ -20,8 +20,16 @@ User getFromJsonUserData(int idCreator) {
 class EventCustomCard extends StatelessWidget {
   final Event event;
   final bool isEditable;
+  final bool isSubscribed;
+  final double margintop;
+  final double marginbottom;
   const EventCustomCard(
-      {Key? key, required this.event, this.isEditable = false})
+      {Key? key,
+      required this.event,
+      this.isEditable = false,
+      this.isSubscribed = false,
+      this.margintop = 20,
+      this.marginbottom = 20})
       : super(key: key);
 
   @override
@@ -29,73 +37,93 @@ class EventCustomCard extends StatelessWidget {
     User userInfo;
     if (isEditable) userInfo = getFromJsonUserData(event.creatorId);
 
-    return Container(
-      margin: const EdgeInsets.all(20),
-      padding: const EdgeInsets.only(left: 15, right: 15, top: 0, bottom: 0),
-      height: 450,
-      decoration: const BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.all(Radius.circular(20.0)),
-        boxShadow: [
-          BoxShadow(
-              blurRadius: 4,
-              offset: Offset(0, 4),
-              spreadRadius: 1,
-              color: Color(0xffBEC1FF)),
-        ],
-      ),
-      child: Column(
-        children: [
-          EventCustomCardCreatorInfo(
-            date: event.creationDate,
-            idCreator: event.creatorId,
-            marginbottom: 0,
-          ),
-          EventCustomCardImage(
-            picUrl: event.picUrl,
-            marginTop: 5,
-            marginBottom: 5,
-          ),
-          EventCustomCardFiltersInfo(
-            category: event.category,
-            date: event.eventDate,
-            maxPeople: event.maxPeople,
-            price: event.price,
-            marginbottom: 0,
-          ),
-          Container(
-            alignment: Alignment.topLeft,
-            height: 70,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  event.title,
-                  overflow: TextOverflow.ellipsis,
-                  maxLines: 1,
-                  style: TextStyle(
-                      fontSize: 16,
-                      color: Theme.of(context).primaryColor,
-                      fontWeight: FontWeight.w500),
-                ),
-                Text(
-                  event.description,
-                  overflow: TextOverflow.ellipsis,
-                  maxLines: 4,
-                  style: TextStyle(color: Theme.of(context).primaryColor),
-                ),
-              ],
-            ),
-          ),
-          Align(
-            child: EventCustomCardSocialIcons(
-              likes: event.likes,
-              marginTop: 0,
+    return GestureDetector(
+      onTap: () {
+        Navigator.of(context).pushNamed('/event-details', arguments: event);
+      },
+      child: Container(
+        margin: EdgeInsets.only(
+            left: 20, right: 20, top: margintop, bottom: marginbottom),
+        padding: const EdgeInsets.only(left: 15, right: 15, top: 0, bottom: 0),
+        height: 450,
+        decoration: const BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.all(Radius.circular(20.0)),
+          boxShadow: [
+            BoxShadow(
+                blurRadius: 4,
+                offset: Offset(0, 4),
+                spreadRadius: 1,
+                color: Color(0xffBEC1FF)),
+          ],
+        ),
+        child: Column(
+          children: [
+            isEditable
+                ? Container(
+                    margin: const EdgeInsets.only(
+                        top: 13, bottom: 10, left: 5, right: 5),
+                    child: Container(
+                        alignment: Alignment.centerLeft,
+                        margin: const EdgeInsets.only(left: 5, right: 5),
+                        child: Text(
+                          "Created on ${event.creationDate}",
+                          style:
+                              TextStyle(color: Theme.of(context).primaryColor),
+                        )))
+                : EventCustomCardCreatorInfo(
+                    date: event.creationDate,
+                    idCreator: event.creatorId,
+                    marginbottom: 0,
+                  ),
+            EventCustomCardImage(
+              picUrl: event.picUrl,
+              marginTop: 5,
               marginBottom: 5,
             ),
-          ),
-        ],
+            EventCustomCardFiltersInfo(
+              category: event.category,
+              date: event.eventDate,
+              maxPeople: event.maxPeople,
+              price: event.price,
+              marginbottom: 0,
+            ),
+            Container(
+              alignment: Alignment.topLeft,
+              height: 70,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    event.title,
+                    overflow: TextOverflow.ellipsis,
+                    maxLines: 1,
+                    style: TextStyle(
+                        fontSize: 16,
+                        color: Theme.of(context).primaryColor,
+                        fontWeight: FontWeight.w500),
+                  ),
+                  Text(
+                    event.description,
+                    overflow: TextOverflow.ellipsis,
+                    maxLines: 4,
+                    style: TextStyle(color: Theme.of(context).primaryColor),
+                  ),
+                ],
+              ),
+            ),
+            Align(
+              child: EventCustomCardSocialIcons(
+                likes: event.likes,
+                isEditable: isEditable,
+                isSubscribed: isSubscribed,
+                marginTop: 0,
+                marginBottom: 5,
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -160,6 +188,7 @@ class EventCustomCardImage extends StatelessWidget {
 
 class EventCustomCardCreatorInfo extends StatelessWidget {
   final int idCreator;
+  final bool showButton;
   final String date;
   final double marginbottom;
 
@@ -167,6 +196,7 @@ class EventCustomCardCreatorInfo extends StatelessWidget {
       {Key? key,
       required this.idCreator,
       required this.date,
+      this.showButton = true,
       this.marginbottom = 15})
       : super(key: key);
 
@@ -232,15 +262,17 @@ class EventCustomCardCreatorInfo extends StatelessWidget {
               ),
             ],
           ),
-          IconButton(
-            icon: const Icon(
-              Icons.person_add_sharp,
-              size: 30,
-            ),
-            onPressed:
-                () {}, //TODO añadir el id del usuario creador a la lista del
-            //usuario loggeado y hacer que el boton desaparezca
-          ),
+          showButton
+              ? IconButton(
+                  icon: const Icon(
+                    Icons.message,
+                    size: 30,
+                  ),
+                  onPressed:
+                      () {}, //TODO añadir el id del usuario creador a la lista del
+                  //usuario loggeado y hacer que el boton desaparezca
+                )
+              : Container(),
         ],
       ),
     );
@@ -351,11 +383,15 @@ class CustomPairIconText extends StatelessWidget {
 
 class EventCustomCardSocialIcons extends StatefulWidget {
   final int likes;
+  final bool isEditable;
+  final bool isSubscribed;
   final double marginTop;
   final double marginBottom;
   const EventCustomCardSocialIcons(
       {Key? key,
       required this.likes,
+      this.isEditable = false,
+      this.isSubscribed = false,
       this.marginTop = 10,
       this.marginBottom = 15})
       : super(key: key);
@@ -377,8 +413,8 @@ class _EventCustomCardSocialIcons extends State<EventCustomCardSocialIcons> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin:
-          EdgeInsets.only(top: widget.marginTop, bottom: widget.marginBottom),
+      margin: EdgeInsets.only(
+          top: widget.marginTop, bottom: widget.marginBottom, left: 4),
       child: Row(
         children: [
           Text('$likes',
@@ -402,20 +438,45 @@ class _EventCustomCardSocialIcons extends State<EventCustomCardSocialIcons> {
           ),
           IconButton(
             icon: Icon(
-              Icons.messenger_outline,
-              size: 28,
-              color: Theme.of(context).focusColor,
-            ),
-            onPressed: () {}, //TODO enviar mensaje
-          ),
-          IconButton(
-            icon: Icon(
-              Icons.share_outlined,
+              Icons.share,
               size: 28,
               color: Theme.of(context).focusColor,
             ),
             onPressed: () {}, //TODO COMPARTIR
           ),
+          widget.isEditable
+              ? IconButton(
+                  icon: Icon(
+                    Icons.edit,
+                    color: Theme.of(context).focusColor,
+                  ),
+                  onPressed: () {},
+                )
+              : Container(),
+          widget.isEditable
+              ? IconButton(
+                  onPressed: () {},
+                  icon: Icon(
+                    Icons.delete,
+                    color: Theme.of(context).errorColor,
+                  ))
+              : Container(),
+          widget.isSubscribed
+              ? Align(
+                  alignment: Alignment.centerRight,
+                  widthFactor: 2.2,
+                  child: Container(
+                      height: 30,
+                      decoration: BoxDecoration(
+                          color: Theme.of(context).errorColor,
+                          borderRadius: BorderRadius.all(Radius.circular(20))),
+                      child: TextButton(
+                          onPressed: () {}, //TODO eliminar de la bbdd
+                          child: Text(
+                            "Unsubscribe",
+                            style: TextStyle(color: Colors.white),
+                          ))))
+              : Container(),
         ],
       ),
     );

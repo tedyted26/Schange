@@ -3,8 +3,8 @@ import 'package:Schange/EventCustomCard.dart';
 import 'package:flutter/material.dart';
 
 class YourSubscriptions extends StatefulWidget {
-  final Event event;
-  const YourSubscriptions({Key? key, required this.event}) : super(key: key);
+  final List<Event> events;
+  const YourSubscriptions({Key? key, required this.events}) : super(key: key);
 
   @override
   State<YourSubscriptions> createState() => _YourSubscriptionsState();
@@ -13,6 +13,7 @@ class YourSubscriptions extends StatefulWidget {
 class _YourSubscriptionsState extends State<YourSubscriptions> {
   @override
   Widget build(BuildContext context) {
+    List<EventCustomCard> listofevents = iterateEvents(widget.events);
     return Scaffold(
       backgroundColor: const Color(0xffF5F9FF),
       appBar: AppBar(
@@ -24,10 +25,34 @@ class _YourSubscriptionsState extends State<YourSubscriptions> {
           onPressed: () {}, //TODO boton de volver
         ),
       ),
-      //FIXME ESTO VA DENTRO DE UN SCROLLABLE
-      body: EventCustomCard(
-        event: widget.event,
-      ),
+      body: ListView(children: [
+        for (int i = 0; i < listofevents.length; i++) listofevents[i]
+      ]),
     );
   }
+}
+
+List<EventCustomCard> iterateEvents(List<Event> events) {
+  List<EventCustomCard> listOfEvents = [];
+  for (int i = 0; i < events.length; i++) {
+    if (i == 0) {
+      listOfEvents.add(EventCustomCard(
+        event: events[i],
+        isSubscribed: true,
+        marginbottom: 5,
+      ));
+    } else if (i == events.length - 1) {
+      listOfEvents.add(EventCustomCard(
+        event: events[i],
+        isSubscribed: true,
+        margintop: 5,
+      ));
+    } else {
+      listOfEvents.add(EventCustomCard(
+        event: events[i],
+        isSubscribed: true,
+      ));
+    }
+  }
+  return listOfEvents;
 }

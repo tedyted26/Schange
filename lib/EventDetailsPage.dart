@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_map/flutter_map.dart';
+import 'package:latlong2/latlong.dart';
 import 'EventCustomCard.dart';
 import 'Event.dart';
 import 'User.dart';
@@ -21,17 +23,26 @@ List<User> getFromJsonSubscribedUserList(List<int> subscribedPeopleList) {
 class EventDetailsPage extends StatefulWidget {
   final Event event;
 
-  const EventDetailsPage({Key? key, required this.event}) : super(key: key);
+  const EventDetailsPage({
+    Key? key,
+    required this.event,
+  }) : super(key: key);
 
   @override
   State<StatefulWidget> createState() => _EventDetailsPage();
 }
 
 class _EventDetailsPage extends State<EventDetailsPage> {
+  bool isEditable = true;
+  bool isSubscribed = false;
+  int i = 0;
   @override
   Widget build(BuildContext context) {
     List<User> userList =
         getFromJsonSubscribedUserList(widget.event.subscribedPeople);
+    double _lat = 40.37;
+    double _long = -3.91;
+    //buscar el id del evento en el json para ver en que lista esta para devolverlo a esa pantalla con todos sus eventos hermanos
     return Scaffold(
       backgroundColor: const Color(0xffF5F9FF),
       appBar: AppBar(
@@ -40,8 +51,24 @@ class _EventDetailsPage extends State<EventDetailsPage> {
           icon: const Icon(
             Icons.arrow_back,
           ),
-          onPressed: () {}, //TODO volver a menu
+          onPressed: () {
+            //if(widget.isEditable) Navigator.of(context).pushNamed('/your-events', arguments: objetoEvento)
+          }, //TODO volver a menu
         ),
+        actions: [
+          isEditable
+              ? IconButton(
+                  onPressed: () {
+                    Navigator.of(context)
+                        .pushNamed('/edit-event', arguments: widget.event);
+                  },
+                  icon: Icon(
+                    Icons.edit,
+                    color: Theme.of(context).errorColor,
+                  ),
+                )
+              : Container(),
+        ],
       ),
       body: Column(
         children: [
@@ -78,6 +105,7 @@ class _EventDetailsPage extends State<EventDetailsPage> {
                     EventCustomCardCreatorInfo(
                       date: widget.event.creationDate,
                       idCreator: widget.event.creatorId,
+                      showButton: !isEditable,
                     ),
                     EventCustomCardFiltersInfo(
                       category: widget.event.category,
@@ -85,16 +113,60 @@ class _EventDetailsPage extends State<EventDetailsPage> {
                       maxPeople: widget.event.maxPeople,
                       price: widget.event.price,
                     ),
-                    Text(
-                      widget.event.description,
-                      style: TextStyle(color: Theme.of(context).primaryColor),
+                    Container(
+                      alignment: Alignment.topLeft,
+                      child: Text(
+                        widget.event.description,
+                        style: TextStyle(color: Theme.of(context).primaryColor),
+                      ),
                     ),
                     EventCustomCardSocialIcons(likes: widget.event.likes),
-                    Container(
-                      height: 100,
-                      margin: EdgeInsets.only(bottom: 25),
-                      child: Text('Espacio para Ubicación'),
-                      //TODO ubicacion
+                    Stack(
+                      alignment: Alignment.center,
+                      children: [
+                        Container(
+                          height: 220,
+                          width: 320,
+                          margin: const EdgeInsets.only(top: 0, bottom: 30),
+                          decoration: const BoxDecoration(
+                              color: Colors.white,
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(20.0)),
+                              boxShadow: [
+                                BoxShadow(
+                                    blurStyle: BlurStyle.inner,
+                                    blurRadius: 2,
+                                    offset: Offset(0, -0.5),
+                                    spreadRadius: 1.5,
+                                    color: Color(0xffD6EAFF)),
+                              ]),
+                          child: ClipRRect(
+                            borderRadius:
+                                const BorderRadius.all(Radius.circular(20.0)),
+                            child: FlutterMap(
+                                options: MapOptions(
+                                    center: LatLng(_lat, _long), zoom: 12),
+                                layers: [
+                                  TileLayerOptions(
+                                    urlTemplate:
+                                        "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+                                    subdomains: ['a', 'b', 'c'],
+                                  ),
+                                  MarkerLayerOptions(
+                                    markers: [
+                                      Marker(
+                                        point: LatLng(_lat, _long),
+                                        builder: (ctx) => Icon(
+                                          Icons.location_on,
+                                          color: Theme.of(context).focusColor,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ]),
+                          ),
+                        ),
+                      ],
                     ),
                     EventDetailsSubscribedPeople(
                       maxPeople: widget.event.maxPeople,
@@ -105,8 +177,10 @@ class _EventDetailsPage extends State<EventDetailsPage> {
               ),
             ),
           ),
-          const EventDetailsSubscribedButton(),
-          //TODO suscribirse y cambiar de color el boton
+          EventDetailsSubscribedButton(
+            isEditable: isEditable,
+            isSubscribed: isSubscribed,
+          ),
         ],
       ),
     );
@@ -183,27 +257,67 @@ class EventDetailsSubscribedPeople extends StatelessWidget {
   }
 }
 
-class EventDetailsSubscribedButton extends StatelessWidget {
-  const EventDetailsSubscribedButton({Key? key}) : super(key: key);
+class EventDetailsSubscribedButton extends StatefulWidget {
+  bool isEditable;
+  bool isSubscribed;
+
+  EventDetailsSubscribedButton({
+    Key? key,
+    this.isEditable = false,
+    this.isSubscribed = false,
+  }) : super(key: key);
 
   @override
+  State<StatefulWidget> createState() => _EventDetailsSubscribedButton();
+}
+
+class _EventDetailsSubscribedButton
+    extends State<EventDetailsSubscribedButton> {
+  @override
   Widget build(BuildContext context) {
+    String customText = "Subscribe to event";
+    if (widget.isEditable) {
+      customText = "Delete event";
+    } else if (widget.isSubscribed) {
+      customText = "Unsubscribe";
+    }
     return SizedBox(
       width: double.infinity,
       height: 50,
       child: TextButton(
-        onPressed: () {},
-        child: const Text(
-          "Subscribe to event",
-          style: TextStyle(color: Colors.white),
+        onPressed: () {
+          setState(() {
+            if (widget.isSubscribed) {
+              widget.isSubscribed = false;
+            } else if (widget.isEditable) {
+              //TODO navegar a las suscripciones
+            } else {
+              widget.isSubscribed = true;
+            }
+          });
+        },
+        child: Text(
+          customText,
+          style: const TextStyle(color: Colors.white),
         ),
         style: ButtonStyle(
           backgroundColor: MaterialStateProperty.resolveWith((states) {
-            
             if (states.contains(MaterialState.pressed)) {
-              return Theme.of(context).focusColor.withOpacity(0.9);
+              if (widget.isEditable) {
+                return Theme.of(context).errorColor.withOpacity(0.9);
+              } else if (widget.isSubscribed) {
+                return Theme.of(context).errorColor.withOpacity(0.9);
+              } else {
+                return Theme.of(context).focusColor.withOpacity(0.9);
+              }
             }
-            return Theme.of(context).focusColor;
+            if (widget.isEditable) {
+              return Theme.of(context).errorColor;
+            } else if (widget.isSubscribed) {
+              return Theme.of(context).errorColor;
+            } else {
+              return Theme.of(context).focusColor;
+            }
           }),
         ),
       ),
