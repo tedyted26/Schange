@@ -11,6 +11,7 @@ User getFromJsonUserData(int idCreator) {
       name: 'Teo',
       profilePic: '',
       mail: '',
+      password: '',
       contacts: [],
       chats: []);
 

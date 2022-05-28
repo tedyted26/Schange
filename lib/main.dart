@@ -41,9 +41,8 @@ class MyApp extends StatelessWidget {
           size: 30,
         ),
       ),
-      initialRoute: '/new-event',
+      initialRoute: '/your-subscriptions',
       onGenerateRoute: RouteGenerator.generateRoute,
     );
   }
 }
-

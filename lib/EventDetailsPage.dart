@@ -6,7 +6,7 @@ import 'Event.dart';
 import 'User.dart';
 
 //temporal
-List<User> getFromJsonSubscribedUserList(List<int> subscribedPeopleList) {
+List<User> getFromJsonSubscribedUserList(List<dynamic> subscribedPeopleList) {
   List<User> userList = [];
   //TODO buscarlo en JSON y devolver una lista de usuarios
   userList.add(User(
@@ -14,6 +14,7 @@ List<User> getFromJsonSubscribedUserList(List<int> subscribedPeopleList) {
       contacts: [],
       id: 1,
       mail: '',
+      password: '',
       name: 'Nombre de prueba',
       profilePic: ''));
 

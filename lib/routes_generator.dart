@@ -1,5 +1,8 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:Schange/NewEventPage.dart';
+import 'package:flutter/services.dart';
 import 'EventDetailsPage.dart';
 import 'LoginPage.dart';
 import 'HomePage.dart';
@@ -7,23 +10,24 @@ import 'Event.dart';
 import 'YourEventsPage.dart';
 import 'YourSubscriptionsPage.dart';
 import 'EditEventPage.dart';
+import 'User.dart';
 
 //temporal
 Event getEvent(int id) {
   return Event(
       id: 0,
-      title: "Dinner with Teo",
+      title: "Evento de variable",
       picUrl: "",
-      creatorName: "Teo",
       creatorId: 0,
       creationDate: "Jun 10",
       maxPeople: 5,
       eventDate: "Jun 30",
       price: 20,
       category: "Dinner",
-      description: "Me gusta comer",
+      description: "No vengo de json",
       likes: 4,
-      ubication: "Mi casa",
+      latitude: 0,
+      longitude: 0,
       subscribedPeople: [4, 2, 5]);
 }
 
@@ -39,26 +43,25 @@ class RouteGenerator {
         //comprobar si el argumento pasado es de tipo evento
         if (args is Event) {
           return MaterialPageRoute(
-              builder: (_) => EventDetailsPage(
-                  event: getEvent(
-                      0))); //TODO cambiar el evento seleccionado en home
+              builder: (_) => EventDetailsPage(event: getEvent(0)));
+          //TODO cambiar el evento seleccionado en home
           // En home seria: onPressed(): (){
-          // Navigator.of(context).pushNamed('/event-details', data: objetoEvento)}
+          // Navigator.of(context).pushNamed('/event-details', arguments: objetoEvento)}
         }
         //si no lo es aparece una pagina de error
         else {
           return _errorRoute();
         }
       case '/new-event':
-        return MaterialPageRoute(builder: (_) => NewEvent());
+        return MaterialPageRoute(builder: (_) => const NewEvent());
+
+      //FIXME: your events y subscribed events tiene que recibir el id por parametro
       case '/your-events':
-        return MaterialPageRoute(
-            builder: (_) =>
-                YourEvents(events: [getEvent(0), getEvent(0), getEvent(0)]));
+        return MaterialPageRoute(builder: (_) => YourEvents(userId: 0));
+
       case '/your-subscriptions':
-        return MaterialPageRoute(
-            builder: (_) => YourSubscriptions(
-                events: [getEvent(0), getEvent(0), getEvent(0)]));
+        return MaterialPageRoute(builder: (_) => YourSubscriptions(userId: 0));
+
       case '/edit-event':
         return MaterialPageRoute(builder: (_) => EditEvent(event: getEvent(0)));
       default:

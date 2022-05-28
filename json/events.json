@@ -1,0 +1,19 @@
+[
+    {
+        "id": 0,
+        "title": "Dinner with Teo",
+        "picUrl": "",
+        "creatorId": 1,
+        "creationDate": "Jun 10",
+        "maxPeople": 5,
+        "eventDate": "Jun 30",
+        "price": 20,
+        "category": "Dinner",
+        "description": "AAAAAA",
+        "likes": 5,
+        "latitude": 0.0,
+        "longitude": 0.0,
+        "subscribedPeople": [0, 2, 5]
+    }
+    
+]
