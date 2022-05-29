@@ -14,16 +14,16 @@ class NewEvent extends StatefulWidget {
 }
 
 class _NewEvent extends State<NewEvent> {
-  TextEditingController _titleController = TextEditingController();
-  TextEditingController _descController = TextEditingController();
-  TextEditingController _peopleController = TextEditingController();
-  TextEditingController _moneyController = TextEditingController();
-  MapController _mapController = MapController();
+  final TextEditingController _titleController = TextEditingController();
+  final TextEditingController _descController = TextEditingController();
+  final TextEditingController _peopleController = TextEditingController();
+  final TextEditingController _moneyController = TextEditingController();
+  final MapController _mapController = MapController();
   File? image;
   String picPath = "";
   String? category;
-  double _lat = 40.37;
-  double _long = -3.91;
+  final double _lat = 40.37;
+  final double _long = -3.91;
 
   _NewEvent() {
     _peopleController.text = "0";
@@ -392,7 +392,7 @@ class _NewEvent extends State<NewEvent> {
                       ),
                       //Location
                       Row(
-                        children: [
+                        children: const [
                           CustomPairIconText(
                               icon: Icons.location_on, text: "Location:"),
                         ],
@@ -455,7 +455,36 @@ class _NewEvent extends State<NewEvent> {
               width: double.infinity,
               height: 50,
               child: TextButton(
-                onPressed: () {},
+                onPressed: () {
+                  showDialog(
+                      context: context,
+                      barrierDismissible: true,
+                      builder: (_) => AlertDialog(
+                            title: const Text("Publish this event?"),
+                            elevation: 1,
+                            actions: [
+                              TextButton(
+                                  onPressed: () {
+                                    Navigator.pop(context, 'Cancel');
+                                  },
+                                  child: Text(
+                                    "Cancel",
+                                    style: TextStyle(
+                                        color: Theme.of(context).focusColor),
+                                  )),
+                              TextButton(
+                                  onPressed: () {
+                                    // TODO volver a menu Navigator.of(context).pushNamed('/your-events',
+                                    //arguments: widget.event.creatorId);
+                                  },
+                                  child: Text(
+                                    "Yes",
+                                    style: TextStyle(
+                                        color: Theme.of(context).errorColor),
+                                  ))
+                            ],
+                          ));
+                },
                 child: const Text(
                   "Publish event",
                   style: TextStyle(color: Colors.white),

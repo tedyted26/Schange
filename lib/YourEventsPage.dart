@@ -66,18 +66,21 @@ class _YourEventsState extends State<YourEvents> {
                     itemBuilder: (context, index) {
                       if (index == 0) {
                         return EventCustomCard(
+                          idUser: widget.userId,
                           event: items[index],
                           isEditable: true,
                           marginbottom: 5,
                         );
                       } else if (index == items.length - 1) {
                         return EventCustomCard(
+                          idUser: widget.userId,
                           event: items[index],
                           isEditable: true,
                           margintop: 5,
                         );
                       } else if (index < items.length) {
                         return EventCustomCard(
+                          idUser: widget.userId,
                           event: items[index],
                           isEditable: true,
                         );

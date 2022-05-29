@@ -7,5 +7,23 @@
         "password": "laura123",
         "contacts": [],
         "chats": []
+    },
+    {
+        "id" : 2,
+        "name": "Laura Levy",
+        "profilePic": "",
+        "mail": "lauralevy@mail.com",
+        "password": "laura123",
+        "contacts": [],
+        "chats": []
+    },
+    {
+        "id" : 5,
+        "name": "Laura Levy",
+        "profilePic": "",
+        "mail": "lauralevy@mail.com",
+        "password": "laura123",
+        "contacts": [],
+        "chats": []
     }
 ]

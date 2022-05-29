@@ -1,8 +1,5 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:Schange/NewEventPage.dart';
-import 'package:flutter/services.dart';
 import 'EventDetailsPage.dart';
 import 'LoginPage.dart';
 import 'HomePage.dart';
@@ -10,7 +7,6 @@ import 'Event.dart';
 import 'YourEventsPage.dart';
 import 'YourSubscriptionsPage.dart';
 import 'EditEventPage.dart';
-import 'User.dart';
 
 //temporal
 Event getEvent(int id) {
@@ -37,25 +33,26 @@ class RouteGenerator {
     switch (data.name) {
       case '/login':
         return MaterialPageRoute(builder: (_) => LoginPage());
+
       case '/home':
         return MaterialPageRoute(builder: (_) => HomePage());
+
       case '/event-details':
-        //comprobar si el argumento pasado es de tipo evento
-        if (args is Event) {
-          return MaterialPageRoute(
-              builder: (_) => EventDetailsPage(event: getEvent(0)));
-          //TODO cambiar el evento seleccionado en home
-          // En home seria: onPressed(): (){
-          // Navigator.of(context).pushNamed('/event-details', arguments: objetoEvento)}
-        }
-        //si no lo es aparece una pagina de error
-        else {
-          return _errorRoute();
-        }
+        return MaterialPageRoute(
+            builder: (_) => EventDetailsPage(
+                  event: getEvent(0),
+                  userId: 0,
+                ));
+
+      //TODO cambiar el evento seleccionado en home
+      // En home seria: onPressed(): (){
+      // Navigator.of(context).pushNamed('/event-details', arguments: [objetoEvento, idUsuarioLoggeado])}
+
       case '/new-event':
         return MaterialPageRoute(builder: (_) => const NewEvent());
 
-      //FIXME: your events y subscribed events tiene que recibir el id por parametro
+      //FIXME: your events y subscribed events tiene que recibir el id por parametro recibido de home
+
       case '/your-events':
         return MaterialPageRoute(builder: (_) => YourEvents(userId: 0));
 

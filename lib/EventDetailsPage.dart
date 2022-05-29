@@ -1,49 +1,57 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
 import 'EventCustomCard.dart';
 import 'Event.dart';
 import 'User.dart';
 
-//temporal
-List<User> getFromJsonSubscribedUserList(List<dynamic> subscribedPeopleList) {
-  List<User> userList = [];
-  //TODO buscarlo en JSON y devolver una lista de usuarios
-  userList.add(User(
-      chats: [],
-      contacts: [],
-      id: 1,
-      mail: '',
-      password: '',
-      name: 'Nombre de prueba',
-      profilePic: ''));
-
-  return userList;
-}
-
 class EventDetailsPage extends StatefulWidget {
   final Event event;
+  final int userId;
+  bool isEditable = false;
+  bool isSubscribed = false;
 
-  const EventDetailsPage({
+  EventDetailsPage({
     Key? key,
     required this.event,
-  }) : super(key: key);
+    required this.userId,
+  }) : super(key: key) {
+    if (event.creatorId == userId) {
+      isEditable = true;
+    } else if (event.subscribedPeople.contains(userId)) {
+      isSubscribed = true;
+    }
+  }
 
   @override
   State<StatefulWidget> createState() => _EventDetailsPage();
 }
 
 class _EventDetailsPage extends State<EventDetailsPage> {
-  bool isEditable = true;
-  bool isSubscribed = false;
+  Future fetchSubscribedPeople() async {
+    final jsonData = await rootBundle.loadString('json/users.json');
+    final list = json.decode(jsonData) as List<dynamic>;
+    List<User> listSubscribedUsers = [];
+    if (list.isNotEmpty) {
+      final List<User> listAllUsers =
+          list.map((e) => User.fromJson(e)).toList();
+
+      for (int i = 0; i < listAllUsers.length; i++) {
+        if (widget.event.subscribedPeople.contains(listAllUsers[i].id)) {
+          listSubscribedUsers.add(listAllUsers[i]);
+        }
+      }
+    }
+    return listSubscribedUsers;
+  }
+
   int i = 0;
+
   @override
   Widget build(BuildContext context) {
-    List<User> userList =
-        getFromJsonSubscribedUserList(widget.event.subscribedPeople);
-    double _lat = 40.37;
-    double _long = -3.91;
-    //buscar el id del evento en el json para ver en que lista esta para devolverlo a esa pantalla con todos sus eventos hermanos
     return Scaffold(
       backgroundColor: const Color(0xffF5F9FF),
       appBar: AppBar(
@@ -53,11 +61,17 @@ class _EventDetailsPage extends State<EventDetailsPage> {
             Icons.arrow_back,
           ),
           onPressed: () {
-            //if(widget.isEditable) Navigator.of(context).pushNamed('/your-events', arguments: objetoEvento)
-          }, //TODO volver a menu
+            if (widget.isEditable) {
+              Navigator.of(context)
+                  .pushNamed('/your-events', arguments: widget.userId);
+            } else {
+              Navigator.of(context).pushNamed('/your-events',
+                  arguments: widget.userId); //FIXME volver a menú
+            }
+          },
         ),
         actions: [
-          isEditable
+          widget.isEditable
               ? IconButton(
                   onPressed: () {
                     Navigator.of(context)
@@ -104,9 +118,9 @@ class _EventDetailsPage extends State<EventDetailsPage> {
                     ),
                     EventCustomCardImage(picUrl: widget.event.picUrl),
                     EventCustomCardCreatorInfo(
-                      date: widget.event.creationDate,
-                      idCreator: widget.event.creatorId,
-                      showButton: !isEditable,
+                      event: widget.event,
+                      idUser: widget.userId,
+                      showButton: !widget.isEditable,
                     ),
                     EventCustomCardFiltersInfo(
                       category: widget.event.category,
@@ -121,7 +135,7 @@ class _EventDetailsPage extends State<EventDetailsPage> {
                         style: TextStyle(color: Theme.of(context).primaryColor),
                       ),
                     ),
-                    EventCustomCardSocialIcons(likes: widget.event.likes),
+                    EventCustomCardSocialIcons(event: widget.event),
                     Stack(
                       alignment: Alignment.center,
                       children: [
@@ -146,7 +160,9 @@ class _EventDetailsPage extends State<EventDetailsPage> {
                                 const BorderRadius.all(Radius.circular(20.0)),
                             child: FlutterMap(
                                 options: MapOptions(
-                                    center: LatLng(_lat, _long), zoom: 12),
+                                    center: LatLng(widget.event.latitude,
+                                        widget.event.longitude),
+                                    zoom: 12),
                                 layers: [
                                   TileLayerOptions(
                                     urlTemplate:
@@ -156,7 +172,8 @@ class _EventDetailsPage extends State<EventDetailsPage> {
                                   MarkerLayerOptions(
                                     markers: [
                                       Marker(
-                                        point: LatLng(_lat, _long),
+                                        point: LatLng(widget.event.latitude,
+                                            widget.event.longitude),
                                         builder: (ctx) => Icon(
                                           Icons.location_on,
                                           color: Theme.of(context).focusColor,
@@ -169,18 +186,40 @@ class _EventDetailsPage extends State<EventDetailsPage> {
                         ),
                       ],
                     ),
-                    EventDetailsSubscribedPeople(
-                      maxPeople: widget.event.maxPeople,
-                      userList: userList,
-                    ),
+                    FutureBuilder(
+                        future: fetchSubscribedPeople(),
+                        builder: (context, data) {
+                          if (data.hasError) {
+                            return Center(
+                              child: Text(
+                                "Oh no! Something went wrong!",
+                                style: TextStyle(
+                                    color: Theme.of(context).errorColor),
+                              ),
+                            );
+                          } else if (data.hasData) {
+                            var items = data.data as List<User>;
+                            if (items.isNotEmpty) {
+                              return EventDetailsSubscribedPeople(
+                                maxPeople: widget.event.maxPeople,
+                                userList: items,
+                              );
+                            } else {
+                              return Container();
+                            }
+                          } else {
+                            return Container();
+                          }
+                        }),
                   ],
                 ),
               ),
             ),
           ),
           EventDetailsSubscribedButton(
-            isEditable: isEditable,
-            isSubscribed: isSubscribed,
+            isEditable: widget.isEditable,
+            isSubscribed: widget.isSubscribed,
+            userId: widget.userId,
           ),
         ],
       ),
@@ -258,20 +297,24 @@ class EventDetailsSubscribedPeople extends StatelessWidget {
   }
 }
 
+//finiquitao
 class EventDetailsSubscribedButton extends StatefulWidget {
   bool isEditable;
   bool isSubscribed;
+  int userId;
 
   EventDetailsSubscribedButton({
     Key? key,
     this.isEditable = false,
     this.isSubscribed = false,
+    required this.userId,
   }) : super(key: key);
 
   @override
   State<StatefulWidget> createState() => _EventDetailsSubscribedButton();
 }
 
+//finiquitao
 class _EventDetailsSubscribedButton
     extends State<EventDetailsSubscribedButton> {
   @override
@@ -291,7 +334,34 @@ class _EventDetailsSubscribedButton
             if (widget.isSubscribed) {
               widget.isSubscribed = false;
             } else if (widget.isEditable) {
-              //TODO navegar a las suscripciones
+              showDialog(
+                  context: context,
+                  barrierDismissible: true,
+                  builder: (_) => AlertDialog(
+                        title: const Text("Delete event?"),
+                        elevation: 1,
+                        actions: [
+                          TextButton(
+                              onPressed: () {
+                                Navigator.pop(context, 'Cancel');
+                              },
+                              child: Text(
+                                "Cancel",
+                                style: TextStyle(
+                                    color: Theme.of(context).focusColor),
+                              )),
+                          TextButton(
+                              onPressed: () {
+                                Navigator.of(context).pushNamed('/your-events',
+                                    arguments: widget.userId);
+                              },
+                              child: Text(
+                                "Yes",
+                                style: TextStyle(
+                                    color: Theme.of(context).errorColor),
+                              ))
+                        ],
+                      ));
             } else {
               widget.isSubscribed = true;
             }

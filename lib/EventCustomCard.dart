@@ -20,6 +20,7 @@ User getFromJsonUserData(int idCreator) {
 
 class EventCustomCard extends StatelessWidget {
   final Event event;
+  final int idUser;
   final bool isEditable;
   final bool isSubscribed;
   final double margintop;
@@ -27,6 +28,7 @@ class EventCustomCard extends StatelessWidget {
   const EventCustomCard(
       {Key? key,
       required this.event,
+      required this.idUser,
       this.isEditable = false,
       this.isSubscribed = false,
       this.margintop = 20,
@@ -73,8 +75,8 @@ class EventCustomCard extends StatelessWidget {
                               TextStyle(color: Theme.of(context).primaryColor),
                         )))
                 : EventCustomCardCreatorInfo(
-                    date: event.creationDate,
-                    idCreator: event.creatorId,
+                    event: event,
+                    idUser: idUser,
                     marginbottom: 0,
                   ),
             EventCustomCardImage(
@@ -116,7 +118,7 @@ class EventCustomCard extends StatelessWidget {
             ),
             Align(
               child: EventCustomCardSocialIcons(
-                likes: event.likes,
+                event: event,
                 isEditable: isEditable,
                 isSubscribed: isSubscribed,
                 marginTop: 0,
@@ -188,22 +190,22 @@ class EventCustomCardImage extends StatelessWidget {
 }
 
 class EventCustomCardCreatorInfo extends StatelessWidget {
-  final int idCreator;
+  final int idUser;
   final bool showButton;
-  final String date;
+  final Event event;
   final double marginbottom;
 
   const EventCustomCardCreatorInfo(
       {Key? key,
-      required this.idCreator,
-      required this.date,
+      required this.idUser,
+      required this.event,
       this.showButton = true,
       this.marginbottom = 15})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    User userdata = getFromJsonUserData(idCreator);
+    User userdata = getFromJsonUserData(event.creatorId);
     String profilepic = userdata.profilePic;
     if (profilepic == "") profilepic = "images/no_user.png";
 
@@ -251,7 +253,7 @@ class EventCustomCardCreatorInfo extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      'Created on $date',
+                      'Created on ${event.creationDate}',
                       style: TextStyle(
                         color: Theme.of(context).primaryColor,
                         fontSize: 15,
@@ -270,8 +272,7 @@ class EventCustomCardCreatorInfo extends StatelessWidget {
                     size: 30,
                   ),
                   onPressed:
-                      () {}, //TODO añadir el id del usuario creador a la lista del
-                  //usuario loggeado y hacer que el boton desaparezca
+                      () {}, //TODO navegar a mensajes con el id del usuariolog y el id del creador
                 )
               : Container(),
         ],
@@ -341,6 +342,7 @@ class EventCustomCardFiltersInfo extends StatelessWidget {
   }
 }
 
+//finiquitado
 class CustomPairIconText extends StatelessWidget {
   final IconData icon;
   final String text;
@@ -382,15 +384,16 @@ class CustomPairIconText extends StatelessWidget {
   }
 }
 
+//finiquitado
 class EventCustomCardSocialIcons extends StatefulWidget {
-  final int likes;
+  final Event event;
   final bool isEditable;
   final bool isSubscribed;
   final double marginTop;
   final double marginBottom;
   const EventCustomCardSocialIcons(
       {Key? key,
-      required this.likes,
+      required this.event,
       this.isEditable = false,
       this.isSubscribed = false,
       this.marginTop = 10,
@@ -401,13 +404,14 @@ class EventCustomCardSocialIcons extends StatefulWidget {
   State<StatefulWidget> createState() => _EventCustomCardSocialIcons();
 }
 
+//finiquitado
 class _EventCustomCardSocialIcons extends State<EventCustomCardSocialIcons> {
   int likes = 0;
   bool _pressed = false;
 
   @override
   void initState() {
-    likes = widget.likes;
+    likes = widget.event.likes;
     super.initState();
   }
 
@@ -443,7 +447,7 @@ class _EventCustomCardSocialIcons extends State<EventCustomCardSocialIcons> {
               size: 28,
               color: Theme.of(context).focusColor,
             ),
-            onPressed: () {}, //TODO COMPARTIR
+            onPressed: () {},
           ),
           widget.isEditable
               ? IconButton(
@@ -451,12 +455,43 @@ class _EventCustomCardSocialIcons extends State<EventCustomCardSocialIcons> {
                     Icons.edit,
                     color: Theme.of(context).focusColor,
                   ),
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.of(context).pushNamed('/edit-event',
+                        arguments: [widget.event, widget.event.creatorId]);
+                  },
                 )
               : Container(),
           widget.isEditable
               ? IconButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    showDialog(
+                        context: context,
+                        barrierDismissible: true,
+                        builder: (_) => AlertDialog(
+                              title: const Text("Delete event?"),
+                              elevation: 1,
+                              actions: [
+                                TextButton(
+                                    onPressed: () {
+                                      Navigator.pop(context, 'Cancel');
+                                    },
+                                    child: Text(
+                                      "Cancel",
+                                      style: TextStyle(
+                                          color: Theme.of(context).focusColor),
+                                    )),
+                                TextButton(
+                                    onPressed: () {
+                                      Navigator.pop(context, 'Yes');
+                                    },
+                                    child: Text(
+                                      "Yes",
+                                      style: TextStyle(
+                                          color: Theme.of(context).errorColor),
+                                    ))
+                              ],
+                            ));
+                  },
                   icon: Icon(
                     Icons.delete,
                     color: Theme.of(context).errorColor,
@@ -470,10 +505,11 @@ class _EventCustomCardSocialIcons extends State<EventCustomCardSocialIcons> {
                       height: 30,
                       decoration: BoxDecoration(
                           color: Theme.of(context).errorColor,
-                          borderRadius: BorderRadius.all(Radius.circular(20))),
+                          borderRadius:
+                              const BorderRadius.all(Radius.circular(20))),
                       child: TextButton(
-                          onPressed: () {}, //TODO eliminar de la bbdd
-                          child: Text(
+                          onPressed: () {},
+                          child: const Text(
                             "Unsubscribe",
                             style: TextStyle(color: Colors.white),
                           ))))

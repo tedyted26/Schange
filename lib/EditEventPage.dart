@@ -7,25 +7,21 @@ import 'package:image_picker/image_picker.dart';
 import 'Event.dart';
 import "package:latlong2/latlong.dart";
 
-getYourEventFromJson() {
-  //TODO
-}
-
 class EditEvent extends StatefulWidget {
-  Event event;
+  final Event event;
 
-  EditEvent({Key? key, required this.event}) : super(key: key);
+  const EditEvent({Key? key, required this.event}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() => _EditEvent();
 }
 
 class _EditEvent extends State<EditEvent> {
-  TextEditingController _titleController = TextEditingController();
-  TextEditingController _descController = TextEditingController();
-  TextEditingController _peopleController = TextEditingController();
-  TextEditingController _moneyController = TextEditingController();
-  MapController _mapController = MapController();
+  final TextEditingController _titleController = TextEditingController();
+  final TextEditingController _descController = TextEditingController();
+  final TextEditingController _peopleController = TextEditingController();
+  final TextEditingController _moneyController = TextEditingController();
+  final MapController _mapController = MapController();
   File? image;
   String picPath = "";
   String? category;
@@ -56,8 +52,8 @@ class _EditEvent extends State<EditEvent> {
     _descController.text = widget.event.description;
     _peopleController.text = widget.event.maxPeople.toString();
     _moneyController.text = widget.event.price.toString();
-    double _lat = 40.37;
-    double _long = -3.91;
+    double _lat = widget.event.latitude;
+    double _long = widget.event.longitude;
 
     picPath = widget.event.picUrl;
     return GestureDetector(
@@ -73,8 +69,34 @@ class _EditEvent extends State<EditEvent> {
               Icons.arrow_back,
             ),
             onPressed: () {
-              Navigator.of(context)
-                  .pushNamed('/your-events', arguments: getYourEventFromJson());
+              showDialog(
+                  context: context,
+                  barrierDismissible: true,
+                  builder: (_) => AlertDialog(
+                        title: const Text("Exit without saving?"),
+                        elevation: 1,
+                        actions: [
+                          TextButton(
+                              onPressed: () {
+                                Navigator.pop(context, 'Cancel');
+                              },
+                              child: Text(
+                                "Cancel",
+                                style: TextStyle(
+                                    color: Theme.of(context).focusColor),
+                              )),
+                          TextButton(
+                              onPressed: () {
+                                Navigator.of(context).pushNamed('/your-events',
+                                    arguments: widget.event.creatorId);
+                              },
+                              child: Text(
+                                "Yes",
+                                style: TextStyle(
+                                    color: Theme.of(context).errorColor),
+                              ))
+                        ],
+                      ));
             },
           ),
         ),
@@ -466,7 +488,37 @@ class _EditEvent extends State<EditEvent> {
               width: double.infinity,
               height: 50,
               child: TextButton(
-                onPressed: () {},
+                onPressed: () {
+                  showDialog(
+                      context: context,
+                      barrierDismissible: true,
+                      builder: (_) => AlertDialog(
+                            title: const Text("Save changes?"),
+                            elevation: 1,
+                            actions: [
+                              TextButton(
+                                  onPressed: () {
+                                    Navigator.pop(context, 'Cancel');
+                                  },
+                                  child: Text(
+                                    "Cancel",
+                                    style: TextStyle(
+                                        color: Theme.of(context).focusColor),
+                                  )),
+                              TextButton(
+                                  onPressed: () {
+                                    Navigator.of(context).pushNamed(
+                                        '/your-events',
+                                        arguments: widget.event.creatorId);
+                                  },
+                                  child: Text(
+                                    "Yes",
+                                    style: TextStyle(
+                                        color: Theme.of(context).errorColor),
+                                  ))
+                            ],
+                          ));
+                },
                 child: const Text(
                   "Save event",
                   style: TextStyle(color: Colors.white),
