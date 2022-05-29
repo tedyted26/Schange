@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:Schange/NewEventPage.dart';
 import 'EventDetailsPage.dart';
 import 'LoginPage.dart';
-import 'HomePage.dart';
 import 'DashboardPage.dart';
 import 'Event.dart';
 import 'YourEventsPage.dart';
@@ -37,13 +36,10 @@ class RouteGenerator {
       case '/login':
         return MaterialPageRoute(builder: (_) => LoginPage());
 
-      case '/home':
-        return MaterialPageRoute(builder: (_) => HomePage());
-
-      case '/event-details':
-        return MaterialPageRoute(builder: (_) => EventDetailsPage());
       case '/dashboard':
         return MaterialPageRoute(builder: (_) => DashboardPage());
+
+      case '/event-details':
         if (args is List) {
           return MaterialPageRoute(
               builder: (_) => EventDetailsPage(

@@ -41,7 +41,7 @@ class MyApp extends StatelessWidget {
           size: 30,
         ),
       ),
-      initialRoute: '/messages',
+      initialRoute: '/tips',
       onGenerateRoute: RouteGenerator.generateRoute,
     );
   }
