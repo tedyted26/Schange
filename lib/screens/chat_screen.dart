@@ -87,12 +87,12 @@ class _ChatScreenState extends State<ChatScreen> {
           onPressed: () {},
         ),
         const Expanded(
-        child: TextField(
-          decoration: InputDecoration.collapsed(hintText: "Send a message...",
-        ),
-        textCapitalization: TextCapitalization.sentences,
-        ),
-
+          child: TextField(
+            decoration: InputDecoration.collapsed(
+              hintText: "Send a message...",
+            ),
+            textCapitalization: TextCapitalization.sentences,
+          ),
         ),
         IconButton(
           icon: Icon(Icons.send),
@@ -109,29 +109,25 @@ class _ChatScreenState extends State<ChatScreen> {
     return Scaffold(
       backgroundColor: Color.fromARGB(255, 240, 245, 253),
       appBar: AppBar(
-        elevation: 2,
-        backgroundColor: Colors.white,
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios_new),
-          onPressed: () {
-            Navigator.pop(context);
-          },
-          color: const Color.fromRGBO(0, 12, 48, 71),
-        ), //colocar aqui a donde ir con el boton de la flecha atras
+          icon: const Icon(
+            Icons.arrow_back,
+          ),
+          onPressed: () => Navigator.pop(context),
+        ),
         title: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             CircleAvatar(
               radius: 20,
               backgroundImage: NetworkImage(widget.user.imageUrl),
             ),
-            const SizedBox(
-              width: 15,
-            ),
-            Text(
-              widget.user.name,
-              style: const TextStyle(
-                  fontFamily: 'SF UI Text',
-                  color: Color.fromRGBO(0, 12, 48, 71)),
+            Container(
+              margin: const EdgeInsets.only(left: 10, right: 60),
+              child: Text(
+                widget.user.name,
+                
+              ),
             ),
           ],
         ),

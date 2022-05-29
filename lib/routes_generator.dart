@@ -1,3 +1,5 @@
+import 'package:Schange/screens/messages_screen.dart';
+import 'package:Schange/screens/tips_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:Schange/NewEventPage.dart';
 import 'EventDetailsPage.dart';
@@ -74,6 +76,13 @@ class RouteGenerator {
           return MaterialPageRoute(builder: (_) => EditEvent(event: args));
         }
         return _errorRoute();
+
+      case '/messages':
+        return MaterialPageRoute(builder: (_) => const MessagesScreen());
+
+      case '/tips':
+        return MaterialPageRoute(builder: (_) => TipsScreen());
+
       default:
         return _errorRoute();
     }

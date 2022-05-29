@@ -2,26 +2,20 @@ import 'package:flutter/material.dart';
 import 'package:Schange/models/message_model.dart';
 import 'package:Schange/screens/chat_screen.dart';
 
-class HomeScreen extends StatelessWidget {
-  const HomeScreen({Key? key}) : super(key: key);
+class MessagesScreen extends StatelessWidget {
+  const MessagesScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          elevation: 2,
-          backgroundColor: Colors.white,
+          title: const Text("Messages"),
           leading: IconButton(
-            icon: const Icon(Icons.arrow_back_ios_new),
-            onPressed: () {},
-            color: const Color.fromRGBO(0, 12, 48, 71),
-          ), //colocar aqui a donde ir con el boton de la flecha atras
-          title: const Text(
-            'Messages',
-            style: TextStyle(
-                fontFamily: 'SF UI Text', color: Color.fromRGBO(0, 12, 48, 71)),
+            icon: const Icon(
+              Icons.arrow_back,
+            ),
+            onPressed: () {}, //TODO boton de volver
           ),
-          centerTitle: true,
         ),
         body: ListView.builder(
           itemCount: chats.length,
@@ -31,7 +25,8 @@ class HomeScreen extends StatelessWidget {
               onTap: () => Navigator.push(
                   content,
                   MaterialPageRoute(
-                      builder: (_) => ChatScreen(user: chat.sender,
+                      builder: (_) => ChatScreen(
+                            user: chat.sender,
                           ))),
               child: Container(
                   color: chat.noLeido
