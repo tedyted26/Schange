@@ -13,7 +13,7 @@ class EditEvent extends StatefulWidget {
   const EditEvent({Key? key, required this.event}) : super(key: key);
 
   @override
-  State<StatefulWidget> createState() => _EditEvent();
+  State<StatefulWidget> createState() => _EditEvent(picPath: event.picUrl);
 }
 
 class _EditEvent extends State<EditEvent> {
@@ -24,8 +24,10 @@ class _EditEvent extends State<EditEvent> {
   final MapController _mapController = MapController();
 
   File? image;
-  String picPath = "";
+  String picPath;
   String? category;
+
+  _EditEvent({required this.picPath});
 
   final dropdownItems = [
     "Party",
@@ -47,7 +49,6 @@ class _EditEvent extends State<EditEvent> {
     }
   }
 
-
   @override
   Widget build(BuildContext context) {
     _titleController.text = widget.event.title;
@@ -57,7 +58,6 @@ class _EditEvent extends State<EditEvent> {
     double _lat = widget.event.latitude;
     double _long = widget.event.longitude;
 
-    picPath = widget.event.picUrl;
     return GestureDetector(
       onTap: () {
         FocusManager.instance.primaryFocus?.unfocus();

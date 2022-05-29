@@ -81,7 +81,7 @@ class EventCustomCard extends StatelessWidget {
             Container(
               alignment: Alignment.topLeft,
               height: 70,
-              margin: EdgeInsets.only(bottom: 5),
+              margin: const EdgeInsets.only(bottom: 5),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -530,7 +530,38 @@ class _EventCustomCardSocialIcons extends State<EventCustomCardSocialIcons> {
                           borderRadius:
                               const BorderRadius.all(Radius.circular(20))),
                       child: TextButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            showDialog(
+                                context: context,
+                                barrierDismissible: true,
+                                builder: (_) => AlertDialog(
+                                      title: const Text(
+                                          "Unsubscribe from this event?"),
+                                      elevation: 1,
+                                      actions: [
+                                        TextButton(
+                                            onPressed: () {
+                                              Navigator.pop(context, 'Cancel');
+                                            },
+                                            child: Text(
+                                              "Cancel",
+                                              style: TextStyle(
+                                                  color: Theme.of(context)
+                                                      .focusColor),
+                                            )),
+                                        TextButton(
+                                            onPressed: () {
+                                              Navigator.pop(context, 'Yes');
+                                            },
+                                            child: Text(
+                                              "Yes",
+                                              style: TextStyle(
+                                                  color: Theme.of(context)
+                                                      .errorColor),
+                                            ))
+                                      ],
+                                    ));
+                          },
                           child: const Text(
                             "Unsubscribe",
                             style: TextStyle(color: Colors.white),
