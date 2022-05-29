@@ -14,9 +14,9 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Schange',
       theme: ThemeData(
-        primaryColor: Color(0xff023047),
-        focusColor: Color(0xff219EBC),
-        errorColor: Color(0xffFFB703),
+        primaryColor: const Color(0xff023047),
+        focusColor: const Color(0xff219EBC),
+        errorColor: const Color(0xffFFB703),
         //APP BAR THEME
         appBarTheme: const AppBarTheme(
           backgroundColor: Colors.white,
@@ -36,12 +36,16 @@ class MyApp extends StatelessWidget {
             size: 30,
           ),
         ),
-        iconTheme: IconThemeData(
+        iconTheme: const IconThemeData(
           color: Color(0xff023047),
           size: 30,
         ),
       ),
+<<<<<<< HEAD
       initialRoute: '/login',
+=======
+      initialRoute: '/your-events',
+>>>>>>> 80f33381208d4571b712297eb165dc30fc499d7a
       onGenerateRoute: RouteGenerator.generateRoute,
     );
   }

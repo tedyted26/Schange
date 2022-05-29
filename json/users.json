@@ -1,0 +1,56 @@
+[
+    {
+        "id" : 0,
+        "name": "Laura Levy",
+        "profilePic": "images/user_0.jpg",
+        "mail": "lauralevy@mail.com",
+        "password": "pass123",
+        "contacts": [],
+        "chats": []
+    },
+    {
+        "id" : 1,
+        "name": "Vivien Heaslip",
+        "profilePic": "images/user_1.jpg",
+        "mail": "vivienh@mail.com",
+        "password": "pass123",
+        "contacts": [],
+        "chats": []
+    },
+    {
+        "id" : 2,
+        "name": "Paulo Gil",
+        "profilePic": "images/user_2.jpg",
+        "mail": "paulogil@mail.com",
+        "password": "pass123",
+        "contacts": [],
+        "chats": []
+    },
+    {
+        "id" : 3,
+        "name": "Anne Rill",
+        "profilePic": "images/user_3.jpg",
+        "mail": "annerill@mail.com",
+        "password": "pass123",
+        "contacts": [],
+        "chats": []
+    },
+    {
+        "id" : 4,
+        "name": "Tina Tomson",
+        "profilePic": "images/user_4.jpg",
+        "mail": "tinatom@mail.com",
+        "password": "pass123",
+        "contacts": [],
+        "chats": []
+    },
+    {
+        "id" : 5,
+        "name": "BruceHudstedt",
+        "profilePic": "images/user_5.jpg",
+        "mail": "brucehud@mail.com",
+        "password": "pass123",
+        "contacts": [],
+        "chats": []
+    }
+]
