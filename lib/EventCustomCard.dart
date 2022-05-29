@@ -1,23 +1,12 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'User.dart';
 import 'Event.dart';
 
-User getFromJsonUserData(int idCreator) {
-  //pillar de json
-  User userdata = User(
-      id: idCreator,
-      name: 'Teo',
-      profilePic: '',
-      mail: '',
-      password: '',
-      contacts: [],
-      chats: []);
-
-  return userdata;
-}
-
+//finiquitado
 class EventCustomCard extends StatelessWidget {
   final Event event;
   final int idUser;
@@ -37,18 +26,16 @@ class EventCustomCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    User userInfo;
-    if (isEditable) userInfo = getFromJsonUserData(event.creatorId);
-
     return GestureDetector(
       onTap: () {
-        Navigator.of(context).pushNamed('/event-details', arguments: event);
+        Navigator.of(context)
+            .pushNamed('/event-details', arguments: [event, idUser]);
       },
       child: Container(
         margin: EdgeInsets.only(
             left: 20, right: 20, top: margintop, bottom: marginbottom),
         padding: const EdgeInsets.only(left: 15, right: 15, top: 0, bottom: 0),
-        height: 450,
+        height: 455,
         decoration: const BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.all(Radius.circular(20.0)),
@@ -76,7 +63,7 @@ class EventCustomCard extends StatelessWidget {
                         )))
                 : EventCustomCardCreatorInfo(
                     event: event,
-                    idUser: idUser,
+                    idUser: event.creatorId,
                     marginbottom: 0,
                   ),
             EventCustomCardImage(
@@ -94,6 +81,7 @@ class EventCustomCard extends StatelessWidget {
             Container(
               alignment: Alignment.topLeft,
               height: 70,
+              margin: EdgeInsets.only(bottom: 5),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -110,7 +98,7 @@ class EventCustomCard extends StatelessWidget {
                   Text(
                     event.description,
                     overflow: TextOverflow.ellipsis,
-                    maxLines: 4,
+                    maxLines: 3,
                     style: TextStyle(color: Theme.of(context).primaryColor),
                   ),
                 ],
@@ -132,6 +120,7 @@ class EventCustomCard extends StatelessWidget {
   }
 }
 
+//finiquitado
 class EventCustomCardImage extends StatelessWidget {
   final String picUrl;
   final double marginTop;
@@ -203,81 +192,114 @@ class EventCustomCardCreatorInfo extends StatelessWidget {
       this.marginbottom = 15})
       : super(key: key);
 
+  Future fetchCreatorInfo() async {
+    final jsonData = await rootBundle.loadString('json/users.json');
+    final list = json.decode(jsonData) as List<dynamic>;
+    User creatorInfo;
+    if (list.isNotEmpty) {
+      final List<User> listAllUsers =
+          list.map((e) => User.fromJson(e)).toList();
+
+      for (int i = 0; i < listAllUsers.length; i++) {
+        if (listAllUsers[i].id == idUser) {
+          creatorInfo = listAllUsers[i];
+          return creatorInfo;
+        }
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    User userdata = getFromJsonUserData(event.creatorId);
-    String profilepic = userdata.profilePic;
-    if (profilepic == "") profilepic = "images/no_user.png";
-
-    return Container(
-      margin: EdgeInsets.only(top: 5, bottom: marginbottom),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Row(
-            children: [
-              ClipOval(
-                child: profilepic.startsWith("images/")
-                    ? Image.asset(
-                        profilepic,
-                        height: 50,
-                        width: 50,
-                        fit: BoxFit.cover,
-                      )
-                    : Image.file(
-                        File(profilepic),
-                        height: 50,
-                        width: 50,
-                        fit: BoxFit.cover,
-                        errorBuilder: (context, object, stacktrace) {
-                          return Image.asset(
-                            "images/no_user.png",
-                            height: 50,
-                            width: 50,
-                            fit: BoxFit.cover,
-                          );
-                        },
-                      ),
+    return FutureBuilder(
+        future: fetchCreatorInfo(),
+        builder: (context, data) {
+          if (data.hasError) {
+            return Center(
+              child: Text(
+                "Oh no! Something went wrong!",
+                style: TextStyle(color: Theme.of(context).errorColor),
               ),
-              Container(
-                margin: const EdgeInsets.only(left: 10),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      userdata.name,
-                      style: TextStyle(
-                        color: Theme.of(context).primaryColor,
-                        fontSize: 16,
-                        fontWeight: FontWeight.w500,
+            );
+          } else if (data.hasData) {
+            User item = data.data as User;
+            String profilepic = item.profilePic;
+            if (profilepic == "") profilepic = "images/no_user.png";
+            return Container(
+              margin: EdgeInsets.only(top: 5, bottom: marginbottom),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Row(
+                    children: [
+                      ClipOval(
+                        child: profilepic.startsWith("images/")
+                            ? Image.asset(
+                                profilepic,
+                                height: 45,
+                                width: 45,
+                                fit: BoxFit.cover,
+                              )
+                            : Image.file(
+                                File(profilepic),
+                                height: 45,
+                                width: 45,
+                                fit: BoxFit.cover,
+                                errorBuilder: (context, object, stacktrace) {
+                                  return Image.asset(
+                                    "images/no_user.png",
+                                    height: 50,
+                                    width: 50,
+                                    fit: BoxFit.cover,
+                                  );
+                                },
+                              ),
                       ),
-                    ),
-                    Text(
-                      'Created on ${event.creationDate}',
-                      style: TextStyle(
-                        color: Theme.of(context).primaryColor,
-                        fontSize: 15,
-                        fontWeight: FontWeight.w300,
+                      Container(
+                        margin: const EdgeInsets.only(left: 10),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              item.name,
+                              style: TextStyle(
+                                color: Theme.of(context).primaryColor,
+                                fontSize: 16,
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
+                            Text(
+                              'Created on ${event.creationDate}',
+                              style: TextStyle(
+                                color: Theme.of(context).primaryColor,
+                                fontSize: 15,
+                                fontWeight: FontWeight.w300,
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ),
-          showButton
-              ? IconButton(
-                  icon: const Icon(
-                    Icons.message,
-                    size: 30,
+                    ],
                   ),
-                  onPressed:
-                      () {}, //TODO navegar a mensajes con el id del usuariolog y el id del creador
-                )
-              : Container(),
-        ],
-      ),
-    );
+                  showButton
+                      ? IconButton(
+                          icon: const Icon(
+                            Icons.message,
+                            size: 30,
+                          ),
+                          onPressed:
+                              () {}, //TODO navegar a mensajes con el id del usuariolog y el id del creador
+                        )
+                      : Container(),
+                ],
+              ),
+            );
+          } else {
+            return CircularProgressIndicator(
+              color: Theme.of(context).focusColor,
+            );
+          }
+        });
   }
 }
 
@@ -500,7 +522,7 @@ class _EventCustomCardSocialIcons extends State<EventCustomCardSocialIcons> {
           widget.isSubscribed
               ? Align(
                   alignment: Alignment.centerRight,
-                  widthFactor: 2.2,
+                  widthFactor: 2.15,
                   child: Container(
                       height: 30,
                       decoration: BoxDecoration(

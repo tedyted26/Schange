@@ -22,6 +22,7 @@ class _EditEvent extends State<EditEvent> {
   final TextEditingController _peopleController = TextEditingController();
   final TextEditingController _moneyController = TextEditingController();
   final MapController _mapController = MapController();
+
   File? image;
   String picPath = "";
   String? category;
@@ -45,6 +46,7 @@ class _EditEvent extends State<EditEvent> {
       picPath = this.image!.path;
     }
   }
+
 
   @override
   Widget build(BuildContext context) {
@@ -435,7 +437,7 @@ class _EditEvent extends State<EditEvent> {
                         alignment: Alignment.center,
                         children: [
                           Container(
-                            height: 220,
+                            height: 320,
                             width: 320,
                             margin: const EdgeInsets.only(top: 15, bottom: 15),
                             decoration: const BoxDecoration(

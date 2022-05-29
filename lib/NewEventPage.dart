@@ -402,7 +402,7 @@ class _NewEvent extends State<NewEvent> {
                         alignment: Alignment.center,
                         children: [
                           Container(
-                            height: 220,
+                            height: 320,
                             width: 320,
                             margin: const EdgeInsets.only(top: 15, bottom: 15),
                             decoration: const BoxDecoration(

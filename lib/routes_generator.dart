@@ -38,11 +38,21 @@ class RouteGenerator {
         return MaterialPageRoute(builder: (_) => HomePage());
 
       case '/event-details':
-        return MaterialPageRoute(
-            builder: (_) => EventDetailsPage(
-                  event: getEvent(0),
-                  userId: 0,
-                ));
+        if (args is List) {
+          return MaterialPageRoute(
+              builder: (_) => EventDetailsPage(
+                    event: args[0],
+                    userId: args[1],
+                  ));
+        }
+        //else para pruebas, en la version final no deberia estar
+        else {
+          return MaterialPageRoute(
+              builder: (_) => EventDetailsPage(
+                    event: getEvent(0),
+                    userId: 0,
+                  ));
+        }
 
       //TODO cambiar el evento seleccionado en home
       // En home seria: onPressed(): (){
@@ -60,7 +70,10 @@ class RouteGenerator {
         return MaterialPageRoute(builder: (_) => YourSubscriptions(userId: 0));
 
       case '/edit-event':
-        return MaterialPageRoute(builder: (_) => EditEvent(event: getEvent(0)));
+        if (args is Event) {
+          return MaterialPageRoute(builder: (_) => EditEvent(event: args));
+        }
+        return _errorRoute();
       default:
         return _errorRoute();
     }

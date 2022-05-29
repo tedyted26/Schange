@@ -64,9 +64,11 @@ class _EventDetailsPage extends State<EventDetailsPage> {
             if (widget.isEditable) {
               Navigator.of(context)
                   .pushNamed('/your-events', arguments: widget.userId);
+            } else if (widget.isSubscribed) {
+              Navigator.of(context)
+                  .pushNamed('/your-subscriptions', arguments: widget.userId);
             } else {
-              Navigator.of(context).pushNamed('/your-events',
-                  arguments: widget.userId); //FIXME volver a menú
+              //FIXME volver a menú
             }
           },
         ),
@@ -140,7 +142,7 @@ class _EventDetailsPage extends State<EventDetailsPage> {
                       alignment: Alignment.center,
                       children: [
                         Container(
-                          height: 220,
+                          height: 320,
                           width: 320,
                           margin: const EdgeInsets.only(top: 0, bottom: 30),
                           decoration: const BoxDecoration(
@@ -208,7 +210,9 @@ class _EventDetailsPage extends State<EventDetailsPage> {
                               return Container();
                             }
                           } else {
-                            return Container();
+                            return CircularProgressIndicator(
+                              color: Theme.of(context).focusColor,
+                            );
                           }
                         }),
                   ],
