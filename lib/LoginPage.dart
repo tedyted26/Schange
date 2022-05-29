@@ -1,3 +1,4 @@
+import 'package:Schange/RegisterPage.dart';
 import 'package:flutter/material.dart';
 import 'package:Schange/DashboardPage.dart';
 
@@ -21,7 +22,7 @@ class LoginPageState extends State<LoginPage> {
           children: [
             Container(
               margin: EdgeInsets.only(
-                  bottom: MediaQuery.of(context).size.height * 0.1),
+                  bottom: MediaQuery.of(context).size.height * 0.05),
               child: Image.asset(
                 "images/logo_principal.png",
                 width: MediaQuery.of(context).size.width * 0.3,
@@ -106,27 +107,41 @@ class LoginPageState extends State<LoginPage> {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                RichText(
-                    text: TextSpan(
-                        text: "Forgot Password?",
-                        style: TextStyle(
-                          color: Color(0xff023047),
-                          decoration: TextDecoration.underline,
-                          fontSize: 16,
-                        ))),
+                TextButton(
+                  onPressed: () {
+                    FocusScope.of(context)
+                        .unfocus(); // Que no abra el teclado al volver al login
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const RegisterPage()),
+                    );
+                  },
+                  child: Text("Forgot Password?"),
+                  style: TextButton.styleFrom(
+                    primary: Color(0xff023047),
+                  ),
+                ),
               ],
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                RichText(
-                    text: TextSpan(
-                        text: "Register Now",
-                        style: TextStyle(
-                          color: Color(0xff023047),
-                          decoration: TextDecoration.underline,
-                          fontSize: 16,
-                        ))),
+                TextButton(
+                  onPressed: () {
+                    FocusScope.of(context)
+                        .unfocus(); // Que no abra el teclado al volver al login
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const RegisterPage()),
+                    );
+                  },
+                  child: Text("Create an account here"),
+                  style: TextButton.styleFrom(
+                    primary: Color(0xff023047),
+                  ),
+                ),
               ],
             ),
           ],
@@ -135,7 +150,7 @@ class LoginPageState extends State<LoginPage> {
       bottomNavigationBar: Container(
         color: Color(0xffffffff),
         alignment: Alignment.center,
-        height: MediaQuery.of(context).size.height * 0.075,
+        height: MediaQuery.of(context).size.height * 0.05,
         width: MediaQuery.of(context).size.width,
         margin: EdgeInsets.all(0),
         child: Text(

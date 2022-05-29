@@ -1,3 +1,4 @@
+import 'package:Schange/LoginPage.dart';
 import 'package:flutter/material.dart';
 
 class RegisterPage extends StatefulWidget {
@@ -15,15 +16,15 @@ class RegisterPageState extends State<RegisterPage> {
         padding: EdgeInsets.only(
                 left: MediaQuery.of(context).size.width * 0.08) +
             EdgeInsets.only(right: MediaQuery.of(context).size.width * 0.08) +
-            EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.2),
+            EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.05),
         child: Column(
           children: [
             Container(
               margin: EdgeInsets.only(
-                  bottom: MediaQuery.of(context).size.height * 0.1),
+                  bottom: MediaQuery.of(context).size.height * 0.09),
               child: Image.asset(
                 "images/logo_principal.png",
-                width: MediaQuery.of(context).size.width * 0.3,
+                width: MediaQuery.of(context).size.width * 0.2,
               ),
             ),
             Container(
@@ -37,9 +38,64 @@ class RegisterPageState extends State<RegisterPage> {
                 autofocus: false,
                 style: TextStyle(color: Color(0xff000000)),
                 decoration: InputDecoration(
-                    hintStyle: TextStyle(color: Color(0xff023047)),
+                    hintStyle:
+                        TextStyle(color: Color(0xff023047).withOpacity(0.6)),
                     fillColor: Color(0xff023047),
                     hintText: 'Name',
+                    prefixIcon: Icon(
+                      Icons.person,
+                      color: Color(0xff023047),
+                    ),
+                    border: InputBorder.none,
+                    contentPadding: EdgeInsets.only(
+                            top: MediaQuery.of(context).size.height * 0.02) +
+                        EdgeInsets.only(
+                            bottom: MediaQuery.of(context).size.height * 0.02)),
+              ),
+            ),
+            Container(
+              margin: EdgeInsets.only(
+                  bottom: MediaQuery.of(context).size.height * 0.03),
+              decoration: BoxDecoration(
+                color: Color(0x44E3F2FD),
+                borderRadius: BorderRadius.circular(15),
+              ),
+              child: TextField(
+                autofocus: false,
+                style: TextStyle(color: Color(0xff023047)),
+                obscureText: true,
+                decoration: InputDecoration(
+                    hintStyle:
+                        TextStyle(color: Color(0xff023047).withOpacity(0.6)),
+                    fillColor: Color(0xff023047),
+                    hintText: 'Username',
+                    prefixIcon: Icon(
+                      Icons.alternate_email,
+                      color: Color(0xff023047),
+                    ),
+                    border: InputBorder.none,
+                    contentPadding: EdgeInsets.only(
+                            top: MediaQuery.of(context).size.height * 0.02) +
+                        EdgeInsets.only(
+                            bottom: MediaQuery.of(context).size.height * 0.02)),
+              ),
+            ),
+            Container(
+              margin: EdgeInsets.only(
+                  bottom: MediaQuery.of(context).size.height * 0.03),
+              decoration: BoxDecoration(
+                color: Color(0x44E3F2FD),
+                borderRadius: BorderRadius.circular(15),
+              ),
+              child: TextField(
+                autofocus: false,
+                style: TextStyle(color: Color(0xff023047)),
+                obscureText: true,
+                decoration: InputDecoration(
+                    hintStyle:
+                        TextStyle(color: Color(0xff023047).withOpacity(0.6)),
+                    fillColor: Color(0xff023047),
+                    hintText: 'Email',
                     prefixIcon: Icon(
                       Icons.mail_outline,
                       color: Color(0xff023047),
@@ -63,60 +119,9 @@ class RegisterPageState extends State<RegisterPage> {
                 style: TextStyle(color: Color(0xff023047)),
                 obscureText: true,
                 decoration: InputDecoration(
-                    hintStyle: TextStyle(color: Colors.white.withOpacity(0.6)),
-                    fillColor: Colors.white,
-                    hintText: 'Username',
-                    prefixIcon: Icon(
-                      Icons.security_outlined,
-                      color: Color(0xff023047),
-                    ),
-                    border: InputBorder.none,
-                    contentPadding: EdgeInsets.only(
-                            top: MediaQuery.of(context).size.height * 0.02) +
-                        EdgeInsets.only(
-                            bottom: MediaQuery.of(context).size.height * 0.02)),
-              ),
-            ),
-            Container(
-              margin: EdgeInsets.only(
-                  bottom: MediaQuery.of(context).size.height * 0.03),
-              decoration: BoxDecoration(
-                color: Color(0x44E3F2FD),
-                borderRadius: BorderRadius.circular(15),
-              ),
-              child: TextField(
-                autofocus: false,
-                style: TextStyle(color: Color(0xff023047)),
-                obscureText: true,
-                decoration: InputDecoration(
-                    hintStyle: TextStyle(color: Colors.white.withOpacity(0.6)),
-                    fillColor: Colors.white,
-                    hintText: 'Email',
-                    prefixIcon: Icon(
-                      Icons.security_outlined,
-                      color: Color(0xff023047),
-                    ),
-                    border: InputBorder.none,
-                    contentPadding: EdgeInsets.only(
-                            top: MediaQuery.of(context).size.height * 0.02) +
-                        EdgeInsets.only(
-                            bottom: MediaQuery.of(context).size.height * 0.02)),
-              ),
-            ),
-            Container(
-              margin: EdgeInsets.only(
-                  bottom: MediaQuery.of(context).size.height * 0.03),
-              decoration: BoxDecoration(
-                color: Color(0x44E3F2FD),
-                borderRadius: BorderRadius.circular(15),
-              ),
-              child: TextField(
-                autofocus: false,
-                style: TextStyle(color: Color(0xff023047)),
-                obscureText: true,
-                decoration: InputDecoration(
-                    hintStyle: TextStyle(color: Colors.white.withOpacity(0.6)),
-                    fillColor: Colors.white,
+                    hintStyle:
+                        TextStyle(color: Color(0xff023047).withOpacity(0.6)),
+                    fillColor: Color(0xff023047),
                     hintText: 'Password',
                     prefixIcon: Icon(
                       Icons.security_outlined,
@@ -141,8 +146,9 @@ class RegisterPageState extends State<RegisterPage> {
                 style: TextStyle(color: Color(0xff023047)),
                 obscureText: true,
                 decoration: InputDecoration(
-                    hintStyle: TextStyle(color: Colors.white.withOpacity(0.6)),
-                    fillColor: Colors.white,
+                    hintStyle:
+                        TextStyle(color: Color(0xff023047).withOpacity(0.6)),
+                    fillColor: Color(0xff023047),
                     hintText: 'Confirm Password',
                     prefixIcon: Icon(
                       Icons.security_outlined,
@@ -160,7 +166,7 @@ class RegisterPageState extends State<RegisterPage> {
                   bottom: MediaQuery.of(context).size.height * 0.005),
               width: MediaQuery.of(context).size.height * 0.2,
               child: ElevatedButton(
-                child: const Text('LOGIN'),
+                child: const Text('Create Account'),
                 style: ElevatedButton.styleFrom(
                   primary: Color(0xff219EBC),
                   shape: new RoundedRectangleBorder(
@@ -170,20 +176,31 @@ class RegisterPageState extends State<RegisterPage> {
                 onPressed: () {
                   FocusScope.of(context)
                       .unfocus(); // Que no abra el teclado al volver al login
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => const LoginPage()),
+                  );
                 },
               ),
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                RichText(
-                    text: TextSpan(
-                        text: "Already an account?",
-                        style: TextStyle(
-                          color: Color(0xff023047),
-                          decoration: TextDecoration.underline,
-                          fontSize: 16,
-                        ))),
+                TextButton(
+                  onPressed: () {
+                    FocusScope.of(context)
+                        .unfocus(); // Que no abra el teclado al volver al login
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const LoginPage()),
+                    );
+                  },
+                  child: Text("Already an account?"),
+                  style: TextButton.styleFrom(
+                    primary: Color(0xff023047),
+                  ),
+                ),
               ],
             ),
           ],
@@ -192,7 +209,7 @@ class RegisterPageState extends State<RegisterPage> {
       bottomNavigationBar: Container(
         color: Color(0xffffffff),
         alignment: Alignment.center,
-        height: MediaQuery.of(context).size.height * 0.075,
+        height: MediaQuery.of(context).size.height * 0.05,
         width: MediaQuery.of(context).size.width,
         margin: EdgeInsets.all(0),
         child: Text(
