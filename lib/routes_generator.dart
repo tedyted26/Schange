@@ -34,17 +34,10 @@ class RouteGenerator {
     switch (data.name) {
       case '/login':
         return MaterialPageRoute(builder: (_) => LoginPage());
-<<<<<<< HEAD
-      case '/home2':
-        return MaterialPageRoute(builder: (_) => HomePage());
-      case '/home':
-        return MaterialPageRoute(builder: (_) => DashboardPage());
-=======
 
       case '/home':
         return MaterialPageRoute(builder: (_) => HomePage());
 
->>>>>>> 80f33381208d4571b712297eb165dc30fc499d7a
       case '/event-details':
         if (args is List) {
           return MaterialPageRoute(

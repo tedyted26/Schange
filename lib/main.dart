@@ -41,11 +41,7 @@ class MyApp extends StatelessWidget {
           size: 30,
         ),
       ),
-<<<<<<< HEAD
-      initialRoute: '/login',
-=======
       initialRoute: '/your-events',
->>>>>>> 80f33381208d4571b712297eb165dc30fc499d7a
       onGenerateRoute: RouteGenerator.generateRoute,
     );
   }
