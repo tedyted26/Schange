@@ -9,7 +9,7 @@ import 'Event.dart';
 //finiquitado
 class EventCustomCard extends StatelessWidget {
   final Event event;
-  final int idUser;
+  final int idUser = 0;
   final bool isEditable;
   final bool isSubscribed;
   final double margintop;
@@ -17,7 +17,6 @@ class EventCustomCard extends StatelessWidget {
   const EventCustomCard(
       {Key? key,
       required this.event,
-      required this.idUser,
       this.isEditable = false,
       this.isSubscribed = false,
       this.margintop = 20,
@@ -28,8 +27,7 @@ class EventCustomCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Navigator.of(context)
-            .pushNamed('/event-details', arguments: [event, idUser]);
+        Navigator.of(context).pushNamed('/event-details', arguments: event);
       },
       child: Container(
         margin: EdgeInsets.only(
@@ -284,11 +282,12 @@ class EventCustomCardCreatorInfo extends StatelessWidget {
                   showButton
                       ? IconButton(
                           icon: const Icon(
-                            Icons.message,
+                            Icons.messenger_rounded,
                             size: 30,
                           ),
-                          onPressed:
-                              () {}, //TODO navegar a mensajes con el id del usuariolog y el id del creador
+                          onPressed: () {
+                            Navigator.of(context).pushNamed('/messages');
+                          },
                         )
                       : Container(),
                 ],

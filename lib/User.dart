@@ -4,17 +4,14 @@ class User {
   String profilePic = "";
   String mail = "";
   String password = "";
-  List<dynamic> contacts = [];
-  List<dynamic> chats = [];
 
-  User(
-      {required this.id,
-      required this.name,
-      required this.profilePic,
-      required this.mail,
-      required this.password,
-      required this.contacts,
-      required this.chats});
+  User({
+    required this.id,
+    required this.name,
+    required this.profilePic,
+    required this.mail,
+    required this.password,
+  });
 
   User.fromJson(Map<String, dynamic> json) {
     id = json["id"];
@@ -22,7 +19,5 @@ class User {
     profilePic = json["profilePic"];
     mail = json["mail"];
     password = json["password"];
-    contacts = json["contacts"];
-    chats = json["chats"];
   }
 }

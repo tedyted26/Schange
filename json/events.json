@@ -13,7 +13,7 @@
         "likes": 8,
         "latitude": 40.37,
         "longitude": -3.91,
-        "subscribedPeople": [0, 2, 5]
+        "subscribedPeople": [2, 5]
     },
     {
         "id": 1,
@@ -45,7 +45,7 @@
         "likes": 20,
         "latitude": 40.54,
         "longitude": -3.61,
-        "subscribedPeople": [0, 4, 5]
+        "subscribedPeople": [4, 5]
     },  
     {
         "id": 3,

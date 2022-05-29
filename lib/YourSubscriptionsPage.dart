@@ -43,7 +43,9 @@ class _YourSubscriptionsState extends State<YourSubscriptions> {
           icon: const Icon(
             Icons.arrow_back,
           ),
-          onPressed: () {}, //TODO boton de volver
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
         ),
       ),
       body: FutureBuilder(
@@ -64,21 +66,18 @@ class _YourSubscriptionsState extends State<YourSubscriptions> {
                     itemBuilder: (context, index) {
                       if (index == 0) {
                         return EventCustomCard(
-                          idUser: widget.userId,
                           event: items[index],
                           isSubscribed: true,
                           marginbottom: 5,
                         );
                       } else if (index == items.length - 1) {
                         return EventCustomCard(
-                          idUser: widget.userId,
                           event: items[index],
                           isSubscribed: true,
                           margintop: 5,
                         );
                       } else if (index < items.length) {
                         return EventCustomCard(
-                          idUser: widget.userId,
                           event: items[index],
                           isSubscribed: true,
                         );

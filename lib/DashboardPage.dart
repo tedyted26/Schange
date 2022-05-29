@@ -36,63 +36,11 @@ class DashboardPageState extends State<DashboardPage> {
 
   void getPostData() {
     List<dynamic> responseList = EVENTS_DATA;
+    List<Event> eventList = responseList.map((e) => Event.fromJson(e)).toList();
     List<Widget> listItem = [];
-    responseList.forEach((element) {
-      listItem.add(Container(
-        height: 580,
-        child: Column(
-          children: [
-            Container(
-              margin: EdgeInsets.all(10),
-              padding: EdgeInsets.all(20),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.all(Radius.circular(20.0)),
-                boxShadow: const [
-                  BoxShadow(
-                      blurRadius: 4,
-                      offset: Offset(0, 4),
-                      spreadRadius: 1,
-                      color: Color(0xffBEC1FF)),
-                ],
-              ),
-              child: Column(
-                children: [
-                  //EventCustomCardCreatorInfo(
-                  // date: 'Monday',
-                  // idCreator: element['id'],
-                  // ),
-                  EventCustomCardImage(
-                    picUrl: element['picUrl'],
-                  ),
-                  //EventCustomCardFiltersInfo(
-                  //  category: element['category'],
-                  //  date: 'Monday',
-                  //  maxPeople: element['max_people'].toString(),
-                  //  price: element['price'],
-                  //),
-                  Text(
-                    element['title'],
-                    textAlign: TextAlign.left,
-                    overflow: TextOverflow.ellipsis,
-                    maxLines: 2,
-                    style: TextStyle(
-                        fontSize: 24,
-                        color: Colors.black,
-                        fontWeight: FontWeight.w400),
-                  ),
-                  Text(
-                    element['description'],
-                    style: TextStyle(color: Colors.black),
-                  ),
-                  // EventCustomCardSocialIcons(likes: 10),
-                ],
-              ),
-            )
-          ],
-        ),
-      ));
-    });
+    for (Event element in eventList) {
+      listItem.add(EventCustomCard(event: element));
+    }
     setState(() {
       itemsData = listItem;
     });
@@ -101,31 +49,29 @@ class DashboardPageState extends State<DashboardPage> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          backgroundColor: Colors.white,
-          centerTitle: true,
-          title: Image.asset('images/logo_principal.png',
-              height: 50, fit: BoxFit.cover),
+          title: const Text("Home"),
           actions: <Widget>[
             IconButton(
               icon: const Icon(Icons.messenger_rounded),
-              tooltip: 'Show Snackbar',
               onPressed: () {
-                ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text('This is a snackbar')));
+                //ScaffoldMessenger.of(context).showSnackBar(
+                //const SnackBar(content: Text('This is a snackbar')));
+                Navigator.of(context).pushNamed('/messages');
               },
             ),
           ],
         ),
         body: Container(
+          color: Colors.white,
           child: Column(
             children: [
               Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
                   Container(
-                    margin:
-                        EdgeInsets.symmetric(horizontal: 10.0, vertical: 10.0),
-                    decoration: BoxDecoration(
+                    margin: const EdgeInsets.symmetric(
+                        horizontal: 10.0, vertical: 10.0),
+                    decoration: const BoxDecoration(
                       color: Color.fromARGB(49, 26, 29, 29),
                       borderRadius: BorderRadius.all(Radius.circular(22.0)),
                     ),
@@ -133,9 +79,9 @@ class DashboardPageState extends State<DashboardPage> {
                   Expanded(
                     flex: 1,
                     child: TextFormField(
-                      decoration: InputDecoration(
+                      decoration: const InputDecoration(
                         border: InputBorder.none,
-                        hintText: "Search 4 Party",
+                        hintText: "Search: ",
                         hintStyle: TextStyle(color: Colors.black),
                         icon: Icon(Icons.search, color: Colors.black),
                       ),
@@ -153,7 +99,7 @@ class DashboardPageState extends State<DashboardPage> {
                     scrollDirection: Axis.horizontal,
                     itemBuilder: (context, index) => Container(
                       child: TextFormField(
-                        decoration: InputDecoration(
+                        decoration: const InputDecoration(
                           border: InputBorder.none,
                           hintText: "Type",
                           hintStyle: TextStyle(color: Colors.black),
@@ -161,14 +107,14 @@ class DashboardPageState extends State<DashboardPage> {
                         ),
                       ),
                       width: 120,
-                      margin: EdgeInsets.all(10),
-                      color: Color(0xFFF5F9FF),
+                      margin: const EdgeInsets.all(10),
+                      color: const Color(0xFFF5F9FF),
                     ),
                   )),
               Expanded(
                   child: ListView.builder(
                       itemCount: itemsData.length,
-                      physics: BouncingScrollPhysics(),
+                      physics: const BouncingScrollPhysics(),
                       itemBuilder: (context, index) {
                         return itemsData[index];
                       }))

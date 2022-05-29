@@ -64,7 +64,36 @@ class _NewEvent extends State<NewEvent> {
             icon: const Icon(
               Icons.arrow_back,
             ),
-            onPressed: () {}, //TODO boton de volver
+            onPressed: () {
+              showDialog(
+                  context: context,
+                  barrierDismissible: true,
+                  builder: (_) => AlertDialog(
+                        title: const Text("Exit without saving?"),
+                        elevation: 1,
+                        actions: [
+                          TextButton(
+                              onPressed: () {
+                                Navigator.pop(context, 'Cancel');
+                              },
+                              child: Text(
+                                "Cancel",
+                                style: TextStyle(
+                                    color: Theme.of(context).focusColor),
+                              )),
+                          TextButton(
+                              onPressed: () {
+                                Navigator.of(context).pop();
+                              },
+                              child: Text(
+                                "Yes",
+                                style: TextStyle(
+                                    color: Theme.of(context).errorColor),
+                              ))
+                        ],
+                      ));
+              ;
+            },
           ),
         ),
         body: Column(

@@ -89,8 +89,9 @@ class _EditEvent extends State<EditEvent> {
                               )),
                           TextButton(
                               onPressed: () {
-                                Navigator.of(context).pushNamed('/your-events',
-                                    arguments: widget.event.creatorId);
+                                Navigator.of(context).pushNamed(
+                                    '/event-details',
+                                    arguments: widget.event);
                               },
                               child: Text(
                                 "Yes",

@@ -60,15 +60,7 @@ class _EventDetailsPage extends State<EventDetailsPage> {
             Icons.arrow_back,
           ),
           onPressed: () {
-            if (widget.isEditable) {
-              Navigator.of(context)
-                  .pushNamed('/your-events', arguments: widget.userId);
-            } else if (widget.isSubscribed) {
-              Navigator.of(context)
-                  .pushNamed('/your-subscriptions', arguments: widget.userId);
-            } else {
-              //FIXME volver a menú
-            }
+            Navigator.of(context).pop();
           },
         ),
         actions: [

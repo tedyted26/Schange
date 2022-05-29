@@ -21,14 +21,11 @@ class RouteGenerator {
         return MaterialPageRoute(builder: (_) => const DashboardPage());
 
       case '/event-details':
-        if (args is Event) {
-          return MaterialPageRoute(
-              builder: (_) => EventDetailsPage(
-                    event: args,
-                  ));
-        } else {
-          return _errorRoute();
-        }
+        return MaterialPageRoute(
+            builder: (_) => EventDetailsPage(
+                  event: args as Event,
+                ));
+
       // Navigator.of(context).pushNamed('/event-details', arguments: [objetoEvento, idUsuarioLoggeado])}
 
       case '/new-event':
