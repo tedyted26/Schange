@@ -9,11 +9,17 @@ class LoginPage extends StatefulWidget {
 }
 
 class LoginPageState extends State<LoginPage> {
+  final mail = "lauralevy@mail.com";
+  final password = "pass123";
+  final TextEditingController _mailController = TextEditingController();
+  final TextEditingController _passController = TextEditingController();
+  bool isVisible = false;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        color: Color(0xffffffff),
+        color: const Color(0xffffffff),
         padding: EdgeInsets.only(
                 left: MediaQuery.of(context).size.width * 0.08) +
             EdgeInsets.only(right: MediaQuery.of(context).size.width * 0.08) +
@@ -28,22 +34,35 @@ class LoginPageState extends State<LoginPage> {
                 width: MediaQuery.of(context).size.width * 0.3,
               ),
             ),
+            isVisible
+                ? Container(
+                    height: MediaQuery.of(context).size.height * 0.025,
+                    margin: EdgeInsets.only(
+                        bottom: MediaQuery.of(context).size.height * 0.01),
+                    child: Text(
+                      "Mail or password incorrect",
+                      style: TextStyle(color: Theme.of(context).errorColor),
+                    ))
+                : Container(
+                    height: MediaQuery.of(context).size.height * 0.035,
+                  ),
             Container(
               margin: EdgeInsets.only(
                   bottom: MediaQuery.of(context).size.height * 0.03),
               decoration: BoxDecoration(
-                border: Border.all(color: Color(0xff023047)),
-                color: Color(0x44E3F2FD),
+                border: Border.all(color: const Color(0xff023047)),
+                color: const Color(0x44E3F2FD),
                 borderRadius: BorderRadius.circular(15),
               ),
               child: TextField(
+                controller: _mailController,
                 autofocus: false,
-                style: TextStyle(color: Color(0xff000000)),
+                style: const TextStyle(color: Color(0xff000000)),
                 decoration: InputDecoration(
-                    hintStyle: TextStyle(color: Color(0xff023047)),
-                    fillColor: Color(0xff023047),
-                    hintText: 'Username',
-                    prefixIcon: Icon(
+                    hintStyle: const TextStyle(color: Color(0xff023047)),
+                    fillColor: const Color(0xff023047),
+                    hintText: 'Mail',
+                    prefixIcon: const Icon(
                       Icons.person,
                       color: Color(0xff023047),
                     ),
@@ -58,19 +77,20 @@ class LoginPageState extends State<LoginPage> {
               margin: EdgeInsets.only(
                   bottom: MediaQuery.of(context).size.height * 0.03),
               decoration: BoxDecoration(
-                border: Border.all(color: Color(0xff023047)),
-                color: Color(0x44E3F2FD),
+                border: Border.all(color: const Color(0xff023047)),
+                color: const Color(0x44E3F2FD),
                 borderRadius: BorderRadius.circular(15),
               ),
               child: TextField(
                 autofocus: false,
-                style: TextStyle(color: Color(0xff023047)),
+                controller: _passController,
+                style: const TextStyle(color: Color(0xff023047)),
                 obscureText: true,
                 decoration: InputDecoration(
-                    hintStyle: TextStyle(color: Color(0xff023047)),
-                    fillColor: Color(0xff023047),
+                    hintStyle: const TextStyle(color: Color(0xff023047)),
+                    fillColor: const Color(0xff023047),
                     hintText: 'Password',
-                    prefixIcon: Icon(
+                    prefixIcon: const Icon(
                       Icons.security_outlined,
                       color: Color(0xff023047),
                     ),
@@ -88,19 +108,26 @@ class LoginPageState extends State<LoginPage> {
               child: ElevatedButton(
                 child: const Text('LOGIN'),
                 style: ElevatedButton.styleFrom(
-                  primary: Color(0xff219EBC),
-                  shape: new RoundedRectangleBorder(
-                    borderRadius: new BorderRadius.circular(15),
+                  primary: const Color(0xff219EBC),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(15),
                   ),
                 ),
                 onPressed: () {
                   FocusScope.of(context)
                       .unfocus(); // Que no abra el teclado al volver al login
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => const DashboardPage()),
-                  );
+                  if (_mailController.text == mail &&
+                      _passController.text == password) {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const DashboardPage()),
+                    );
+                  } else {
+                    setState(() {
+                      isVisible = true;
+                    });
+                  }
                 },
               ),
             ),
@@ -117,9 +144,9 @@ class LoginPageState extends State<LoginPage> {
                           builder: (context) => const RegisterPage()),
                     );
                   },
-                  child: Text("Forgot Password?"),
+                  child: const Text("Forgot Password?"),
                   style: TextButton.styleFrom(
-                    primary: Color(0xff023047),
+                    primary: const Color(0xff023047),
                   ),
                 ),
               ],

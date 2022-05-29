@@ -10,14 +10,13 @@ import 'User.dart';
 
 class EventDetailsPage extends StatefulWidget {
   final Event event;
-  final int userId;
+  final int userId = 0;
   bool isEditable = false;
   bool isSubscribed = false;
 
   EventDetailsPage({
     Key? key,
     required this.event,
-    required this.userId,
   }) : super(key: key) {
     if (event.creatorId == userId) {
       isEditable = true;

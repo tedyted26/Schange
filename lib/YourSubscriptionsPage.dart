@@ -8,8 +8,8 @@ import 'package:flutter/services.dart';
 
 //HAY QUE PASARLE EL ID DEL USUARIO, ÉL YA SE BUSCA LA VIDA PARA CARGAR LAS COSAS
 class YourSubscriptions extends StatefulWidget {
-  final int userId;
-  const YourSubscriptions({Key? key, required this.userId}) : super(key: key);
+  final int userId = 0;
+  const YourSubscriptions({Key? key}) : super(key: key);
 
   @override
   State<YourSubscriptions> createState() => _YourSubscriptionsState();

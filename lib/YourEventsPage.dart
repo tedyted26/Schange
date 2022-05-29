@@ -7,10 +7,9 @@ import 'EventCustomCard.dart';
 
 //HAY QUE PASARLE EL ID DEL USUARIO, ÉL YA SE BUSCA LA VIDA PARA CARGAR LAS COSAS
 class YourEvents extends StatefulWidget {
-  final int userId;
+  final int userId = 0;
   const YourEvents({
     Key? key,
-    required this.userId,
   }) : super(key: key);
 
   @override
