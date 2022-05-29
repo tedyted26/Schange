@@ -17,55 +17,68 @@ class _TipsScreenState extends State<TipsScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        elevation: 2,
-        backgroundColor: Colors.white,
+        title: const Text("Tips"),
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios_new),
-          onPressed: () {},
-          color: const Color.fromRGBO(0, 12, 48, 71),
-        ), //colocar aqui a donde ir con el boton de la flecha atras
-        title: const Text(
-          'Tips',
-          style: TextStyle(
-              fontFamily: 'SF UI Text', color: Color.fromRGBO(0, 12, 48, 71)),
+          icon: const Icon(
+            Icons.arrow_back,
+          ),
+          onPressed: () {}, //TODO boton de volver
         ),
-        centerTitle: true,
       ),
       body: SingleChildScrollView(
-        padding: const EdgeInsets.all(20),
-        child: Center(
+        child: Container(
+            color: Color(0xffF5F9FF),
+            padding: const EdgeInsets.all(15),
             child: Column(
-          children: <Widget>[
-            _seleccionador(),
-            if (idiomaSeleccionado == 'Spanish') ...[
-              _tablaSpanish(),
-            ],
-            if (idiomaSeleccionado == 'French') ...[
-              _tablaFrench(),
-            ],
-            if (idiomaSeleccionado == 'German') ...[
-              _tablaGerman(),
-            ],
-            if (idiomaSeleccionado == 'Italian') ...[
-              _tablaItalian(),
-            ],
-            _tipCard(),
-          ],
-        )),
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                Container(
+                    margin: const EdgeInsets.only(top: 5, bottom: 5),
+                    width: 240,
+                    alignment: Alignment.bottomLeft,
+                    child: Text("Select Language: ",
+                        style: TextStyle(
+                          color: Theme.of(context).primaryColor,
+                          fontSize: 14,
+                        ))),
+                Container(
+                  alignment: Alignment.center,
+                  width: 250,
+                  margin: const EdgeInsets.only(bottom: 25),
+                  child: _seleccionador(),
+                ),
+                if (idiomaSeleccionado == 'Spanish') ...[
+                  _tablaSpanish(),
+                ],
+                if (idiomaSeleccionado == 'French') ...[
+                  _tablaFrench(),
+                ],
+                if (idiomaSeleccionado == 'German') ...[
+                  _tablaGerman(),
+                ],
+                if (idiomaSeleccionado == 'Italian') ...[
+                  _tablaItalian(),
+                ],
+                Container(
+                    margin: const EdgeInsets.only(top: 25), child: _tipCard()),
+              ],
+            )),
       ),
     );
   }
 
   Widget _seleccionador() {
     return Card(
-      elevation: 10,
+      shadowColor: const Color(0xffBABDFF),
+      elevation: 5,
+      color: Colors.white,
       child: Container(
         alignment: Alignment.center,
         child: Column(
           children: [
             Container(
               alignment: Alignment.centerLeft,
-              margin: const EdgeInsets.only(left: 10),
+              padding: const EdgeInsets.only(left: 10, right: 5),
               child: DropdownButton(
                 style: const TextStyle(
                     fontSize: 18.0, color: Color.fromRGBO(0, 12, 48, 71)),
@@ -76,7 +89,9 @@ class _TipsScreenState extends State<TipsScreen> {
                 items: idiomas.map((String items) {
                   return DropdownMenuItem(
                     value: items,
-                    child: Text(items),
+                    child: Text(
+                      items,
+                    ),
                   );
                 }).toList(),
                 // After selecting the desired option,it will
@@ -99,8 +114,9 @@ class _TipsScreenState extends State<TipsScreen> {
       child: Padding(
         padding: const EdgeInsets.all(0),
         child: Card(
+          shadowColor: Color(0xffBABDFF),
+          elevation: 5,
           clipBehavior: Clip.antiAlias,
-          elevation: 10,
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
           child: Column(
@@ -112,18 +128,22 @@ class _TipsScreenState extends State<TipsScreen> {
                     'https://ichef.bbci.co.uk/news/640/cpsprodpb/1A28/production/_103669660_whatsubject.jpg'),
                 const Padding(
                   padding: EdgeInsets.all(16.0),
-                  child: Text('Tips',
-                      style: TextStyle(color: Colors.white, fontSize: 20)),
+                  child: Text('Tip of the day!',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 22,
+                      )),
                 )
               ]),
               Padding(
-                padding: const EdgeInsets.only(left: 16, top: 16, right: 16),
+                padding: const EdgeInsets.all(20),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: const <Widget>[
                     Text(
                       "If you visit Spain, tipping is not included in the final bill. If you liked the food and the service of the waiters or barman, which you will undoubtedly do as they are usually professionals who have been in the trade for many years, the tip is usually 10% or more of the total bill.\n",
-                      style: TextStyle(color: Color.fromRGBO(0, 12, 48, 71)),
+                      style: TextStyle(
+                          color: Color.fromRGBO(0, 12, 48, 71), fontSize: 16),
                     )
                   ],
                 ),
@@ -137,9 +157,11 @@ class _TipsScreenState extends State<TipsScreen> {
 
   Widget _tablaSpanish() {
     return SizedBox(
-      height: 170,
       child: Card(
-        elevation: 10,
+        shadowColor: Color(0xffBABDFF),
+        elevation: 5,
+        shape: const RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(Radius.circular(12))),
         child: Center(
             child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -156,7 +178,7 @@ class _TipsScreenState extends State<TipsScreen> {
                     Column(children: [
                       Container(
                         alignment: Alignment.centerLeft,
-                        margin: const EdgeInsets.only(left: 10),
+                        margin: const EdgeInsets.only(left: 15, top: 15),
                         child: const Text('Hello',
                             style: TextStyle(
                                 fontSize: 18.0,
@@ -166,7 +188,7 @@ class _TipsScreenState extends State<TipsScreen> {
                     Column(children: [
                       Container(
                         alignment: Alignment.centerLeft,
-                        margin: const EdgeInsets.only(left: 10),
+                        margin: const EdgeInsets.only(left: 15, top: 15),
                         child: const Text('Hola',
                             style: TextStyle(
                                 fontSize: 18.0,
@@ -179,7 +201,7 @@ class _TipsScreenState extends State<TipsScreen> {
                     Column(children: [
                       Container(
                         alignment: Alignment.centerLeft,
-                        margin: const EdgeInsets.only(left: 10),
+                        margin: const EdgeInsets.only(left: 15, top: 15),
                         child: const Text('How are you?',
                             style: TextStyle(
                                 fontSize: 18.0,
@@ -189,7 +211,7 @@ class _TipsScreenState extends State<TipsScreen> {
                     Column(children: [
                       Container(
                         alignment: Alignment.centerLeft,
-                        margin: const EdgeInsets.only(left: 10),
+                        margin: const EdgeInsets.only(left: 15, top: 15),
                         child: const Text('¿Que tal estás?',
                             style: TextStyle(
                                 fontSize: 18.0,
@@ -202,7 +224,7 @@ class _TipsScreenState extends State<TipsScreen> {
                     Column(children: [
                       Container(
                         alignment: Alignment.centerLeft,
-                        margin: const EdgeInsets.only(left: 10),
+                        margin: const EdgeInsets.only(left: 15, top: 15),
                         child: const Text('Are you ok?',
                             style: TextStyle(
                                 fontSize: 18.0,
@@ -212,7 +234,7 @@ class _TipsScreenState extends State<TipsScreen> {
                     Column(children: [
                       Container(
                         alignment: Alignment.centerLeft,
-                        margin: const EdgeInsets.only(left: 10),
+                        margin: const EdgeInsets.only(left: 15, top: 15),
                         child: const Text('¿Estas bien?',
                             style: TextStyle(
                                 fontSize: 18.0,
@@ -225,7 +247,7 @@ class _TipsScreenState extends State<TipsScreen> {
                     Column(children: [
                       Container(
                         alignment: Alignment.centerLeft,
-                        margin: const EdgeInsets.only(left: 10),
+                        margin: const EdgeInsets.only(left: 15, top: 15),
                         child: const Text('Thank you',
                             style: TextStyle(
                                 fontSize: 18.0,
@@ -235,7 +257,7 @@ class _TipsScreenState extends State<TipsScreen> {
                     Column(children: [
                       Container(
                         alignment: Alignment.centerLeft,
-                        margin: const EdgeInsets.only(left: 10),
+                        margin: const EdgeInsets.only(left: 15, top: 15),
                         child: const Text('Gracias',
                             style: TextStyle(
                                 fontSize: 18.0,
@@ -248,7 +270,7 @@ class _TipsScreenState extends State<TipsScreen> {
                     Column(children: [
                       Container(
                         alignment: Alignment.centerLeft,
-                        margin: const EdgeInsets.only(left: 10),
+                        margin: const EdgeInsets.only(left: 15, top: 15),
                         child: const Text('Good morning',
                             style: TextStyle(
                                 fontSize: 18.0,
@@ -258,7 +280,7 @@ class _TipsScreenState extends State<TipsScreen> {
                     Column(children: [
                       Container(
                         alignment: Alignment.centerLeft,
-                        margin: const EdgeInsets.only(left: 10),
+                        margin: const EdgeInsets.only(left: 15, top: 15),
                         child: const Text('Buenos días',
                             style: TextStyle(
                                 fontSize: 18.0,
@@ -271,7 +293,7 @@ class _TipsScreenState extends State<TipsScreen> {
                     Column(children: [
                       Container(
                         alignment: Alignment.centerLeft,
-                        margin: const EdgeInsets.only(left: 10),
+                        margin: const EdgeInsets.only(left: 15, top: 15),
                         child: const Text('Good afternoon',
                             style: TextStyle(
                                 fontSize: 18.0,
@@ -281,7 +303,7 @@ class _TipsScreenState extends State<TipsScreen> {
                     Column(children: [
                       Container(
                         alignment: Alignment.centerLeft,
-                        margin: const EdgeInsets.only(left: 10),
+                        margin: const EdgeInsets.only(left: 15, top: 15),
                         child: const Text('Buenas tardes',
                             style: TextStyle(
                                 fontSize: 18.0,
@@ -294,7 +316,8 @@ class _TipsScreenState extends State<TipsScreen> {
                     Column(children: [
                       Container(
                         alignment: Alignment.centerLeft,
-                        margin: const EdgeInsets.only(left: 10),
+                        margin: const EdgeInsets.only(
+                            left: 15, top: 15, bottom: 15),
                         child: const Text('Good night',
                             style: TextStyle(
                                 fontSize: 18.0,
@@ -304,7 +327,8 @@ class _TipsScreenState extends State<TipsScreen> {
                     Column(children: [
                       Container(
                         alignment: Alignment.centerLeft,
-                        margin: const EdgeInsets.only(left: 10),
+                        margin: const EdgeInsets.only(
+                            left: 15, top: 15, bottom: 15),
                         child: const Text('Buenas noches',
                             style: TextStyle(
                                 fontSize: 18.0,
@@ -322,9 +346,11 @@ class _TipsScreenState extends State<TipsScreen> {
 
   Widget _tablaFrench() {
     return SizedBox(
-      height: 170,
       child: Card(
-        elevation: 10,
+        shadowColor: Color(0xffBABDFF),
+        elevation: 5,
+        shape: const RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(Radius.circular(12))),
         child: Center(
             child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -341,7 +367,7 @@ class _TipsScreenState extends State<TipsScreen> {
                     Column(children: [
                       Container(
                         alignment: Alignment.centerLeft,
-                        margin: const EdgeInsets.only(left: 10),
+                        margin: const EdgeInsets.only(left: 15, top: 15),
                         child: const Text('Hello',
                             style: TextStyle(
                                 fontSize: 18.0,
@@ -351,7 +377,7 @@ class _TipsScreenState extends State<TipsScreen> {
                     Column(children: [
                       Container(
                         alignment: Alignment.centerLeft,
-                        margin: const EdgeInsets.only(left: 10),
+                        margin: const EdgeInsets.only(left: 15, top: 15),
                         child: const Text('Bonjour',
                             style: TextStyle(
                                 fontSize: 18.0,
@@ -364,7 +390,7 @@ class _TipsScreenState extends State<TipsScreen> {
                     Column(children: [
                       Container(
                         alignment: Alignment.centerLeft,
-                        margin: const EdgeInsets.only(left: 10),
+                        margin: const EdgeInsets.only(left: 15, top: 15),
                         child: const Text('How are you?',
                             style: TextStyle(
                                 fontSize: 18.0,
@@ -374,7 +400,7 @@ class _TipsScreenState extends State<TipsScreen> {
                     Column(children: [
                       Container(
                         alignment: Alignment.centerLeft,
-                        margin: const EdgeInsets.only(left: 10),
+                        margin: const EdgeInsets.only(left: 15, top: 15),
                         child: const Text('Comment ça va?',
                             style: TextStyle(
                                 fontSize: 18.0,
@@ -387,7 +413,7 @@ class _TipsScreenState extends State<TipsScreen> {
                     Column(children: [
                       Container(
                         alignment: Alignment.centerLeft,
-                        margin: const EdgeInsets.only(left: 10),
+                        margin: const EdgeInsets.only(left: 15, top: 15),
                         child: const Text('Are you ok?',
                             style: TextStyle(
                                 fontSize: 18.0,
@@ -397,7 +423,7 @@ class _TipsScreenState extends State<TipsScreen> {
                     Column(children: [
                       Container(
                         alignment: Alignment.centerLeft,
-                        margin: const EdgeInsets.only(left: 10),
+                        margin: const EdgeInsets.only(left: 15, top: 15),
                         child: const Text('Vous allez bien?',
                             style: TextStyle(
                                 fontSize: 18.0,
@@ -410,7 +436,7 @@ class _TipsScreenState extends State<TipsScreen> {
                     Column(children: [
                       Container(
                         alignment: Alignment.centerLeft,
-                        margin: const EdgeInsets.only(left: 10),
+                        margin: const EdgeInsets.only(left: 15, top: 15),
                         child: const Text('Thank you',
                             style: TextStyle(
                                 fontSize: 18.0,
@@ -420,7 +446,7 @@ class _TipsScreenState extends State<TipsScreen> {
                     Column(children: [
                       Container(
                         alignment: Alignment.centerLeft,
-                        margin: const EdgeInsets.only(left: 10),
+                        margin: const EdgeInsets.only(left: 15, top: 15),
                         child: const Text('Je vous remercie',
                             style: TextStyle(
                                 fontSize: 18.0,
@@ -433,7 +459,7 @@ class _TipsScreenState extends State<TipsScreen> {
                     Column(children: [
                       Container(
                         alignment: Alignment.centerLeft,
-                        margin: const EdgeInsets.only(left: 10),
+                        margin: const EdgeInsets.only(left: 15, top: 15),
                         child: const Text('Good morning',
                             style: TextStyle(
                                 fontSize: 18.0,
@@ -443,7 +469,7 @@ class _TipsScreenState extends State<TipsScreen> {
                     Column(children: [
                       Container(
                         alignment: Alignment.centerLeft,
-                        margin: const EdgeInsets.only(left: 10),
+                        margin: const EdgeInsets.only(left: 15, top: 15),
                         child: const Text('Bonjour',
                             style: TextStyle(
                                 fontSize: 18.0,
@@ -456,7 +482,7 @@ class _TipsScreenState extends State<TipsScreen> {
                     Column(children: [
                       Container(
                         alignment: Alignment.centerLeft,
-                        margin: const EdgeInsets.only(left: 10),
+                        margin: const EdgeInsets.only(left: 15, top: 15),
                         child: const Text('Good afternoon',
                             style: TextStyle(
                                 fontSize: 18.0,
@@ -466,7 +492,7 @@ class _TipsScreenState extends State<TipsScreen> {
                     Column(children: [
                       Container(
                         alignment: Alignment.centerLeft,
-                        margin: const EdgeInsets.only(left: 10),
+                        margin: const EdgeInsets.only(left: 15, top: 15),
                         child: const Text('Bon après-midi',
                             style: TextStyle(
                                 fontSize: 18.0,
@@ -479,7 +505,8 @@ class _TipsScreenState extends State<TipsScreen> {
                     Column(children: [
                       Container(
                         alignment: Alignment.centerLeft,
-                        margin: const EdgeInsets.only(left: 10),
+                        margin: const EdgeInsets.only(
+                            left: 15, top: 15, bottom: 15),
                         child: const Text('Good night',
                             style: TextStyle(
                                 fontSize: 18.0,
@@ -489,7 +516,8 @@ class _TipsScreenState extends State<TipsScreen> {
                     Column(children: [
                       Container(
                         alignment: Alignment.centerLeft,
-                        margin: const EdgeInsets.only(left: 10),
+                        margin: const EdgeInsets.only(
+                            left: 15, top: 15, bottom: 15),
                         child: const Text('Bonsoir',
                             style: TextStyle(
                                 fontSize: 18.0,
@@ -507,9 +535,11 @@ class _TipsScreenState extends State<TipsScreen> {
 
   Widget _tablaGerman() {
     return SizedBox(
-      height: 170,
       child: Card(
-        elevation: 10,
+        shadowColor: Color(0xffBABDFF),
+        elevation: 5,
+        shape: const RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(Radius.circular(12))),
         child: Center(
             child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -526,7 +556,7 @@ class _TipsScreenState extends State<TipsScreen> {
                     Column(children: [
                       Container(
                         alignment: Alignment.centerLeft,
-                        margin: const EdgeInsets.only(left: 10),
+                        margin: const EdgeInsets.only(left: 15, top: 15),
                         child: const Text('Hello',
                             style: TextStyle(
                                 fontSize: 18.0,
@@ -536,7 +566,7 @@ class _TipsScreenState extends State<TipsScreen> {
                     Column(children: [
                       Container(
                         alignment: Alignment.centerLeft,
-                        margin: const EdgeInsets.only(left: 10),
+                        margin: const EdgeInsets.only(left: 15, top: 15),
                         child: const Text('Hallo',
                             style: TextStyle(
                                 fontSize: 18.0,
@@ -549,7 +579,7 @@ class _TipsScreenState extends State<TipsScreen> {
                     Column(children: [
                       Container(
                         alignment: Alignment.centerLeft,
-                        margin: const EdgeInsets.only(left: 10),
+                        margin: const EdgeInsets.only(left: 15, top: 15),
                         child: const Text('How are you?',
                             style: TextStyle(
                                 fontSize: 18.0,
@@ -559,7 +589,7 @@ class _TipsScreenState extends State<TipsScreen> {
                     Column(children: [
                       Container(
                         alignment: Alignment.centerLeft,
-                        margin: const EdgeInsets.only(left: 10),
+                        margin: const EdgeInsets.only(left: 15, top: 15),
                         child: const Text('Wie geht es dir?',
                             style: TextStyle(
                                 fontSize: 18.0,
@@ -572,7 +602,7 @@ class _TipsScreenState extends State<TipsScreen> {
                     Column(children: [
                       Container(
                         alignment: Alignment.centerLeft,
-                        margin: const EdgeInsets.only(left: 10),
+                        margin: const EdgeInsets.only(left: 15, top: 15),
                         child: const Text('Are you ok?',
                             style: TextStyle(
                                 fontSize: 18.0,
@@ -582,7 +612,7 @@ class _TipsScreenState extends State<TipsScreen> {
                     Column(children: [
                       Container(
                         alignment: Alignment.centerLeft,
-                        margin: const EdgeInsets.only(left: 10),
+                        margin: const EdgeInsets.only(left: 15, top: 15),
                         child: const Text('Geht es Ihnen gut?',
                             style: TextStyle(
                                 fontSize: 18.0,
@@ -595,7 +625,7 @@ class _TipsScreenState extends State<TipsScreen> {
                     Column(children: [
                       Container(
                         alignment: Alignment.centerLeft,
-                        margin: const EdgeInsets.only(left: 10),
+                        margin: const EdgeInsets.only(left: 15, top: 15),
                         child: const Text('Thank you',
                             style: TextStyle(
                                 fontSize: 18.0,
@@ -605,7 +635,7 @@ class _TipsScreenState extends State<TipsScreen> {
                     Column(children: [
                       Container(
                         alignment: Alignment.centerLeft,
-                        margin: const EdgeInsets.only(left: 10),
+                        margin: const EdgeInsets.only(left: 15, top: 15),
                         child: const Text('Danke',
                             style: TextStyle(
                                 fontSize: 18.0,
@@ -618,7 +648,7 @@ class _TipsScreenState extends State<TipsScreen> {
                     Column(children: [
                       Container(
                         alignment: Alignment.centerLeft,
-                        margin: const EdgeInsets.only(left: 10),
+                        margin: const EdgeInsets.only(left: 15, top: 15),
                         child: const Text('Good morning',
                             style: TextStyle(
                                 fontSize: 18.0,
@@ -628,7 +658,7 @@ class _TipsScreenState extends State<TipsScreen> {
                     Column(children: [
                       Container(
                         alignment: Alignment.centerLeft,
-                        margin: const EdgeInsets.only(left: 10),
+                        margin: const EdgeInsets.only(left: 15, top: 15),
                         child: const Text('Guten Morgen',
                             style: TextStyle(
                                 fontSize: 18.0,
@@ -641,7 +671,7 @@ class _TipsScreenState extends State<TipsScreen> {
                     Column(children: [
                       Container(
                         alignment: Alignment.centerLeft,
-                        margin: const EdgeInsets.only(left: 10),
+                        margin: const EdgeInsets.only(left: 15, top: 15),
                         child: const Text('Good afternoon',
                             style: TextStyle(
                                 fontSize: 18.0,
@@ -651,7 +681,7 @@ class _TipsScreenState extends State<TipsScreen> {
                     Column(children: [
                       Container(
                         alignment: Alignment.centerLeft,
-                        margin: const EdgeInsets.only(left: 10),
+                        margin: const EdgeInsets.only(left: 15, top: 15),
                         child: const Text('Guten Tag',
                             style: TextStyle(
                                 fontSize: 18.0,
@@ -664,7 +694,8 @@ class _TipsScreenState extends State<TipsScreen> {
                     Column(children: [
                       Container(
                         alignment: Alignment.centerLeft,
-                        margin: const EdgeInsets.only(left: 10),
+                        margin: const EdgeInsets.only(
+                            left: 15, top: 15, bottom: 15),
                         child: const Text('Good night',
                             style: TextStyle(
                                 fontSize: 18.0,
@@ -674,7 +705,8 @@ class _TipsScreenState extends State<TipsScreen> {
                     Column(children: [
                       Container(
                         alignment: Alignment.centerLeft,
-                        margin: const EdgeInsets.only(left: 10),
+                        margin: const EdgeInsets.only(
+                            left: 15, top: 15, bottom: 15),
                         child: const Text('Gute Nacht',
                             style: TextStyle(
                                 fontSize: 18.0,
@@ -692,9 +724,11 @@ class _TipsScreenState extends State<TipsScreen> {
 
   Widget _tablaItalian() {
     return SizedBox(
-      height: 170,
       child: Card(
-        elevation: 10,
+        shadowColor: Color(0xffBABDFF),
+        elevation: 5,
+        shape: const RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(Radius.circular(12))),
         child: Center(
             child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -711,7 +745,7 @@ class _TipsScreenState extends State<TipsScreen> {
                     Column(children: [
                       Container(
                         alignment: Alignment.centerLeft,
-                        margin: const EdgeInsets.only(left: 10),
+                        margin: const EdgeInsets.only(left: 15, top: 15),
                         child: const Text('Hello',
                             style: TextStyle(
                                 fontSize: 18.0,
@@ -721,7 +755,7 @@ class _TipsScreenState extends State<TipsScreen> {
                     Column(children: [
                       Container(
                         alignment: Alignment.centerLeft,
-                        margin: const EdgeInsets.only(left: 10),
+                        margin: const EdgeInsets.only(left: 15, top: 15),
                         child: const Text('Ciao',
                             style: TextStyle(
                                 fontSize: 18.0,
@@ -734,7 +768,7 @@ class _TipsScreenState extends State<TipsScreen> {
                     Column(children: [
                       Container(
                         alignment: Alignment.centerLeft,
-                        margin: const EdgeInsets.only(left: 10),
+                        margin: const EdgeInsets.only(left: 15, top: 15),
                         child: const Text('How are you?',
                             style: TextStyle(
                                 fontSize: 18.0,
@@ -744,7 +778,7 @@ class _TipsScreenState extends State<TipsScreen> {
                     Column(children: [
                       Container(
                         alignment: Alignment.centerLeft,
-                        margin: const EdgeInsets.only(left: 10),
+                        margin: const EdgeInsets.only(left: 15, top: 15),
                         child: const Text('Come stai?',
                             style: TextStyle(
                                 fontSize: 18.0,
@@ -757,7 +791,7 @@ class _TipsScreenState extends State<TipsScreen> {
                     Column(children: [
                       Container(
                         alignment: Alignment.centerLeft,
-                        margin: const EdgeInsets.only(left: 10),
+                        margin: const EdgeInsets.only(left: 15, top: 15),
                         child: const Text('Are you ok?',
                             style: TextStyle(
                                 fontSize: 18.0,
@@ -767,7 +801,7 @@ class _TipsScreenState extends State<TipsScreen> {
                     Column(children: [
                       Container(
                         alignment: Alignment.centerLeft,
-                        margin: const EdgeInsets.only(left: 10),
+                        margin: const EdgeInsets.only(left: 15, top: 15),
                         child: const Text('Stai bene?',
                             style: TextStyle(
                                 fontSize: 18.0,
@@ -780,7 +814,7 @@ class _TipsScreenState extends State<TipsScreen> {
                     Column(children: [
                       Container(
                         alignment: Alignment.centerLeft,
-                        margin: const EdgeInsets.only(left: 10),
+                        margin: const EdgeInsets.only(left: 15, top: 15),
                         child: const Text('Thank you',
                             style: TextStyle(
                                 fontSize: 18.0,
@@ -790,7 +824,7 @@ class _TipsScreenState extends State<TipsScreen> {
                     Column(children: [
                       Container(
                         alignment: Alignment.centerLeft,
-                        margin: const EdgeInsets.only(left: 10),
+                        margin: const EdgeInsets.only(left: 15, top: 15),
                         child: const Text('Grazie',
                             style: TextStyle(
                                 fontSize: 18.0,
@@ -803,7 +837,7 @@ class _TipsScreenState extends State<TipsScreen> {
                     Column(children: [
                       Container(
                         alignment: Alignment.centerLeft,
-                        margin: const EdgeInsets.only(left: 10),
+                        margin: const EdgeInsets.only(left: 15, top: 15),
                         child: const Text('Good morning',
                             style: TextStyle(
                                 fontSize: 18.0,
@@ -813,7 +847,7 @@ class _TipsScreenState extends State<TipsScreen> {
                     Column(children: [
                       Container(
                         alignment: Alignment.centerLeft,
-                        margin: const EdgeInsets.only(left: 10),
+                        margin: const EdgeInsets.only(left: 15, top: 15),
                         child: const Text('Buongiorno',
                             style: TextStyle(
                                 fontSize: 18.0,
@@ -826,7 +860,7 @@ class _TipsScreenState extends State<TipsScreen> {
                     Column(children: [
                       Container(
                         alignment: Alignment.centerLeft,
-                        margin: const EdgeInsets.only(left: 10),
+                        margin: const EdgeInsets.only(left: 15, top: 15),
                         child: const Text('Good afternoon',
                             style: TextStyle(
                                 fontSize: 18.0,
@@ -836,7 +870,7 @@ class _TipsScreenState extends State<TipsScreen> {
                     Column(children: [
                       Container(
                         alignment: Alignment.centerLeft,
-                        margin: const EdgeInsets.only(left: 10),
+                        margin: const EdgeInsets.only(left: 15, top: 15),
                         child: const Text('Buon pomeriggio',
                             style: TextStyle(
                                 fontSize: 18.0,
@@ -849,7 +883,8 @@ class _TipsScreenState extends State<TipsScreen> {
                     Column(children: [
                       Container(
                         alignment: Alignment.centerLeft,
-                        margin: const EdgeInsets.only(left: 10),
+                        margin: const EdgeInsets.only(
+                            left: 15, top: 15, bottom: 15),
                         child: const Text('Good night',
                             style: TextStyle(
                                 fontSize: 18.0,
@@ -859,7 +894,8 @@ class _TipsScreenState extends State<TipsScreen> {
                     Column(children: [
                       Container(
                         alignment: Alignment.centerLeft,
-                        margin: const EdgeInsets.only(left: 10),
+                        margin: const EdgeInsets.only(
+                            left: 15, top: 15, bottom: 15),
                         child: const Text('Buona notte',
                             style: TextStyle(
                                 fontSize: 18.0,

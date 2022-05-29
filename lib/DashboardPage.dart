@@ -58,19 +58,19 @@ class DashboardPageState extends State<DashboardPage> {
               ),
               child: Column(
                 children: [
-                  EventCustomCardCreatorInfo(
-                    date: 'Monday',
-                    idCreator: element['id'],
-                  ),
+                  //EventCustomCardCreatorInfo(
+                  // date: 'Monday',
+                  // idCreator: element['id'],
+                  // ),
                   EventCustomCardImage(
                     picUrl: element['picUrl'],
                   ),
-                  EventCustomCardFiltersInfo(
-                    category: element['category'],
-                    date: 'Monday',
-                    maxPeople: element['max_people'].toString(),
-                    price: element['price'],
-                  ),
+                  //EventCustomCardFiltersInfo(
+                  //  category: element['category'],
+                  //  date: 'Monday',
+                  //  maxPeople: element['max_people'].toString(),
+                  //  price: element['price'],
+                  //),
                   Text(
                     element['title'],
                     textAlign: TextAlign.left,
@@ -85,7 +85,7 @@ class DashboardPageState extends State<DashboardPage> {
                     element['description'],
                     style: TextStyle(color: Colors.black),
                   ),
-                  EventCustomCardSocialIcons(likes: 10),
+                  // EventCustomCardSocialIcons(likes: 10),
                 ],
               ),
             )
