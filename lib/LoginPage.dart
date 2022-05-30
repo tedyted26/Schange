@@ -2,6 +2,8 @@ import 'package:Schange/RegisterPage.dart';
 import 'package:flutter/material.dart';
 import 'package:Schange/DashboardPage.dart';
 
+import 'PasswordReset.dart';
+
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
   @override
@@ -63,7 +65,7 @@ class LoginPageState extends State<LoginPage> {
                     fillColor: const Color(0xff023047),
                     hintText: 'Mail',
                     prefixIcon: const Icon(
-                      Icons.person,
+                      Icons.mail_outline,
                       color: Color(0xff023047),
                     ),
                     border: InputBorder.none,
@@ -141,7 +143,7 @@ class LoginPageState extends State<LoginPage> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => const RegisterPage()),
+                          builder: (context) => const PasswordReset()),
                     );
                   },
                   child: const Text("Forgot Password?"),
@@ -177,7 +179,7 @@ class LoginPageState extends State<LoginPage> {
       bottomNavigationBar: Container(
         color: const Color(0xffffffff),
         alignment: Alignment.center,
-        height: MediaQuery.of(context).size.height * 0.05,
+        height: MediaQuery.of(context).size.height * 0.04,
         width: MediaQuery.of(context).size.width,
         margin: const EdgeInsets.all(0),
         child: const Text(

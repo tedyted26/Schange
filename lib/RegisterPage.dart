@@ -17,16 +17,16 @@ class RegisterPageState extends State<RegisterPage> {
             left: MediaQuery.of(context).size.width * 0.08,
             right: MediaQuery.of(context).size.width * 0.08,
             top: MediaQuery.of(context).size.height * 0.15,
-            bottom: MediaQuery.of(context).size.height * 0.1),
+            bottom: MediaQuery.of(context).size.height * 0.05),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
             Container(
               margin: EdgeInsets.only(
-                  bottom: MediaQuery.of(context).size.height * 0.05),
+                  bottom: MediaQuery.of(context).size.height * 0.04),
               child: Image.asset(
                 "images/logo_principal.png",
-                width: MediaQuery.of(context).size.width * 0.2,
+                width: MediaQuery.of(context).size.width * 0.3,
               ),
             ),
             Container(
@@ -185,9 +185,9 @@ class RegisterPageState extends State<RegisterPage> {
         ),
       ),
       bottomNavigationBar: Container(
-        color: const Color(0xffffffff),
+        color: Colors.white,
         alignment: Alignment.center,
-        height: MediaQuery.of(context).size.height * 0.05,
+        height: MediaQuery.of(context).size.height * 0.04,
         width: MediaQuery.of(context).size.width,
         margin: const EdgeInsets.all(0),
         child: const Text(
