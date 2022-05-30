@@ -39,7 +39,7 @@ class _YourEventsState extends State<YourEvents> {
     return Scaffold(
       backgroundColor: const Color(0xffF5F9FF),
       appBar: AppBar(
-        title: const Text("Your events"),
+        title: const Text("My events"),
         leading: IconButton(
           icon: const Icon(
             Icons.arrow_back,

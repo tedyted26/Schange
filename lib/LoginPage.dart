@@ -57,7 +57,7 @@ class LoginPageState extends State<LoginPage> {
               child: TextField(
                 controller: _mailController,
                 autofocus: false,
-                style: const TextStyle(color: Color(0xff000000)),
+                style: const TextStyle(color: Color(0xff023047)),
                 decoration: InputDecoration(
                     hintStyle: const TextStyle(color: Color(0xff023047)),
                     fillColor: const Color(0xff023047),
@@ -164,9 +164,9 @@ class LoginPageState extends State<LoginPage> {
                           builder: (context) => const RegisterPage()),
                     );
                   },
-                  child: Text("Create an account here"),
+                  child: const Text("Create an account here"),
                   style: TextButton.styleFrom(
-                    primary: Color(0xff023047),
+                    primary: const Color(0xff023047),
                   ),
                 ),
               ],
@@ -175,12 +175,12 @@ class LoginPageState extends State<LoginPage> {
         ),
       ),
       bottomNavigationBar: Container(
-        color: Color(0xffffffff),
+        color: const Color(0xffffffff),
         alignment: Alignment.center,
         height: MediaQuery.of(context).size.height * 0.05,
         width: MediaQuery.of(context).size.width,
-        margin: EdgeInsets.all(0),
-        child: Text(
+        margin: const EdgeInsets.all(0),
+        child: const Text(
           "Schange (C) - Políticas de privacidad",
           style: TextStyle(
             color: Color(0xff023047),

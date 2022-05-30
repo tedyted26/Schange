@@ -99,3 +99,18 @@ final User lesl = User(
   imageUrl:
       'https://cdn.pixabay.com/photo/2017/01/23/19/40/woman-2003647_960_720.jpg',
 );
+
+final arrayUsers = [
+  juan,
+  miguel,
+  sergio,
+  jorge,
+  alfonso,
+  ale,
+  izarra,
+  sara,
+  stef,
+  tom,
+  kass,
+  lesl
+];

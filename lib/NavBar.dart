@@ -4,68 +4,77 @@ class NavBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Drawer(
+      backgroundColor: Color(0xffF5F9FF),
       child: ListView(
         children: [
           UserAccountsDrawerHeader(
-            accountName: Text('Laura Levy'),
-            accountEmail: Text(''),
+            accountName: Text(
+              'Laura Levy',
+              style: TextStyle(
+                  color: Theme.of(context).primaryColor, fontSize: 16),
+            ),
+            accountEmail: Text('lauralevy@mail.com',
+                style: TextStyle(
+                    color: Theme.of(context).primaryColor, fontSize: 14)),
             currentAccountPicture: CircleAvatar(
               child: ClipOval(
-                  child: Image.network(
-                      'https://images.unsplash.com/photo-1519699047748-de8e457a634e?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=880&q=80')),
+                  child: Image.asset(
+                'images/user_0.jpg',
+                fit: BoxFit.cover,
+                height: 75,
+                width: 75,
+              )),
             ),
-            decoration: BoxDecoration(color: Colors.white),
+            decoration: const BoxDecoration(color: Colors.white),
           ),
           ListTile(
-            leading: Icon(
-              Icons.border_color_outlined,
-            ),
-            title: Text('CREATE EVENT'),
-            onTap: () => null,
+            iconColor: Color.fromARGB(255, 73, 85, 103),
+            leading: const Icon(Icons.add_circle),
+            title: const Text('CREATE EVENT'),
+            onTap: () => Navigator.of(context).pushNamed('/new-event'),
           ),
           ListTile(
-            leading: Icon(
-              Icons.border_color_outlined,
+            iconColor: Color.fromARGB(255, 73, 85, 103),
+            leading: const Icon(
+              Icons.edit_calendar,
             ),
-            title: Text('MY SUBSCRIPTIONS'),
-            onTap: () => null,
+            title: const Text('MY EVENTS'),
+            onTap: () => Navigator.of(context).pushNamed('/your-events'),
           ),
           ListTile(
-            leading: Icon(
-              Icons.calendar_month_sharp,
+            iconColor: Color.fromARGB(255, 73, 85, 103),
+            leading: const Icon(
+              Icons.event_available,
             ),
-            title: Text('MY EVENTS'),
-            onTap: () => null,
+            title: const Text('MY SUBSCRIPTIONS'),
+            onTap: () => Navigator.of(context).pushNamed('/your-subscriptions'),
           ),
           ListTile(
-            leading: Icon(
-              Icons.settings_accessibility_outlined,
+            iconColor: Color.fromARGB(255, 73, 85, 103),
+            leading: const Icon(
+              Icons.lightbulb,
             ),
-            title: Text('FRIENDS'),
-            onTap: () => null,
+            title: const Text('TIPS'),
+            onTap: () => Navigator.of(context).pushNamed('/tips'),
           ),
           ListTile(
-            leading: Icon(
-              Icons.abc_outlined,
-            ),
-            title: Text('TIPS'),
-            onTap: () => null,
-          ),
-          ListTile(
-            leading: Icon(
+            iconColor: Color.fromARGB(255, 73, 85, 103),
+            leading: const Icon(
               Icons.settings,
             ),
-            title: Text('PREFERENCES'),
-            onTap: () => null,
+            title: const Text('SETTINGS'),
+            onTap: () => null, //TODO
           ),
-          Divider(),
-          Divider(),
-          ListTile(
-            leading: Icon(
-              Icons.power_settings_new,
+          Container(
+            padding: const EdgeInsets.only(top: 205),
+            child: ListTile(
+              iconColor: Color.fromARGB(255, 73, 85, 103),
+              leading: const Icon(
+                Icons.power_settings_new,
+              ),
+              title: const Text('LOGOUT'),
+              onTap: () => Navigator.of(context).pushNamed('/login'),
             ),
-            title: Text('LOGOUT'),
-            onTap: () => null,
           ),
         ],
       ),

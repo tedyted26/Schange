@@ -14,7 +14,9 @@ class MessagesScreen extends StatelessWidget {
             icon: const Icon(
               Icons.arrow_back,
             ),
-            onPressed: () {}, //TODO boton de volver
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
           ),
         ),
         body: ListView.builder(

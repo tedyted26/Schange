@@ -38,7 +38,7 @@ class _YourSubscriptionsState extends State<YourSubscriptions> {
     return Scaffold(
       backgroundColor: const Color(0xffF5F9FF),
       appBar: AppBar(
-        title: const Text("Your subscriptions"),
+        title: const Text("My subscriptions"),
         leading: IconButton(
           icon: const Icon(
             Icons.arrow_back,

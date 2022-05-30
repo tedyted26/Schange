@@ -1,6 +1,8 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:Schange/models/user_model.dart' as user_model;
+import 'package:Schange/screens/chat_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'User.dart';
@@ -25,6 +27,7 @@ class EventCustomCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    bool showMessageButton = (idUser != event.creatorId);
     return GestureDetector(
       onTap: () {
         Navigator.of(context).pushNamed('/event-details', arguments: event);
@@ -61,7 +64,8 @@ class EventCustomCard extends StatelessWidget {
                         )))
                 : EventCustomCardCreatorInfo(
                     event: event,
-                    idUser: event.creatorId,
+                    idUser: idUser,
+                    showButton: showMessageButton,
                     marginbottom: 0,
                   ),
             EventCustomCardImage(
@@ -199,7 +203,7 @@ class EventCustomCardCreatorInfo extends StatelessWidget {
           list.map((e) => User.fromJson(e)).toList();
 
       for (int i = 0; i < listAllUsers.length; i++) {
-        if (listAllUsers[i].id == idUser) {
+        if (listAllUsers[i].id == event.creatorId) {
           creatorInfo = listAllUsers[i];
           return creatorInfo;
         }
@@ -246,8 +250,8 @@ class EventCustomCardCreatorInfo extends StatelessWidget {
                                 errorBuilder: (context, object, stacktrace) {
                                   return Image.asset(
                                     "images/no_user.png",
-                                    height: 50,
-                                    width: 50,
+                                    height: 45,
+                                    width: 45,
                                     fit: BoxFit.cover,
                                   );
                                 },
@@ -286,7 +290,17 @@ class EventCustomCardCreatorInfo extends StatelessWidget {
                             size: 30,
                           ),
                           onPressed: () {
-                            Navigator.of(context).pushNamed('/messages');
+                            for (user_model.User user
+                                in user_model.arrayUsers) {
+                              if (user.id == event.creatorId) {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (_) => ChatScreen(
+                                              user: user,
+                                            )));
+                              }
+                            }
                           },
                         )
                       : Container(),

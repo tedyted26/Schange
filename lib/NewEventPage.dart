@@ -83,7 +83,7 @@ class _NewEvent extends State<NewEvent> {
                               )),
                           TextButton(
                               onPressed: () {
-                                Navigator.of(context).pop();
+                                Navigator.of(context).pushNamed('/dashboard');
                               },
                               child: Text(
                                 "Yes",
@@ -503,8 +503,8 @@ class _NewEvent extends State<NewEvent> {
                                   )),
                               TextButton(
                                   onPressed: () {
-                                    // TODO volver a menu Navigator.of(context).pushNamed('/your-events',
-                                    //arguments: widget.event.creatorId);
+                                    Navigator.of(context)
+                                        .pushNamed('/dashboard');
                                   },
                                   child: Text(
                                     "Yes",

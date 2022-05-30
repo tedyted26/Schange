@@ -60,7 +60,7 @@ class _EventDetailsPage extends State<EventDetailsPage> {
             Icons.arrow_back,
           ),
           onPressed: () {
-            Navigator.of(context).pop();
+            Navigator.of(context).pushNamed('/dashboard');
           },
         ),
         actions: [
@@ -112,7 +112,7 @@ class _EventDetailsPage extends State<EventDetailsPage> {
                     EventCustomCardImage(picUrl: widget.event.picUrl),
                     EventCustomCardCreatorInfo(
                       event: widget.event,
-                      idUser: widget.userId,
+                      idUser: widget.event.creatorId,
                       showButton: !widget.isEditable,
                     ),
                     EventCustomCardFiltersInfo(

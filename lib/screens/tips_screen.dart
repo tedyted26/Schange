@@ -22,7 +22,9 @@ class _TipsScreenState extends State<TipsScreen> {
           icon: const Icon(
             Icons.arrow_back,
           ),
-          onPressed: () {}, //TODO boton de volver
+          onPressed: () {
+            Navigator.of(context).pushNamed('/dashboard');
+          },
         ),
       ),
       body: SingleChildScrollView(
