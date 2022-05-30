@@ -39,7 +39,9 @@ class DashboardPageState extends State<DashboardPage> {
     List<Event> eventList = responseList.map((e) => Event.fromJson(e)).toList();
     List<Widget> listItem = [];
     for (Event element in eventList) {
-      listItem.add(EventCustomCard(event: element));
+      listItem.add(EventCustomCard(
+        event: element,
+      ));
     }
     setState(() {
       itemsData = listItem;
@@ -47,12 +49,28 @@ class DashboardPageState extends State<DashboardPage> {
   }
 
   Widget build(BuildContext context) {
+    final filterIcons = [
+      Icons.people,
+      Icons.calendar_month,
+      Icons.euro,
+      Icons.chair,
+      Icons.location_on
+    ];
+    final filterHints = [
+      "Nº of people",
+      "Date of event",
+      "Price",
+      "Type of event",
+      "Location"
+    ];
     return Scaffold(
+        backgroundColor: Colors.white,
         appBar: AppBar(
           title: const Text("Home"),
+          elevation: 0,
           actions: <Widget>[
             IconButton(
-              icon: const Icon(Icons.messenger_rounded),
+              icon: const Icon(Icons.chat_bubble),
               onPressed: () {
                 //ScaffoldMessenger.of(context).showSnackBar(
                 //const SnackBar(content: Text('This is a snackbar')));
@@ -61,65 +79,75 @@ class DashboardPageState extends State<DashboardPage> {
             ),
           ],
         ),
-        body: Container(
-          color: Colors.white,
-          child: Column(
-            children: [
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: <Widget>[
-                  Container(
-                    margin: const EdgeInsets.symmetric(
-                        horizontal: 10.0, vertical: 10.0),
-                    decoration: const BoxDecoration(
-                      color: Color.fromARGB(49, 26, 29, 29),
-                      borderRadius: BorderRadius.all(Radius.circular(22.0)),
+        body: Column(
+          children: [
+            Column(
+              children: [
+                Container(
+                  margin: const EdgeInsets.symmetric(horizontal: 20.0),
+                  height: 40,
+                  padding: const EdgeInsets.only(left: 10),
+                  decoration: const BoxDecoration(
+                    color: Color.fromARGB(155, 207, 221, 241),
+                    borderRadius: BorderRadius.all(Radius.circular(20.0)),
+                  ),
+                  child: TextFormField(
+                    decoration: InputDecoration(
+                      border: InputBorder.none,
+                      hintText: "Search: ",
+                      hintStyle:
+                          TextStyle(color: Theme.of(context).primaryColor),
+                      icon: Icon(Icons.search,
+                          color: Theme.of(context).primaryColor),
                     ),
                   ),
-                  Expanded(
-                    flex: 1,
-                    child: TextFormField(
-                      decoration: const InputDecoration(
-                        border: InputBorder.none,
-                        hintText: "Search: ",
-                        hintStyle: TextStyle(color: Colors.black),
-                        icon: Icon(Icons.search, color: Colors.black),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-              const SizedBox(
-                height: 5,
-              ),
-              SizedBox(
-                  height: 60,
-                  child: ListView.builder(
-                    itemCount: 5,
-                    scrollDirection: Axis.horizontal,
-                    itemBuilder: (context, index) => Container(
-                      child: TextFormField(
-                        decoration: const InputDecoration(
-                          border: InputBorder.none,
-                          hintText: "Type",
-                          hintStyle: TextStyle(color: Colors.black),
-                          icon: Icon(Icons.search, color: Colors.black),
+                ),
+                Container(
+                  margin: const EdgeInsets.only(left: 10, right: 10),
+                  child: SizedBox(
+                      height: 50,
+                      child: ListView.builder(
+                        itemCount: 5,
+                        scrollDirection: Axis.horizontal,
+                        itemBuilder: (context, index) => Container(
+                          width: 140,
+                          margin: const EdgeInsets.all(10),
+                          padding: const EdgeInsets.only(left: 10, right: 5),
+                          decoration: const BoxDecoration(
+                              color: Color.fromARGB(155, 207, 221, 241),
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(20.0))),
+                          child: TextFormField(
+                            style: const TextStyle(fontSize: 14),
+                            decoration: InputDecoration(
+                              border: InputBorder.none,
+                              hintText: filterHints[index],
+                              hintStyle: TextStyle(
+                                  color: Theme.of(context).primaryColor),
+                              icon: Icon(
+                                filterIcons[index],
+                                color: Theme.of(context).primaryColor,
+                                size: 18,
+                              ),
+                            ),
+                          ),
                         ),
-                      ),
-                      width: 120,
-                      margin: const EdgeInsets.all(10),
-                      color: const Color(0xFFF5F9FF),
-                    ),
-                  )),
-              Expanded(
-                  child: ListView.builder(
-                      itemCount: itemsData.length,
-                      physics: const BouncingScrollPhysics(),
-                      itemBuilder: (context, index) {
-                        return itemsData[index];
-                      }))
-            ],
-          ),
+                      )),
+                ),
+              ],
+            ),
+            Expanded(
+              child: Container(
+                color: const Color(0xffF5F9FF),
+                child: ListView.builder(
+                    itemCount: itemsData.length,
+                    physics: const BouncingScrollPhysics(),
+                    itemBuilder: (context, index) {
+                      return itemsData[index];
+                    }),
+              ),
+            ),
+          ],
         ),
         drawer: NavBar());
   }

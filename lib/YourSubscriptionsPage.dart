@@ -44,7 +44,7 @@ class _YourSubscriptionsState extends State<YourSubscriptions> {
             Icons.arrow_back,
           ),
           onPressed: () {
-            Navigator.of(context).pop();
+            Navigator.of(context).pushNamed('/dashboard');
           },
         ),
       ),
@@ -68,13 +68,13 @@ class _YourSubscriptionsState extends State<YourSubscriptions> {
                         return EventCustomCard(
                           event: items[index],
                           isSubscribed: true,
-                          marginbottom: 5,
+                          marginbottom: 15,
                         );
                       } else if (index == items.length - 1) {
                         return EventCustomCard(
                           event: items[index],
                           isSubscribed: true,
-                          margintop: 5,
+                          margintop: 15,
                         );
                       } else if (index < items.length) {
                         return EventCustomCard(

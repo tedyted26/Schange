@@ -27,7 +27,6 @@ class EventCustomCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    bool showMessageButton = (idUser != event.creatorId);
     return GestureDetector(
       onTap: () {
         Navigator.of(context).pushNamed('/event-details', arguments: event);
@@ -65,7 +64,7 @@ class EventCustomCard extends StatelessWidget {
                 : EventCustomCardCreatorInfo(
                     event: event,
                     idUser: idUser,
-                    showButton: showMessageButton,
+                    showButton: false,
                     marginbottom: 0,
                   ),
             EventCustomCardImage(
@@ -228,7 +227,7 @@ class EventCustomCardCreatorInfo extends StatelessWidget {
             String profilepic = item.profilePic;
             if (profilepic == "") profilepic = "images/no_user.png";
             return Container(
-              margin: EdgeInsets.only(top: 5, bottom: marginbottom),
+              margin: EdgeInsets.only(top: 10, bottom: marginbottom),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -286,7 +285,7 @@ class EventCustomCardCreatorInfo extends StatelessWidget {
                   showButton
                       ? IconButton(
                           icon: const Icon(
-                            Icons.messenger_rounded,
+                            Icons.messenger,
                             size: 30,
                           ),
                           onPressed: () {
@@ -294,11 +293,13 @@ class EventCustomCardCreatorInfo extends StatelessWidget {
                                 in user_model.arrayUsers) {
                               if (user.id == event.creatorId) {
                                 Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (_) => ChatScreen(
-                                              user: user,
-                                            )));
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (_) => ChatScreen(
+                                      user: user,
+                                    ),
+                                  ),
+                                );
                               }
                             }
                           },

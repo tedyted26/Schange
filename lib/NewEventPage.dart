@@ -46,7 +46,9 @@ class _NewEvent extends State<NewEvent> {
     if (image != null) {
       final imageTemporary = File(image.path);
       this.image = imageTemporary;
-      picPath = this.image!.path;
+      setState(() {
+        picPath = this.image!.path;
+      });
     }
   }
 
@@ -147,11 +149,15 @@ class _NewEvent extends State<NewEvent> {
                             marginTop: 10,
                             isOriginCreateEvent: true,
                           ),
-                          IconButton(
-                            icon: const Icon(Icons.add_a_photo),
-                            onPressed: () => setState(() {
-                              pickImage();
-                            }),
+                          Container(
+                            decoration: BoxDecoration(
+                              color: Color.fromARGB(231, 244, 244, 244),
+                              borderRadius: BorderRadius.circular(50),
+                            ),
+                            child: IconButton(
+                              icon: const Icon(Icons.add_a_photo),
+                              onPressed: () => pickImage(),
+                            ),
                           ),
                         ],
                       ),
