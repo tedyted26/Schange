@@ -1,3 +1,4 @@
+import 'package:Schange/Settings.dart';
 import 'package:Schange/screens/messages_screen.dart';
 import 'package:Schange/screens/tips_screen.dart';
 import 'package:flutter/material.dart';
@@ -20,13 +21,14 @@ class RouteGenerator {
       case '/dashboard':
         return MaterialPageRoute(builder: (_) => const DashboardPage());
 
+      case '/settings':
+        return MaterialPageRoute(builder: (_) => const Settings());
+
       case '/event-details':
         return MaterialPageRoute(
             builder: (_) => EventDetailsPage(
                   event: args as Event,
                 ));
-
-      // Navigator.of(context).pushNamed('/event-details', arguments: [objetoEvento, idUsuarioLoggeado])}
 
       case '/new-event':
         return MaterialPageRoute(builder: (_) => const NewEvent());
@@ -38,10 +40,8 @@ class RouteGenerator {
         return MaterialPageRoute(builder: (_) => const YourSubscriptions());
 
       case '/edit-event':
-        if (args is Event) {
-          return MaterialPageRoute(builder: (_) => EditEvent(event: args));
-        }
-        return _errorRoute();
+        return MaterialPageRoute(
+            builder: (_) => EditEvent(event: args as Event));
 
       case '/messages':
         return MaterialPageRoute(builder: (_) => const MessagesScreen());

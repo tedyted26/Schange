@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 
 class NavBar extends StatelessWidget {
+  const NavBar({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Drawer(
-      backgroundColor: Color(0xffF5F9FF),
+      backgroundColor: const Color(0xffF5F9FF),
       child: ListView(
         children: [
           UserAccountsDrawerHeader(
@@ -28,13 +30,13 @@ class NavBar extends StatelessWidget {
             decoration: const BoxDecoration(color: Colors.white),
           ),
           ListTile(
-            iconColor: Color.fromARGB(255, 73, 85, 103),
+            iconColor: const Color.fromARGB(255, 73, 85, 103),
             leading: const Icon(Icons.add_circle),
             title: const Text('CREATE EVENT'),
             onTap: () => Navigator.of(context).pushNamed('/new-event'),
           ),
           ListTile(
-            iconColor: Color.fromARGB(255, 73, 85, 103),
+            iconColor: const Color.fromARGB(255, 73, 85, 103),
             leading: const Icon(
               Icons.edit_calendar,
             ),
@@ -42,7 +44,7 @@ class NavBar extends StatelessWidget {
             onTap: () => Navigator.of(context).pushNamed('/your-events'),
           ),
           ListTile(
-            iconColor: Color.fromARGB(255, 73, 85, 103),
+            iconColor: const Color.fromARGB(255, 73, 85, 103),
             leading: const Icon(
               Icons.event_available,
             ),
@@ -50,7 +52,7 @@ class NavBar extends StatelessWidget {
             onTap: () => Navigator.of(context).pushNamed('/your-subscriptions'),
           ),
           ListTile(
-            iconColor: Color.fromARGB(255, 73, 85, 103),
+            iconColor: const Color.fromARGB(255, 73, 85, 103),
             leading: const Icon(
               Icons.lightbulb,
             ),
@@ -58,17 +60,17 @@ class NavBar extends StatelessWidget {
             onTap: () => Navigator.of(context).pushNamed('/tips'),
           ),
           ListTile(
-            iconColor: Color.fromARGB(255, 73, 85, 103),
+            iconColor: const Color.fromARGB(255, 73, 85, 103),
             leading: const Icon(
               Icons.settings,
             ),
             title: const Text('SETTINGS'),
-            onTap: () => null, //TODO
+            onTap: () => Navigator.of(context).pushNamed('/settings'),
           ),
           Container(
             padding: const EdgeInsets.only(top: 205),
             child: ListTile(
-              iconColor: Color.fromARGB(255, 73, 85, 103),
+              iconColor: const Color.fromARGB(255, 73, 85, 103),
               leading: const Icon(
                 Icons.power_settings_new,
               ),
