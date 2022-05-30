@@ -16,20 +16,24 @@ class EventCustomCard extends StatelessWidget {
   final bool isSubscribed;
   final double margintop;
   final double marginbottom;
+  final bool isOriginDashboard;
+
   const EventCustomCard(
       {Key? key,
       required this.event,
       this.isEditable = false,
       this.isSubscribed = false,
       this.margintop = 20,
-      this.marginbottom = 20})
+      this.marginbottom = 20,
+      this.isOriginDashboard = false})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Navigator.of(context).pushNamed('/event-details', arguments: event);
+        Navigator.of(context)
+            .pushNamed('/event-details', arguments: [event, isOriginDashboard]);
       },
       child: Container(
         margin: EdgeInsets.only(
@@ -492,8 +496,8 @@ class _EventCustomCardSocialIcons extends State<EventCustomCardSocialIcons> {
                     color: Theme.of(context).focusColor,
                   ),
                   onPressed: () {
-                    Navigator.of(context).pushNamed('/edit-event',
-                        arguments: [widget.event, widget.event.creatorId]);
+                    Navigator.of(context)
+                        .pushNamed('/edit-event', arguments: widget.event);
                   },
                 )
               : Container(),

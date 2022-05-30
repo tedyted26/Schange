@@ -13,10 +13,12 @@ class EventDetailsPage extends StatefulWidget {
   final int userId = 0;
   bool isEditable = false;
   bool isSubscribed = false;
+  final bool isOriginDashboard;
 
   EventDetailsPage({
     Key? key,
     required this.event,
+    this.isOriginDashboard = false,
   }) : super(key: key) {
     if (event.creatorId == userId) {
       isEditable = true;
@@ -60,7 +62,13 @@ class _EventDetailsPage extends State<EventDetailsPage> {
             Icons.arrow_back,
           ),
           onPressed: () {
-            Navigator.of(context).pushNamed('/dashboard');
+            if (widget.isEditable && !widget.isOriginDashboard) {
+              Navigator.of(context).pushNamed('/your-events');
+            } else if (widget.isSubscribed && !widget.isOriginDashboard) {
+              Navigator.of(context).pushNamed('/your-subscriptions');
+            } else {
+              Navigator.of(context).pushNamed('/dashboard');
+            }
           },
         ),
         actions: [

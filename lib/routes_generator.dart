@@ -25,10 +25,18 @@ class RouteGenerator {
         return MaterialPageRoute(builder: (_) => const Settings());
 
       case '/event-details':
-        return MaterialPageRoute(
-            builder: (_) => EventDetailsPage(
-                  event: args as Event,
-                ));
+        if (args is List) {
+          return MaterialPageRoute(
+              builder: (_) => EventDetailsPage(
+                    event: args[0] as Event,
+                    isOriginDashboard: args[1],
+                  ));
+        } else {
+          return MaterialPageRoute(
+              builder: (_) => EventDetailsPage(
+                    event: args as Event,
+                  ));
+        }
 
       case '/new-event':
         return MaterialPageRoute(builder: (_) => const NewEvent());

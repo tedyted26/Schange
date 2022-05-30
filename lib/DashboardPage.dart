@@ -41,6 +41,7 @@ class DashboardPageState extends State<DashboardPage> {
     for (Event element in eventList) {
       listItem.add(EventCustomCard(
         event: element,
+        isOriginDashboard: true,
       ));
     }
     setState(() {
