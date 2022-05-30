@@ -1,3 +1,4 @@
+import 'package:Schange/LoginPage.dart';
 import 'package:flutter/material.dart';
 
 class RegisterPage extends StatefulWidget {
@@ -11,36 +12,67 @@ class RegisterPageState extends State<RegisterPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        color: Color(0xffffffff),
+        color: const Color(0xffffffff),
         padding: EdgeInsets.only(
-                left: MediaQuery.of(context).size.width * 0.08) +
-            EdgeInsets.only(right: MediaQuery.of(context).size.width * 0.08) +
-            EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.2),
+            left: MediaQuery.of(context).size.width * 0.08,
+            right: MediaQuery.of(context).size.width * 0.08,
+            top: MediaQuery.of(context).size.height * 0.15,
+            bottom: MediaQuery.of(context).size.height * 0.1),
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
             Container(
               margin: EdgeInsets.only(
-                  bottom: MediaQuery.of(context).size.height * 0.1),
+                  bottom: MediaQuery.of(context).size.height * 0.05),
               child: Image.asset(
                 "images/logo_principal.png",
-                width: MediaQuery.of(context).size.width * 0.3,
+                width: MediaQuery.of(context).size.width * 0.2,
               ),
             ),
             Container(
               margin: EdgeInsets.only(
                   bottom: MediaQuery.of(context).size.height * 0.03),
               decoration: BoxDecoration(
-                color: Color(0x44E3F2FD),
+                border: Border.all(color: const Color(0xff023047)),
+                color: const Color(0x44E3F2FD),
                 borderRadius: BorderRadius.circular(15),
               ),
               child: TextField(
                 autofocus: false,
-                style: TextStyle(color: Color(0xff000000)),
+                style: const TextStyle(color: Color(0xff023047)),
                 decoration: InputDecoration(
-                    hintStyle: TextStyle(color: Color(0xff023047)),
-                    fillColor: Color(0xff023047),
+                    hintStyle: TextStyle(
+                        color: const Color(0xff023047).withOpacity(0.6)),
+                    fillColor: const Color(0xff023047),
                     hintText: 'Name',
-                    prefixIcon: Icon(
+                    prefixIcon: const Icon(
+                      Icons.person,
+                      color: Color(0xff023047),
+                    ),
+                    border: InputBorder.none,
+                    contentPadding: EdgeInsets.only(
+                            top: MediaQuery.of(context).size.height * 0.02) +
+                        EdgeInsets.only(
+                            bottom: MediaQuery.of(context).size.height * 0.02)),
+              ),
+            ),
+            Container(
+              margin: EdgeInsets.only(
+                  bottom: MediaQuery.of(context).size.height * 0.03),
+              decoration: BoxDecoration(
+                border: Border.all(color: const Color(0xff023047)),
+                color: const Color(0x44E3F2FD),
+                borderRadius: BorderRadius.circular(15),
+              ),
+              child: TextField(
+                autofocus: false,
+                style: const TextStyle(color: Color(0xff023047)),
+                decoration: InputDecoration(
+                    hintStyle: TextStyle(
+                        color: const Color(0xff023047).withOpacity(0.6)),
+                    fillColor: const Color(0xff023047),
+                    hintText: 'Email',
+                    prefixIcon: const Icon(
                       Icons.mail_outline,
                       color: Color(0xff023047),
                     ),
@@ -55,70 +87,20 @@ class RegisterPageState extends State<RegisterPage> {
               margin: EdgeInsets.only(
                   bottom: MediaQuery.of(context).size.height * 0.03),
               decoration: BoxDecoration(
-                color: Color(0x44E3F2FD),
+                border: Border.all(color: const Color(0xff023047)),
+                color: const Color(0x44E3F2FD),
                 borderRadius: BorderRadius.circular(15),
               ),
               child: TextField(
                 autofocus: false,
-                style: TextStyle(color: Color(0xff023047)),
+                style: const TextStyle(color: Color(0xff023047)),
                 obscureText: true,
                 decoration: InputDecoration(
-                    hintStyle: TextStyle(color: Colors.white.withOpacity(0.6)),
-                    fillColor: Colors.white,
-                    hintText: 'Username',
-                    prefixIcon: Icon(
-                      Icons.security_outlined,
-                      color: Color(0xff023047),
-                    ),
-                    border: InputBorder.none,
-                    contentPadding: EdgeInsets.only(
-                            top: MediaQuery.of(context).size.height * 0.02) +
-                        EdgeInsets.only(
-                            bottom: MediaQuery.of(context).size.height * 0.02)),
-              ),
-            ),
-            Container(
-              margin: EdgeInsets.only(
-                  bottom: MediaQuery.of(context).size.height * 0.03),
-              decoration: BoxDecoration(
-                color: Color(0x44E3F2FD),
-                borderRadius: BorderRadius.circular(15),
-              ),
-              child: TextField(
-                autofocus: false,
-                style: TextStyle(color: Color(0xff023047)),
-                obscureText: true,
-                decoration: InputDecoration(
-                    hintStyle: TextStyle(color: Colors.white.withOpacity(0.6)),
-                    fillColor: Colors.white,
-                    hintText: 'Email',
-                    prefixIcon: Icon(
-                      Icons.security_outlined,
-                      color: Color(0xff023047),
-                    ),
-                    border: InputBorder.none,
-                    contentPadding: EdgeInsets.only(
-                            top: MediaQuery.of(context).size.height * 0.02) +
-                        EdgeInsets.only(
-                            bottom: MediaQuery.of(context).size.height * 0.02)),
-              ),
-            ),
-            Container(
-              margin: EdgeInsets.only(
-                  bottom: MediaQuery.of(context).size.height * 0.03),
-              decoration: BoxDecoration(
-                color: Color(0x44E3F2FD),
-                borderRadius: BorderRadius.circular(15),
-              ),
-              child: TextField(
-                autofocus: false,
-                style: TextStyle(color: Color(0xff023047)),
-                obscureText: true,
-                decoration: InputDecoration(
-                    hintStyle: TextStyle(color: Colors.white.withOpacity(0.6)),
-                    fillColor: Colors.white,
+                    hintStyle: TextStyle(
+                        color: const Color(0xff023047).withOpacity(0.6)),
+                    fillColor: const Color(0xff023047),
                     hintText: 'Password',
-                    prefixIcon: Icon(
+                    prefixIcon: const Icon(
                       Icons.security_outlined,
                       color: Color(0xff023047),
                     ),
@@ -133,18 +115,20 @@ class RegisterPageState extends State<RegisterPage> {
               margin: EdgeInsets.only(
                   bottom: MediaQuery.of(context).size.height * 0.03),
               decoration: BoxDecoration(
-                color: Color(0x44E3F2FD),
+                border: Border.all(color: const Color(0xff023047)),
+                color: const Color(0x44E3F2FD),
                 borderRadius: BorderRadius.circular(15),
               ),
               child: TextField(
                 autofocus: false,
-                style: TextStyle(color: Color(0xff023047)),
+                style: const TextStyle(color: Color(0xff023047)),
                 obscureText: true,
                 decoration: InputDecoration(
-                    hintStyle: TextStyle(color: Colors.white.withOpacity(0.6)),
-                    fillColor: Colors.white,
+                    hintStyle: TextStyle(
+                        color: const Color(0xff023047).withOpacity(0.6)),
+                    fillColor: const Color(0xff023047),
                     hintText: 'Confirm Password',
-                    prefixIcon: Icon(
+                    prefixIcon: const Icon(
                       Icons.security_outlined,
                       color: Color(0xff023047),
                     ),
@@ -160,42 +144,53 @@ class RegisterPageState extends State<RegisterPage> {
                   bottom: MediaQuery.of(context).size.height * 0.005),
               width: MediaQuery.of(context).size.height * 0.2,
               child: ElevatedButton(
-                child: const Text('LOGIN'),
+                child: const Text('Create Account'),
                 style: ElevatedButton.styleFrom(
-                  primary: Color(0xff219EBC),
-                  shape: new RoundedRectangleBorder(
-                    borderRadius: new BorderRadius.circular(15),
+                  primary: const Color(0xff219EBC),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(15),
                   ),
                 ),
                 onPressed: () {
                   FocusScope.of(context)
                       .unfocus(); // Que no abra el teclado al volver al login
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => const LoginPage()),
+                  );
                 },
               ),
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                RichText(
-                    text: TextSpan(
-                        text: "Already an account?",
-                        style: TextStyle(
-                          color: Color(0xff023047),
-                          decoration: TextDecoration.underline,
-                          fontSize: 16,
-                        ))),
+                TextButton(
+                  onPressed: () {
+                    FocusScope.of(context)
+                        .unfocus(); // Que no abra el teclado al volver al login
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const LoginPage()),
+                    );
+                  },
+                  child: const Text("Already have an account?"),
+                  style: TextButton.styleFrom(
+                    primary: const Color(0xff023047),
+                  ),
+                ),
               ],
             ),
           ],
         ),
       ),
       bottomNavigationBar: Container(
-        color: Color(0xffffffff),
+        color: const Color(0xffffffff),
         alignment: Alignment.center,
-        height: MediaQuery.of(context).size.height * 0.075,
+        height: MediaQuery.of(context).size.height * 0.05,
         width: MediaQuery.of(context).size.width,
-        margin: EdgeInsets.all(0),
-        child: Text(
+        margin: const EdgeInsets.all(0),
+        child: const Text(
           "Schange (C) - Políticas de privacidad",
           style: TextStyle(
             color: Color(0xff023047),
