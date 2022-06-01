@@ -32,7 +32,7 @@ class LoginPageState extends State<LoginPage> {
           child: Column(
             children: [
               Container(
-                margin: EdgeInsets.only(
+                margin: EdgeInsets.only(top: 20,
                     bottom: MediaQuery.of(context).size.height * 0.05),
                 child: Image.asset(
                   "images/logo_principal.png",

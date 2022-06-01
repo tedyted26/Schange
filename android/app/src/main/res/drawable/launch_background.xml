@@ -6,8 +6,8 @@
     <!-- You can insert your own image assets here -->
     <item>
         <bitmap
-            android:gravity="center"
-            android:src="@mipmap/launch_image" />
+            android:gravity="bottom"
+            android:src="@drawable/launch_image" />
     </item>
     <!-- You can insert your own image assets here -->
     <!-- Copia de lo de arriba, por si hay que hacer que la imagen se adapte a la pantalla
