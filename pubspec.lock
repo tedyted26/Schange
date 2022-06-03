@@ -219,8 +219,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.8.1"
-<<<<<<< HEAD
-=======
   plugin_platform_interface:
     dependency: transitive
     description:
@@ -249,7 +247,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "3.1.0"
->>>>>>> 80f33381208d4571b712297eb165dc30fc499d7a
   sky_engine:
     dependency: transitive
     description: flutter
@@ -297,8 +294,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.4.9"
-<<<<<<< HEAD
-=======
   transparent_image:
     dependency: transitive
     description:
@@ -327,7 +322,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.3.1"
->>>>>>> 80f33381208d4571b712297eb165dc30fc499d7a
   vector_math:
     dependency: transitive
     description:
@@ -335,10 +329,9 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.1.2"
-<<<<<<< HEAD
 sdks:
   dart: ">=2.17.0-0 <3.0.0"
-=======
+  flutter: ">=2.8.0"
   wkt_parser:
     dependency: transitive
     description:
@@ -346,7 +339,4 @@ sdks:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.0.0"
-sdks:
-  dart: ">=2.17.0-0 <3.0.0"
-  flutter: ">=2.8.0"
->>>>>>> 80f33381208d4571b712297eb165dc30fc499d7a
+  
